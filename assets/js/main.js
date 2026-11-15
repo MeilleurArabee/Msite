@@ -162,7 +162,7 @@
 
       /* 3. Formules (ordinateur) : les 3 cartes se lèvent une fois */
       if (c.desktop) {
-        gsap.from(['.plan--solo', '.plan--featured', '.plan--signature'], {
+        gsap.from(['.plan-preview', '.plan[data-plan="solo"]', '.plan[data-plan="business"]', '.plan[data-plan="signature"]'], {
           y: 80, opacity: 0, duration: 1, stagger: 0.12, ease: 'power3.out', clearProps: 'transform,opacity',
           scrollTrigger: { trigger: '.plans', start: 'top 85%', once: true }
         });

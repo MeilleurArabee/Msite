@@ -6,14 +6,25 @@ Le concept : on part des étoiles et, en descendant, on arrive dans un paysage �
 (grand chêne, balançoire, herbes roses, lucioles). Chaque étape du scroll s'anime un peu plus.
 
 ## Le créateur de site (page d'accueil)
-Le visiteur tape le nom de son commerce, choisit son activité et son ambiance :
-le site se construit en direct dans l'iPhone, puis il arrive sur les formules.
+1. Le visiteur tape le **nom** de son commerce.
+2. Il tape son **métier**, en toutes lettres (une centaine reconnus : fleuriste, ostéopathe, tatoueur…).
+   Un métier inconnu fonctionne aussi : le site reprend son mot.
+3. Il choisit **n'importe quelle couleur**, un **style** (élégant, moderne, chaleureux),
+   et **touche les textes de l'iPhone pour les réécrire**.
+
+Ensuite, la bande-annonce s'adresse à lui par son nom, les formules lui donnent un conseil
+selon son métier, et son iPhone montre son site en version Solo, Business ou Signature.
+Le mail de contact est déjà rédigé.
 
 **Lien personnalisé pour le démarchage** : envoyez par SMS ou par mail un lien comme
 `https://astelsia.fr/?nom=Le%20Fournil&type=boulangerie`
 Le commerçant ouvre le site et voit son propre site déjà créé, avec son nom.
-- `type` : restaurant, coiffeur, boulangerie, boutique, artisan, garage
-- `ambiance` (facultatif) : dore, rose, sauge, nuit
+- `nom` : le nom du commerce (`%20` = espace)
+- `type` : le métier, en toutes lettres (ex. `fleuriste`, `garage`, `osteopathe`)
+- `couleur` (facultatif) : une teinte de 0 à 359 (0 rouge, 30 orange, 130 vert, 210 bleu, 330 rose)
+- `style` (facultatif) : `elegant`, `moderne` ou `chaleureux`
+
+Les métiers reconnus et leurs textes sont dans `assets/js/builder.js` (liste `JOBS`).
 
 ## Modifier les coordonnées
 Un seul fichier : `assets/js/config.js` (téléphone et mail).
