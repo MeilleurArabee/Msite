@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Mentions légales — Astelsia</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#060a22">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>body { background: radial-gradient(120% 80% at 50% 0%, #0d1440 0%, #070c2a 50%, #0a1236 100%) fixed; }</style>
+</head>
+<body>
+  <header class="header is-scrolled">
+    <a href="./" class="logo" aria-label="Astelsia, retour à l'accueil">
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 1.5l2.6 7.9 7.9 2.6-7.9 2.6L12 22.5l-2.6-7.9L1.5 12l7.9-2.6z" fill="currentColor"/></svg>
+      Astelsia
+    </a>
+    <a href="./" class="btn btn--small btn--ghost">Retour au site</a>
+  </header>
+
+  <main class="legal">
+    <h1>Mentions légales</h1>
+
+    <!-- À COMPLÉTER : remplacez chaque <mark>…</mark> par vos informations. -->
+
+    <h2>Éditeur du site</h2>
+    <p>Astelsia — <mark>Prénom Nom</mark>, entrepreneur individuel.</p>
+    <p>SIRET&nbsp;: <mark>à compléter</mark></p>
+    <p>Adresse&nbsp;: <mark>à compléter</mark></p>
+    <p>Contact&nbsp;: <span data-legal="email">contact@astelsia.fr</span> · <span data-legal="phone">06 00 00 00 00</span></p>
+    <p>Directeur de la publication&nbsp;: <mark>Prénom Nom</mark></p>
+
+    <h2>Hébergement</h2>
+    <p>Netlify, Inc. — <mark>adresse postale à reprendre sur netlify.com</mark> — www.netlify.com</p>
+
+    <h2>Données personnelles</h2>
+    <p>Ce site ne dépose aucun cookie et n'utilise aucun outil de mesure d'audience. Les polices de caractères sont hébergées sur le site lui-même&nbsp;: aucune donnée n'est transmise à un service tiers lors de votre visite.</p>
+    <p>Si vous nous contactez par téléphone ou par mail, vos coordonnées sont utilisées uniquement pour vous répondre et ne sont jamais cédées.</p>
+
+    <h2>Propriété intellectuelle</h2>
+    <p>Les textes, illustrations et le code de ce site sont la propriété d'Astelsia, sauf mention contraire. Les polices Fraunces et Manrope sont distribuées sous licence SIL Open Font License.</p>
+  </main>
+
+  <footer class="footer"><p>© <span data-year>2026</span> Astelsia</p></footer>
+
+  <script src="assets/js/config.js"></script>
+  <script>
+    (function () {
+      var C = window.ASTELSIA_CONTACT || {};
+      var e = document.querySelector('[data-legal="email"]'), p = document.querySelector('[data-legal="phone"]');
+      if (C.email && e) e.textContent = C.email;
+      if (C.phone && p) p.textContent = C.phone;
+      document.querySelectorAll('[data-year]').forEach(function (el) { el.textContent = new Date().getFullYear(); });
+    })();
+  </script>
+</body>
+</html>

@@ -3,19 +3,28 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Astelsia — Sites web pour les commerces du Morbihan</title>
-  <meta name="description" content="Astelsia crée des sites web élégants et rapides pour les restaurants, coiffeurs, artisans et boutiques du Morbihan.">
-  <meta name="theme-color" content="#060918">
-  <meta property="og:title" content="Astelsia — Sites web pour les commerces du Morbihan">
-  <meta property="og:description" content="Des sites dont on se souvient, pour les commerces locaux.">
+  <title>Astelsia — Sites web pour les commerces de proximité</title>
+  <meta name="description" content="Astelsia crée des sites web élégants et rapides pour les restaurants, coiffeurs, artisans et boutiques. Trois formules claires, à partir de 249,90 €.">
+  <meta name="theme-color" content="#060a22">
+  <link rel="canonical" href="https://astelsia.fr/">
+
+  <!-- Aperçu quand le lien est partagé (mail, SMS, réseaux) -->
   <meta property="og:type" content="website">
+  <meta property="og:url" content="https://astelsia.fr/">
+  <meta property="og:title" content="Astelsia — Sites web pour les commerces de proximité">
+  <meta property="og:description" content="Avant de pousser votre porte, vos clients vous cherchent en ligne. Faites-leur bonne impression.">
+  <meta property="og:image" content="https://astelsia.fr/assets/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="preload" href="assets/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/manrope.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="assets/css/style.css">
   <script>
-    // Masque les éléments animés seulement si JS + animations sont autorisés.
+    // Les éléments animés ne sont masqués que si JS tourne et que les animations sont autorisées.
     if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
       document.documentElement.classList.add('anim');
       setTimeout(function () { if (!window.__astelsiaReady) document.documentElement.classList.remove('anim'); }, 3000);
@@ -23,39 +32,63 @@
   </script>
 </head>
 <body>
+  <a class="skip" href="#formules">Aller aux formules</a>
 
-  <!-- ============ DÉCOR : des étoiles au paysage ============ -->
+  <!-- ============ DÉCOR : des étoiles jusqu'au paysage ============ -->
+  <!-- Le paysage est peint à l'avance (2 cadrages : écran large / téléphone) puis animé plan par plan. -->
   <div class="scene" aria-hidden="true">
     <div class="sky sky--dusk"></div>
+    <picture class="clouds">
+      <source media="(max-aspect-ratio: 5/8)" data-srcset="assets/scene/tall-clouds.webp">
+      <img data-src="assets/scene/wide-clouds.webp" alt="" width="2400" height="1350" decoding="async">
+    </picture>
+    <div class="sky sky--twilight"></div>
     <div class="sky sky--night"></div>
     <div class="glow"></div>
     <canvas class="stars"></canvas>
     <div class="moon"></div>
     <div class="land">
-      <canvas class="layer layer--far"></canvas>
-      <canvas class="layer layer--mid"></canvas>
+      <picture class="layer layer--far">
+        <source media="(max-aspect-ratio: 5/8)" data-srcset="assets/scene/tall-far.webp">
+        <img data-src="assets/scene/wide-far.webp" alt="" width="2400" height="1000" decoding="async">
+      </picture>
+      <picture class="layer layer--mid">
+        <source media="(max-aspect-ratio: 5/8)" data-srcset="assets/scene/tall-mid.webp">
+        <img data-src="assets/scene/wide-mid.webp" alt="" width="2400" height="1000" decoding="async">
+      </picture>
       <div class="layer layer--tree">
-        <canvas></canvas>
+        <picture>
+          <source media="(max-aspect-ratio: 5/8)" data-srcset="assets/scene/tall-tree.webp">
+          <img data-src="assets/scene/wide-tree.webp" alt="" width="2400" height="1000" decoding="async">
+        </picture>
         <svg class="swing" viewBox="0 0 100 100" preserveAspectRatio="none">
           <g class="swing__g">
             <line x1="0" y1="0" x2="0" y2="97" /><line x1="100" y1="0" x2="100" y2="97" />
-            <rect x="-14" y="95" width="128" height="5" rx="1.5" fill="#cdb084" />
+            <rect x="-16" y="94" width="132" height="6" rx="1.5" fill="#b89668" />
           </g>
         </svg>
       </div>
-      <canvas class="layer layer--front"></canvas>
+      <picture class="layer layer--front">
+        <source media="(max-aspect-ratio: 5/8)" data-srcset="assets/scene/tall-front.webp">
+        <img data-src="assets/scene/wide-front.webp" alt="" width="2400" height="1000" decoding="async">
+      </picture>
+      <div class="fireflies"></div>
     </div>
   </div>
+
+  <!-- Petite étoile qui « descend » avec vous -->
+  <div class="altitude" aria-hidden="true"><span></span></div>
 
   <!-- ============ EN-TÊTE ============ -->
   <header class="header">
     <a href="#top" class="logo" aria-label="Astelsia, retour en haut">
       <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 1.5l2.6 7.9 7.9 2.6-7.9 2.6L12 22.5l-2.6-7.9L1.5 12l7.9-2.6z" fill="currentColor"/></svg>
-      Astelsia
+      <span translate="no">Astelsia</span>
     </a>
     <nav class="nav" aria-label="Navigation principale">
       <a href="#formules">Formules</a>
-      <a href="#methode">Méthode</a>
+      <a href="#abonnement">Abonnement</a>
+      <a href="#contact">Contact</a>
     </nav>
     <a href="#contact" class="btn btn--small">Parler de mon projet</a>
   </header>
@@ -64,140 +97,142 @@
 
     <!-- ============ ACCUEIL ============ -->
     <section class="hero">
-      <p class="eyebrow hero__in">Studio web · Morbihan (56)</p>
       <h1 class="hero__title" data-hero-title>Votre commerce mérite un site <em>dont on se souvient.</em></h1>
-      <p class="hero__sub hero__in">Astelsia — Sites web pour les commerces du Morbihan.<br>Restaurants, coiffeurs, artisans, boutiques.</p>
+      <p class="hero__sub hero__in">Astelsia — Sites web pour les commerces de proximité.<br>Restaurants, coiffeurs, artisans, boutiques.</p>
       <div class="hero__cta hero__in">
-        <a href="#formules" class="btn">Découvrir les formules</a>
-        <a href="#contact" class="btn btn--ghost">Me contacter</a>
+        <a href="#formules" class="btn btn--magnet">Voir les formules</a>
+        <a href="#contact" class="btn btn--ghost btn--magnet">Me contacter</a>
       </div>
-      <div class="scroll-hint hero__in" aria-hidden="true"><span></span>Descendez</div>
+      <div class="scroll-hint hero__in" aria-hidden="true"><span></span>Descendez doucement</div>
     </section>
 
     <!-- ============ BANDEAU ============ -->
     <div class="marquee" aria-hidden="true">
       <div class="marquee__track">
-        <span>Restaurants ✦ Coiffeurs ✦ Artisans ✦ Boutiques ✦ Crêperies ✦ Fleuristes ✦ Boulangeries ✦ Instituts ✦&nbsp;</span>
-        <span>Restaurants ✦ Coiffeurs ✦ Artisans ✦ Boutiques ✦ Crêperies ✦ Fleuristes ✦ Boulangeries ✦ Instituts ✦&nbsp;</span>
+        <span>Restaurants ✦ Coiffeurs ✦ Artisans ✦ Boutiques ✦ Crêperies ✦ Fleuristes ✦ Boulangeries ✦ Instituts ✦ Garages ✦&nbsp;</span>
+        <span>Restaurants ✦ Coiffeurs ✦ Artisans ✦ Boutiques ✦ Crêperies ✦ Fleuristes ✦ Boulangeries ✦ Instituts ✦ Garages ✦&nbsp;</span>
       </div>
     </div>
-
 
     <!-- ============ BANDE-ANNONCE ============ -->
     <section class="trailer" aria-label="Pourquoi un site">
       <div class="trailer__stage">
-        <p class="tl-line">Il y a des commerces <em>qu'on remarque.</em></p>
-        <p class="tl-line">Et ceux <em>qu'on oublie.</em></p>
-        <p class="tl-line">La différence&nbsp;?</p>
-        <p class="tl-line tl-line--big">Souvent, <em>leur site.</em></p>
+        <p class="tl-line">Vous avez mis des années à construire <em>votre commerce.</em></p>
+        <p class="tl-line">Avant de pousser votre porte,</p>
+        <p class="tl-line">vos clients vous cherchent <em>en ligne.</em></p>
+        <p class="tl-line tl-line--big">Faites-leur <em>bonne impression.</em></p>
       </div>
     </section>
 
-    <!-- ============ TEXTE QUI S'ALLUME ============ -->
-    <section class="section">
-      <p class="hl" data-hl>Vos clients vous cherchent sur leur téléphone. Avant même de pousser votre porte, ils ont déjà décidé. Astelsia crée le site qui leur donne envie de venir&nbsp;: rapide, élégant, à votre image. Comme celui que vous êtes en train de parcourir.</p>
-    </section>
-
-    <!-- ============ ZOOM ============ -->
+    <!-- ============ ZOOM : on passe à travers le nom ============ -->
     <section class="zoom" aria-hidden="true">
-      <div class="zoom__stage"><p class="zoom__word">Astelsia</p></div>
+      <div class="zoom__stage"><p class="zoom__word" translate="no">Astelsia</p></div>
     </section>
 
     <!-- ============ FORMULES ============ -->
-    <section class="section" id="formules">
+    <section class="formules" id="formules">
       <div class="plans__stage">
-      <h2 class="title plans__title" data-split>Trois formules. <em>Quelle image voulez-vous donner&nbsp;?</em></h2>
-
-      <div class="plans"><div class="plans__deck">
-        <!-- Signature en premier : effet d'ancrage -->
-        <article class="plan">
-          <p class="plan__kicker">Pour marquer les esprits</p>
-          <h3 class="plan__name">Signature</h3>
-          <p class="plan__tag">Un site unique, à votre image. Celui dont on se souvient.</p>
-          <p class="plan__price"><span data-count="1200">1 200</span> – <span data-count="1500">1 500</span> €</p>
-          <ul>
-            <li>Tout ce qu'inclut Business</li>
-            <li>Scroll fluide et animations poussées</li>
-            <li>Réservation ou prise de rendez-vous en ligne</li>
-            <li>Un design entièrement sur mesure</li>
-          </ul>
-          <a href="#contact" class="btn btn--ghost" data-plan="Signature">Choisir Signature</a>
-        </article>
-
-        <article class="plan">
-          <p class="plan__kicker">Pour être trouvé</p>
-          <h3 class="plan__name">Solo</h3>
-          <p class="plan__tag">L'essentiel pour être trouvé en ligne.</p>
-          <p class="plan__price"><s>290 €</s> <span data-count="249">249</span> €</p>
-          <p class="plan__offer">Offre de lancement : 3 premiers clients</p>
-          <ul>
-            <li>Une page vitrine</li>
-            <li>Présentation et horaires</li>
-            <li>Carte Google Maps</li>
-            <li>Contact en un geste</li>
-          </ul>
-          <a href="#contact" class="btn btn--ghost" data-plan="Solo">Choisir Solo</a>
-        </article>
-        <article class="plan plan--featured">
-          <span class="badge">Recommandé</span>
-          <p class="plan__kicker">Pour attirer</p>
-          <h3 class="plan__name">Business</h3>
-          <p class="plan__tag">Le site qui fait venir les clients.</p>
-          <p class="plan__price"><span data-count="590">590</span> – <span data-count="790">790</span> €</p>
-          <ul>
-            <li>4 à 5 pages</li>
-            <li>Menu ou catalogue</li>
-            <li>Galerie photo</li>
-            <li>Animations élégantes</li>
-          </ul>
-          <a href="#contact" class="btn" data-plan="Business">Choisir Business</a>
-        </article>
-
-      </div></div>
-      </div>
-
-      <div class="option" data-reveal>
-        <div>
-          <h3>Option Sérénité</h3>
-          <p>Hébergement, petites modifications, mises à jour. Vous ne vous occupez de rien.</p>
+        <div class="plans__head">
+          <h2 class="title plans__title" data-split>Trois formules. <em>Zéro surprise.</em></h2>
         </div>
-        <p class="option__price">20 – 40 €<small>/mois</small></p>
+
+        <!-- Ordre de lecture : Signature (ancrage) → Solo → Business (la recommandée arrive en dernier et reste au-dessus).
+             Sur ordinateur, Business est placée au centre. -->
+        <div class="plans">
+          <article class="plan plan--signature">
+            <p class="plan__kicker">Pour marquer les esprits</p>
+            <h3 class="plan__name">Signature</h3>
+            <p class="plan__tag">Un site unique, à votre image. Celui dont on se souvient.</p>
+            <p class="plan__price">1&nbsp;349,90&nbsp;€</p>
+            <p class="plan__perk">✦ 6 mois d'abonnement offerts</p>
+            <ul>
+              <li>Tout ce qu'inclut Business</li>
+              <li>Réservation ou prise de rendez-vous en ligne</li>
+              <li>Design 100&nbsp;% sur mesure</li>
+              <li>Scroll fluide et animations, comme ce site</li>
+            </ul>
+            <a href="#contact" class="btn btn--ghost" data-plan="Signature">Choisir Signature</a>
+          </article>
+
+          <article class="plan plan--solo">
+            <p class="plan__kicker">Pour être trouvé</p>
+            <h3 class="plan__name">Solo</h3>
+            <p class="plan__tag">L'essentiel pour être trouvé en ligne. Idéal pour un coiffeur ou un artisan.</p>
+            <p class="plan__price"><s>349,90&nbsp;€</s> 249,90&nbsp;€</p>
+            <p class="plan__offer">Offre de lancement pour les 3 premiers clients</p>
+            <ul>
+              <li>Une page vitrine soignée</li>
+              <li>Présentation, horaires et adresse</li>
+              <li>Carte Google Maps</li>
+              <li>Boutons «&nbsp;Appeler&nbsp;» et «&nbsp;Itinéraire&nbsp;»</li>
+            </ul>
+            <a href="#contact" class="btn btn--ghost" data-plan="Solo">Choisir Solo</a>
+          </article>
+
+          <article class="plan plan--featured">
+            <span class="badge">Recommandé</span>
+            <p class="plan__kicker">Pour attirer</p>
+            <h3 class="plan__name">Business</h3>
+            <p class="plan__tag">Le site qui fait venir les clients. Idéal pour un restaurant ou une boutique.</p>
+            <p class="plan__price">649,90&nbsp;€</p>
+            <p class="plan__perk">✦ 1 mois d'abonnement offert</p>
+            <ul>
+              <li>Jusqu'à 5 pages</li>
+              <li>Menu ou catalogue</li>
+              <li>Galerie photo</li>
+              <li>Animations élégantes</li>
+            </ul>
+            <a href="#contact" class="btn" data-plan="Business">Choisir Business</a>
+          </article>
+        </div>
       </div>
+      <p class="plans__note" data-reveal>Paiement unique pour la création du site.<br>✦ Le ciel qui change, les textes qui apparaissent&nbsp;: <strong>c'est la formule Signature.</strong></p>
+      <!-- Si vous êtes en micro-entreprise sans TVA, ajoutez ici : « TVA non applicable, art. 293 B du CGI » -->
     </section>
 
-    <!-- ============ MÉTHODE ============ -->
-    <section class="section" id="methode">
-      <h2 class="title" data-split>Simple, <em>du premier café à la mise en ligne.</em></h2>
-      <ol class="steps">
-        <li class="steps__line" aria-hidden="true"><span></span></li>
-        <li data-reveal><strong>On se rencontre</strong><p>Dans votre commerce, sans engagement. Vous me parlez de vos clients et de votre métier.</p></li>
-        <li data-reveal><strong>Vous validez la maquette</strong><p>Vous voyez votre site avant qu'il soit construit.</p></li>
-        <li data-reveal><strong>Je crée votre site</strong><p>Rapide, beau sur téléphone, pensé pour faire venir vos clients.</p></li>
-        <li data-reveal><strong>Mise en ligne</strong><p>Votre site est en ligne, et je reste disponible pour la suite.</p></li>
-      </ol>
+    <!-- ============ ABONNEMENT ============ -->
+    <section class="section abo" id="abonnement">
+      <h2 class="title" data-split>Sérénité. <em>Vous ne vous occupez de rien.</em></h2>
+      <div class="abo__card" data-reveal>
+        <div class="abo__top">
+          <p class="abo__price">29,70&nbsp;€<small>/mois</small></p>
+          <p class="abo__free">Sans engagement</p>
+        </div>
+        <ul class="abo__list">
+          <li><strong>Hébergement</strong> de votre site</li>
+          <li><strong>Nom de domaine</strong> compris (votre-commerce.fr)</li>
+          <li><strong>Jusqu'à 3 modifications par mois</strong>&nbsp;: horaires, menu, photos, prix</li>
+          <li><strong>Mises à jour</strong> et sécurité</li>
+        </ul>
+        <div class="abo__gift">
+          <p><span>Solo</span><span>—</span></p>
+          <p><span>Business</span><span>1 mois offert</span></p>
+          <p class="is-best"><span>Signature</span><span>6 mois offerts <small>soit 178,20&nbsp;€</small></span></p>
+        </div>
+      </div>
     </section>
 
     <!-- ============ CONTACT (arrivée dans le paysage) ============ -->
     <section class="section contact" id="contact">
-      <h2 class="title title--big" data-split>On en parle&nbsp;? <em>Comme vous préférez.</em></h2>
-      <!-- CONTACT : remplacez les valeurs dans assets/js/config.js -->
+      <h2 class="title title--big" data-split>Parlons de <em>votre commerce.</em></h2>
+      <p class="contact__lead" data-reveal>Un appel ou un mail, comme vous préférez.<br>Je vous réponds personnellement.</p>
+      <!-- CONTACT : les valeurs se changent dans assets/js/config.js -->
       <div class="ways">
-        <a class="way" data-reveal data-contact="cafe" href="#contact">
-          <span class="way__ico">☕</span><strong>Autour d'un café</strong><span>Je passe dans votre commerce.</span>
-        </a>
-        <a class="way" data-reveal data-contact="email" href="mailto:contact@exemple.fr">
-          <span class="way__ico">✉</span><strong>Par mail</strong><span data-contact-text>contact@exemple.fr</span>
-        </a>
         <a class="way" data-reveal data-contact="phone" href="tel:+33600000000">
-          <span class="way__ico">☎</span><strong>Par téléphone</strong><span data-contact-text>06 00 00 00 00</span>
+          <svg class="way__ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>
+          <strong>Par téléphone</strong><span data-contact-text>06 00 00 00 00</span>
+        </a>
+        <a class="way" data-reveal data-contact="email" href="mailto:contact@astelsia.fr">
+          <svg class="way__ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm1 2.2V17h16V7.2l-8 5.3-8-5.3zM5.3 7 12 11.4 18.7 7H5.3z"/></svg>
+          <strong>Par mail</strong><span data-contact-text>contact@astelsia.fr</span>
         </a>
       </div>
-      <p class="contact__plan" hidden>Formule choisie : <strong></strong></p>
+      <p class="contact__plan" hidden>Formule choisie&nbsp;: <strong></strong></p>
     </section>
   </main>
 
   <footer class="footer">
-    <p>© <span data-year>2026</span> Astelsia · Morbihan</p>
+    <p>© <span data-year>2026</span> <span translate="no">Astelsia</span> · <a href="mentions-legales.html">Mentions légales</a></p>
   </footer>
 
   <script src="assets/js/config.js"></script>
