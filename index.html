@@ -24,11 +24,10 @@
   <link rel="preload" href="assets/fonts/manrope.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="assets/css/style.css">
   <script>
-    // Les éléments animés ne sont masqués que si JS tourne et que les animations sont autorisées.
-    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      document.documentElement.classList.add('anim');
-      setTimeout(function () { if (!window.__astelsiaReady) document.documentElement.classList.remove('anim'); }, 3000);
-    }
+        // Les animations restent actives partout. Si l'appareil demande à réduire les animations,
+    // le site passe en « mode doux » : fondus uniquement, aucun mouvement brusque.
+    document.documentElement.classList.add('anim');
+    setTimeout(function () { if (!window.__astelsiaReady) document.documentElement.classList.remove('anim'); }, 3000);
   </script>
 </head>
 <body>
@@ -107,6 +106,7 @@
         <div class="device__frame">
           <div class="device__notch"></div>
           <div class="mini" data-view="business" data-style="elegant">
+            <div class="mini__sky mini__sig"></div>
             <div class="mini__scroll">
               <div class="mini__nav"><b data-b="name" data-edit="name">Votre commerce</b><span data-b="nav">Accueil · Contact</span></div>
               <div class="mini__hero">
@@ -114,6 +114,12 @@
                 <strong data-b="name" data-edit="name">Votre commerce</strong>
                 <span data-b="tagline" data-edit="tagline">Bienvenue, entrez donc.</span>
                 <i data-b="cta" data-edit="cta">Nous trouver</i>
+              </div>
+              <p class="mini__open mini__solo"><span></span>Ouvert aujourd'hui · 9h – 19h</p>
+              <div class="mini__resa mini__sig">
+                <h5>Réserver en ligne</h5>
+                <div class="mini__days"><span>Lun<b>16</b></span><span class="on">Mar<b>17</b></span><span>Mer<b>18</b></span><span>Jeu<b>19</b></span></div>
+                <div class="mini__slots"><span>12:00</span><span class="on">12:30</span><span>19:30</span><span>20:00</span></div>
               </div>
               <div class="mini__sec mini__multi">
                 <h5 data-b="section" data-edit="section">Nos horaires</h5>
@@ -163,7 +169,7 @@
             <button type="button" class="style-btn" data-style="moderne" aria-pressed="false"><span class="s-moderne">Aa</span>Moderne</button>
             <button type="button" class="style-btn" data-style="chaleureux" aria-pressed="false"><span class="s-chaleureux">Aa</span>Chaleureux</button>
           </div>
-          <p class="builder__hint">✎ Touchez un texte dans l'iPhone pour le modifier.</p>
+          <p class="builder__hint">✎ Touchez un texte dans l'aperçu pour le modifier.</p>
           <div class="editor" hidden>
             <label class="builder__label" for="b-edit" data-edit-label>Le slogan</label>
             <div class="editor__row"><input class="builder__input" id="b-edit" type="text" maxlength="60" autocomplete="off" enterkeyhint="done"><button type="button" class="editor__ok">OK</button></div>
@@ -226,6 +232,7 @@
             <div class="device__frame">
               <div class="device__notch"></div>
               <div class="mini" data-view="business" data-style="elegant">
+            <div class="mini__sky mini__sig"></div>
             <div class="mini__scroll">
               <div class="mini__nav"><b data-b="name" data-edit="name">Votre commerce</b><span data-b="nav">Accueil · Contact</span></div>
               <div class="mini__hero">
@@ -233,6 +240,12 @@
                 <strong data-b="name" data-edit="name">Votre commerce</strong>
                 <span data-b="tagline" data-edit="tagline">Bienvenue, entrez donc.</span>
                 <i data-b="cta" data-edit="cta">Nous trouver</i>
+              </div>
+              <p class="mini__open mini__solo"><span></span>Ouvert aujourd'hui · 9h – 19h</p>
+              <div class="mini__resa mini__sig">
+                <h5>Réserver en ligne</h5>
+                <div class="mini__days"><span>Lun<b>16</b></span><span class="on">Mar<b>17</b></span><span>Mer<b>18</b></span><span>Jeu<b>19</b></span></div>
+                <div class="mini__slots"><span>12:00</span><span class="on">12:30</span><span>19:30</span><span>20:00</span></div>
               </div>
               <div class="mini__sec mini__multi">
                 <h5 data-b="section" data-edit="section">Nos horaires</h5>

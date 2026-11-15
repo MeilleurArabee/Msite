@@ -118,10 +118,13 @@
   mm.add({ mobile: '(max-width: 899px)', desktop: '(min-width: 900px)', reduce: '(prefers-reduced-motion: reduce)' }, function (ctx) {
     var c = ctx.conditions;
 
-    if (!c.reduce) {
+    var g = c.reduce; // mode doux : fondus uniquement, aucun déplacement
+    {
       /* 1. Bande-annonce : 3 phrases, une par « cran » */
       var lines = gsap.utils.toArray('.tl-line');
-      gsap.fromTo(lines[0], { opacity: 0, scale: 0.9, yPercent: -36 }, {
+      var IN = g ? { opacity: 0, scale: 1, yPercent: -50 } : { opacity: 0, scale: 0.9, yPercent: -36 };
+      var OUT = g ? { opacity: 0, scale: 1, yPercent: -50 } : { opacity: 0, scale: 1.08, yPercent: -64 };
+      gsap.fromTo(lines[0], IN, {
         opacity: 1, scale: 1, yPercent: -50, ease: 'power2.out',
         scrollTrigger: { trigger: '.trailer', start: 'top 80%', end: 'top top', scrub: true }
       });
@@ -134,19 +137,19 @@
       tr.addLabel('l0').to({}, { duration: 0.15 });
       lines.forEach(function (l, i) {
         if (i === 0) return;
-        tr.fromTo(lines[i - 1], { opacity: 1, scale: 1, yPercent: -50 }, { opacity: 0, scale: 1.08, yPercent: -64, duration: 0.5, ease: 'power2.in', immediateRender: false })
-          .fromTo(l, { opacity: 0, scale: 0.9, yPercent: -36 }, { opacity: 1, scale: 1, yPercent: -50, duration: 0.6, ease: 'power2.out', immediateRender: false }, '-=0.15')
+        tr.fromTo(lines[i - 1], { opacity: 1, scale: 1, yPercent: -50 }, Object.assign({ duration: 0.5, ease: 'power2.in', immediateRender: false }, OUT))
+          .fromTo(l, IN, { opacity: 1, scale: 1, yPercent: -50, duration: 0.6, ease: 'power2.out', immediateRender: false }, '-=0.15')
           .addLabel('l' + i);
       });
       tr.to({}, { duration: 0.25 });
 
       /* 2. Le nom : la phrase apparaît, puis on traverse le mot */
       // le mot arrive pendant qu'on approche : jamais d'écran vide
-      gsap.fromTo('.zoom__word', { scale: 0.7, opacity: 0 }, {
+      gsap.fromTo('.zoom__word', { scale: g ? 1 : 0.7, opacity: 0 }, {
         scale: 1, opacity: 1, ease: 'power2.out',
         scrollTrigger: { trigger: '.zoom', start: 'top 85%', end: 'top 15%', scrub: true }
       });
-      gsap.fromTo('.zoom__line', { opacity: 0, y: 24 }, {
+      gsap.fromTo('.zoom__line', { opacity: 0, y: g ? 0 : 24 }, {
         opacity: 1, y: 0, ease: 'power2.out',
         scrollTrigger: { trigger: '.zoom', start: 'top 45%', end: 'top top', scrub: true }
       });
@@ -157,13 +160,13 @@
         }
       })
         .to({}, { duration: 0.2 })
-        .fromTo('.zoom__line', { opacity: 1, y: 0 }, { opacity: 0, y: -20, duration: 0.2, immediateRender: false })
-        .fromTo('.zoom__word', { scale: 1, opacity: 1 }, { scale: 12, opacity: 0, duration: 0.6, ease: 'power2.in', immediateRender: false }, '<');
+        .fromTo('.zoom__line', { opacity: 1, y: 0 }, { opacity: 0, y: g ? 0 : -20, duration: 0.2, immediateRender: false })
+        .fromTo('.zoom__word', { scale: 1, opacity: 1 }, { scale: g ? 1 : 12, opacity: 0, duration: 0.6, ease: 'power2.in', immediateRender: false }, '<');
 
       /* 3. Formules (ordinateur) : les 3 cartes se lèvent une fois */
       if (c.desktop) {
         gsap.from(['.plan-preview', '.plan[data-plan="solo"]', '.plan[data-plan="business"]', '.plan[data-plan="signature"]'], {
-          y: 80, opacity: 0, duration: 1, stagger: 0.12, ease: 'power3.out', clearProps: 'transform,opacity',
+          y: g ? 0 : 80, opacity: 0, duration: 1, stagger: 0.12, ease: 'power3.out', clearProps: 'transform,opacity',
           scrollTrigger: { trigger: '.plans', start: 'top 85%', once: true }
         });
       }
@@ -209,17 +212,15 @@
     });
   }
 
-  if (reduced) { root.classList.remove('anim'); return; }
-
   /* ---------- Bandeau qui accélère avec le scroll (ScrollVelocity) ---------- */
-  var loop = gsap.to('.marquee__track', { xPercent: -50, duration: 30, ease: 'none', repeat: -1 });
+  var loop = gsap.to('.marquee__track', { xPercent: -50, duration: reduced ? 70 : 30, ease: 'none', repeat: -1 });
   loop.totalTime(loop.duration() * 100);
   var dir = 1, settle = null;
   ScrollTrigger.create({
     trigger: '.marquee', start: 'top bottom', end: 'bottom top',
     onUpdate: function (self) {
       dir = self.direction;
-      var boost = Math.min(Math.abs(self.getVelocity()) / 300, 5);
+      var boost = reduced ? 0 : Math.min(Math.abs(self.getVelocity()) / 300, 5);
       loop.timeScale(dir * (1 + boost));
       if (settle) settle.kill();
       settle = gsap.to(loop, { timeScale: dir, duration: 1, delay: 0.15 });
@@ -227,7 +228,7 @@
   });
 
   /* ---------- Apparitions au scroll ---------- */
-  gsap.set('[data-reveal]', { y: 30 });
+  gsap.set('[data-reveal]', { y: reduced ? 0 : 30 });
   ScrollTrigger.batch('[data-reveal]', {
     start: 'top 92%', once: true,
     onEnter: function (els) { gsap.to(els, { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out', stagger: 0.08 }); }
@@ -242,8 +243,8 @@
       onSplit: function (s) {
         gsap.set(hero, { visibility: 'visible' });
         var intro = gsap.timeline({ delay: 0.1 });
-        intro.from(s.words, { yPercent: 115, rotate: 4, duration: 1, ease: 'power4.out', stagger: 0.06 })
-             .fromTo('.hero__in', { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.9, stagger: 0.12, ease: 'power3.out', clearProps: 'transform' }, '-=0.6');
+        intro.from(s.words, reduced ? { opacity: 0, duration: 0.8, stagger: 0.05 } : { yPercent: 115, rotate: 4, duration: 1, ease: 'power4.out', stagger: 0.06 })
+             .fromTo('.hero__in', { opacity: 0, y: reduced ? 0 : 24 }, { opacity: 1, y: 0, duration: 0.9, stagger: 0.12, ease: 'power3.out', clearProps: 'transform' }, '-=0.6');
         return intro;
       }
     });
@@ -252,7 +253,7 @@
         type: 'lines', mask: 'lines', autoSplit: true,
         onSplit: function (s) {
           gsap.set(el, { visibility: 'visible' });
-          return gsap.from(s.lines, { yPercent: 110, duration: 1, ease: 'power4.out', stagger: 0.1, scrollTrigger: { trigger: el, start: 'top 90%', once: true } });
+          return gsap.from(s.lines, { yPercent: reduced ? 0 : 110, opacity: reduced ? 0 : 1, duration: 1, ease: 'power4.out', stagger: 0.1, scrollTrigger: { trigger: el, start: 'top 90%', once: true } });
         }
       });
     });

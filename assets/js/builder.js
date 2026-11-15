@@ -125,9 +125,9 @@
   var PLANS = { solo: 'Solo', business: 'Business', signature: 'Signature' };
   var ORDER = ['solo', 'business', 'signature'];
   var CAPS = {
-    solo: 'Avec <strong>Solo</strong> : une seule page claire, avec vos horaires, votre adresse et un bouton pour vous appeler.',
-    business: 'Avec <strong>Business</strong> : plusieurs pages, votre carte ou vos produits, et une galerie de photos.',
-    signature: 'Avec <strong>Signature</strong> : tout Business, plus la réservation en ligne et des animations sur mesure.'
+    solo: '<strong>Solo</strong> · Une page simple et claire&nbsp;: vos horaires, votre adresse, un bouton pour vous appeler. L\'essentiel pour être trouvé.',
+    business: '<strong>Business</strong> · Un vrai site de plusieurs pages&nbsp;: grande photo d\'accueil, votre carte ou vos produits, une galerie, un menu de navigation.',
+    signature: '<strong>Signature</strong> · L\'expérience complète, comme ce site&nbsp;: un univers sur mesure, des animations, et la réservation en ligne intégrée.'
   };
 
   function norm(s) { return String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[’'\-_.]/g, ' ').replace(/\s+/g, ' ').trim(); }
@@ -197,6 +197,8 @@
   var nameInput = document.getElementById('b-name'), jobInput = document.getElementById('b-job');
   var hueInput = document.getElementById('b-hue'), editBox = root.querySelector('.editor'), editInput = document.getElementById('b-edit');
   var editLabel = root.querySelector('[data-edit-label]'), hint = root.querySelector('.builder__hint');
+  var mouse = matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if (hint) hint.textContent = mouse ? '✎ Cliquez sur un texte de l\'aperçu pour le modifier.' : '✎ Touchez un texte dans l\'aperçu pour le modifier.';
 
   /* ---------- Couleurs : toute la palette depuis une seule teinte ---------- */
   function palette(h) {
@@ -206,7 +208,8 @@
       '--g3': 'linear-gradient(140deg, hsl(' + ((h + 24) % 360) + ' 45% 66%), hsl(' + h + ' 45% 32%))',
       '--bg': 'hsl(' + h + ' 38% 97%)',
       '--ink': 'hsl(' + h + ' 38% 14%)',
-      '--accent': 'hsl(' + h + ' 55% 42%)'
+      '--accent': 'hsl(' + h + ' 55% 42%)',
+      '--h': String(h)
     };
   }
 
