@@ -87,7 +87,7 @@
     </a>
     <nav class="nav" aria-label="Navigation principale">
       <a href="#formules">Formules</a>
-      <a href="#abonnement">Abonnement</a>
+      <a href="#serenite">Offre Sérénité</a>
       <a href="#contact">Contact</a>
     </nav>
     <a href="#contact" class="btn btn--small">Parler de mon projet</a>
@@ -95,15 +95,90 @@
 
   <main id="top">
 
-    <!-- ============ ACCUEIL ============ -->
-    <section class="hero">
-      <h1 class="hero__title" data-hero-title>Votre commerce mérite un site <em>dont on se souvient.</em></h1>
-      <p class="hero__sub hero__in">Astelsia — Sites web pour les commerces de proximité.<br>Restaurants, coiffeurs, artisans, boutiques.</p>
-      <div class="hero__cta hero__in">
-        <a href="#formules" class="btn btn--magnet">Voir les formules</a>
-        <a href="#contact" class="btn btn--ghost btn--magnet">Me contacter</a>
+    <!-- ============ ACCUEIL : créez votre site en direct ============ -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero__text">
+        <h1 class="hero__title" id="hero-title" data-hero-title>Créez votre site. <em>Là, maintenant.</em></h1>
+        <p class="hero__sub hero__in">Astelsia — Sites web pour les commerces de proximité.</p>
       </div>
-      <div class="scroll-hint hero__in" aria-hidden="true"><span></span>Descendez doucement</div>
+
+      <!-- L'iPhone : le site se construit en direct -->
+      <div class="device hero__in" aria-label="Aperçu de votre site">
+        <div class="device__frame">
+          <div class="device__notch"></div>
+          <div class="mini" data-amb="nuit">
+            <div class="mini__scroll">
+              <div class="mini__nav"><b data-b="name">Votre commerce</b><span data-b="nav">Accueil · Contact</span></div>
+              <div class="mini__hero">
+                <small data-b="label">Votre activité</small>
+                <strong data-b="name">Votre commerce</strong>
+                <span data-b="tagline">Bienvenue, entrez donc.</span>
+                <i data-b="cta">Nous trouver</i>
+              </div>
+              <div class="mini__sec">
+                <h5 data-b="section">Nos horaires</h5>
+                <div data-b="items"><p><span>Mardi – Samedi</span><span>9h – 19h</span></p><p><span>Dimanche</span><span>Fermé</span></p></div>
+              </div>
+              <div class="mini__gal"><span></span><span></span><span></span></div>
+              <div class="mini__sec">
+                <h5>Nous trouver</h5>
+                <div class="mini__map"><span></span></div>
+              </div>
+              <div class="mini__foot">© <span data-b="name">Votre commerce</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="device__glow" aria-hidden="true"></div>
+      </div>
+
+      <!-- Le panneau de création, en 3 étapes -->
+      <div class="builder hero__in" data-step="1">
+        <form class="builder__step" data-s="1" novalidate>
+          <p class="builder__count">Étape 1 sur 3</p>
+          <label class="builder__q" for="b-name">Comment s'appelle votre commerce&nbsp;?</label>
+          <input class="builder__input" id="b-name" name="nom" type="text" maxlength="32" autocomplete="organization" placeholder="Ex. : Le Fournil…" enterkeyhint="next">
+          <button class="btn builder__next" type="submit">Suivant</button>
+        </form>
+
+        <div class="builder__step" data-s="2" hidden>
+          <p class="builder__count">Étape 2 sur 3</p>
+          <p class="builder__q" id="q-type">Votre activité</p>
+          <div class="chips" role="radiogroup" aria-labelledby="q-type">
+            <button type="button" class="chip" role="radio" aria-checked="false" data-type="restaurant">Restaurant</button>
+            <button type="button" class="chip" role="radio" aria-checked="false" data-type="coiffeur">Coiffeur</button>
+            <button type="button" class="chip" role="radio" aria-checked="false" data-type="boulangerie">Boulangerie</button>
+            <button type="button" class="chip" role="radio" aria-checked="false" data-type="boutique">Boutique</button>
+            <button type="button" class="chip" role="radio" aria-checked="false" data-type="artisan">Artisan</button>
+            <button type="button" class="chip" role="radio" aria-checked="false" data-type="garage">Garage</button>
+          </div>
+          <div class="builder__amb">
+          <p class="builder__q builder__q--small" id="q-amb">Votre ambiance</p>
+          <div class="swatches" role="radiogroup" aria-labelledby="q-amb">
+            <button type="button" class="swatch" role="radio" aria-checked="false" data-amb="dore" aria-label="Doré"></button>
+            <button type="button" class="swatch" role="radio" aria-checked="false" data-amb="rose" aria-label="Rosé"></button>
+            <button type="button" class="swatch" role="radio" aria-checked="false" data-amb="sauge" aria-label="Sauge"></button>
+            <button type="button" class="swatch" role="radio" aria-checked="true" data-amb="nuit" aria-label="Nuit"></button>
+          </div>
+          </div>
+          <div class="builder__row">
+            <button type="button" class="builder__back" data-go="1">Retour</button>
+            <button type="button" class="btn builder__next" data-go="3">Voir mon site</button>
+          </div>
+        </div>
+
+        <div class="builder__step builder__done" data-s="3" hidden>
+          <p class="builder__q builder__q--done">Le site de <em data-b="name">votre commerce</em> est prêt.</p>
+          <p class="builder__from">À partir de 249,90&nbsp;€. Choisissez votre formule&nbsp;:</p>
+          <div class="tabs tabs--mini" role="group" aria-label="Formule">
+            <button type="button" class="tab" data-plan-pick="solo">Solo</button>
+            <button type="button" class="tab is-on" data-plan-pick="business">Business</button>
+            <button type="button" class="tab" data-plan-pick="signature">Signature</button>
+          </div>
+          <a href="#formules" class="btn builder__next">Voir les formules</a>
+          <button type="button" class="builder__back builder__restart" data-go="1">Modifier mon site</button>
+        </div>
+        <a href="#film" class="builder__skip">Ou découvrez simplement Astelsia</a>
+      </div>
     </section>
 
     <!-- ============ BANDEAU ============ -->
@@ -115,96 +190,103 @@
     </div>
 
     <!-- ============ BANDE-ANNONCE ============ -->
-    <section class="trailer" aria-label="Pourquoi un site">
+    <section class="trailer" id="film" aria-label="Pourquoi un site">
       <div class="trailer__stage">
         <p class="tl-line">Vous avez mis des années à construire <em>votre commerce.</em></p>
-        <p class="tl-line">Avant de pousser votre porte,</p>
-        <p class="tl-line">vos clients vous cherchent <em>en ligne.</em></p>
+        <p class="tl-line">Avant de pousser votre porte, vos clients vous cherchent <em>en ligne.</em></p>
         <p class="tl-line tl-line--big">Faites-leur <em>bonne impression.</em></p>
       </div>
     </section>
 
-    <!-- ============ ZOOM : on passe à travers le nom ============ -->
-    <section class="zoom" aria-hidden="true">
-      <div class="zoom__stage"><p class="zoom__word" translate="no">Astelsia</p></div>
+    <!-- ============ LE NOM ============ -->
+    <section class="zoom" aria-label="Le nom Astelsia">
+      <div class="zoom__stage">
+        <p class="zoom__word" translate="no">Astelsia</p>
+        <p class="zoom__line">vient des étoiles. Notre métier&nbsp;: faire briller votre commerce, <em>jusqu'à votre porte.</em></p>
+      </div>
     </section>
 
     <!-- ============ FORMULES ============ -->
     <section class="formules" id="formules">
-      <div class="plans__stage">
-        <div class="plans__head">
-          <h2 class="title plans__title" data-split>Trois formules. <em>Zéro surprise.</em></h2>
-        </div>
+      <h2 class="title plans__title" data-reveal><span data-b="plans-title">Trois formules.</span> <em>Zéro surprise.</em></h2>
 
-        <!-- Ordre de lecture : Signature (ancrage) → Solo → Business (la recommandée arrive en dernier et reste au-dessus).
-             Sur ordinateur, Business est placée au centre. -->
-        <div class="plans">
-          <article class="plan plan--signature">
-            <p class="plan__kicker">Pour marquer les esprits</p>
-            <h3 class="plan__name">Signature</h3>
-            <p class="plan__tag">Un site unique, à votre image. Celui dont on se souvient.</p>
-            <p class="plan__price">1&nbsp;349,90&nbsp;€</p>
-            <p class="plan__perk">✦ 6 mois d'abonnement offerts</p>
-            <ul>
-              <li>Tout ce qu'inclut Business</li>
-              <li>Réservation ou prise de rendez-vous en ligne</li>
-              <li>Design 100&nbsp;% sur mesure</li>
-              <li>Scroll fluide et animations, comme ce site</li>
-            </ul>
-            <a href="#contact" class="btn btn--ghost" data-plan="Signature">Choisir Signature</a>
-          </article>
-
-          <article class="plan plan--solo">
-            <p class="plan__kicker">Pour être trouvé</p>
-            <h3 class="plan__name">Solo</h3>
-            <p class="plan__tag">L'essentiel pour être trouvé en ligne. Idéal pour un coiffeur ou un artisan.</p>
-            <p class="plan__price"><s>349,90&nbsp;€</s> 249,90&nbsp;€</p>
-            <p class="plan__offer">Offre de lancement pour les 3 premiers clients</p>
-            <ul>
-              <li>Une page vitrine soignée</li>
-              <li>Présentation, horaires et adresse</li>
-              <li>Carte Google Maps</li>
-              <li>Boutons «&nbsp;Appeler&nbsp;» et «&nbsp;Itinéraire&nbsp;»</li>
-            </ul>
-            <a href="#contact" class="btn btn--ghost" data-plan="Solo">Choisir Solo</a>
-          </article>
-
-          <article class="plan plan--featured">
-            <span class="badge">Recommandé</span>
-            <p class="plan__kicker">Pour attirer</p>
-            <h3 class="plan__name">Business</h3>
-            <p class="plan__tag">Le site qui fait venir les clients. Idéal pour un restaurant ou une boutique.</p>
-            <p class="plan__price">649,90&nbsp;€</p>
-            <p class="plan__perk">✦ 1 mois d'abonnement offert</p>
-            <ul>
-              <li>Jusqu'à 5 pages</li>
-              <li>Menu ou catalogue</li>
-              <li>Galerie photo</li>
-              <li>Animations élégantes</li>
-            </ul>
-            <a href="#contact" class="btn" data-plan="Business">Choisir Business</a>
-          </article>
-        </div>
+      <div class="tabs" role="tablist" aria-label="Formules">
+        <button type="button" class="tab" role="tab" id="t-solo" aria-controls="p-solo" aria-selected="false" data-plan-tab="solo">Solo</button>
+        <button type="button" class="tab is-on" role="tab" id="t-business" aria-controls="p-business" aria-selected="true" data-plan-tab="business">Business</button>
+        <button type="button" class="tab" role="tab" id="t-signature" aria-controls="p-signature" aria-selected="false" data-plan-tab="signature">Signature</button>
       </div>
+
+      <div class="plans">
+        <article class="plan plan--solo" id="p-solo" role="tabpanel" aria-labelledby="t-solo" data-plan="solo">
+          <p class="plan__kicker">Pour être trouvé</p>
+          <h3 class="plan__name">Solo</h3>
+          <p class="plan__tag">L'essentiel pour être trouvé en ligne. Idéal pour un coiffeur ou un artisan.</p>
+          <p class="plan__price"><s>349,90&nbsp;€</s> 249,90&nbsp;€</p>
+          <p class="plan__offer">Offre de lancement pour les 3 premiers clients</p>
+          <ul>
+            <li>Une page vitrine soignée</li>
+            <li>Présentation, horaires et adresse</li>
+            <li>Carte Google Maps</li>
+            <li>Boutons «&nbsp;Appeler&nbsp;» et «&nbsp;Itinéraire&nbsp;»</li>
+          </ul>
+          <a href="#contact" class="btn btn--ghost" data-choose="Solo">Choisir Solo</a>
+        </article>
+
+        <article class="plan plan--featured is-on" id="p-business" role="tabpanel" aria-labelledby="t-business" data-plan="business">
+          <span class="badge">Recommandé</span>
+          <p class="plan__kicker">Pour attirer</p>
+          <h3 class="plan__name">Business</h3>
+          <p class="plan__tag">Le site qui fait venir les clients. Idéal pour un restaurant ou une boutique.</p>
+          <p class="plan__price">649,90&nbsp;€</p>
+          <p class="plan__perk">+ 1 mois d'offre Sérénité offert</p>
+          <ul>
+            <li>Jusqu'à 5 pages</li>
+            <li>Menu ou catalogue</li>
+            <li>Galerie photo</li>
+            <li>Animations élégantes</li>
+          </ul>
+          <a href="#contact" class="btn" data-choose="Business">Choisir Business</a>
+        </article>
+
+        <article class="plan plan--signature" id="p-signature" role="tabpanel" aria-labelledby="t-signature" data-plan="signature">
+          <span class="badge badge--gold">Le plus complet</span>
+          <p class="plan__kicker">Pour marquer les esprits</p>
+          <h3 class="plan__name">Signature</h3>
+          <p class="plan__tag">Un site unique, à votre image. Celui dont on se souvient.</p>
+          <p class="plan__price">1&nbsp;349,90&nbsp;€</p>
+          <p class="plan__perk">+ 6 mois d'offre Sérénité offerts</p>
+          <ul>
+            <li>Tout ce qu'inclut Business</li>
+            <li>Réservation ou prise de rendez-vous en ligne</li>
+            <li>Design 100&nbsp;% sur mesure</li>
+            <li>Scroll fluide et animations, comme ce site</li>
+          </ul>
+          <a href="#contact" class="btn btn--ghost" data-choose="Signature">Choisir Signature</a>
+        </article>
+      </div>
+      <p class="plans__hint" aria-hidden="true">Glissez la carte pour comparer</p>
       <p class="plans__note" data-reveal>Paiement unique pour la création du site.<br>✦ Le ciel qui change, les textes qui apparaissent&nbsp;: <strong>c'est la formule Signature.</strong></p>
       <!-- Si vous êtes en micro-entreprise sans TVA, ajoutez ici : « TVA non applicable, art. 293 B du CGI » -->
     </section>
 
-    <!-- ============ ABONNEMENT ============ -->
-    <section class="section abo" id="abonnement">
-      <h2 class="title" data-split>Sérénité. <em>Vous ne vous occupez de rien.</em></h2>
-      <div class="abo__card" data-reveal>
-        <div class="abo__top">
-          <p class="abo__price">29,70&nbsp;€<small>/mois</small></p>
-          <p class="abo__free">Sans engagement</p>
+    <!-- ============ OFFRE SÉRÉNITÉ (offre à part) ============ -->
+    <section class="section sere" id="serenite">
+      <h2 class="title" data-split>L'offre <em>Sérénité.</em></h2>
+      <p class="sere__lead" data-reveal>L'abonnement mensuel, en complément de votre site.<br>Vous ne vous occupez plus de rien.</p>
+      <div class="sere__card" data-reveal>
+        <div class="sere__top">
+          <svg class="sere__moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg>
+          <p class="sere__price">29,70&nbsp;€<small>/mois</small></p>
+          <p class="sere__free">Sans engagement</p>
         </div>
-        <ul class="abo__list">
+        <ul class="sere__list">
           <li><strong>Hébergement</strong> de votre site</li>
           <li><strong>Nom de domaine</strong> compris (votre-commerce.fr)</li>
           <li><strong>Jusqu'à 3 modifications par mois</strong>&nbsp;: horaires, menu, photos, prix</li>
           <li><strong>Mises à jour</strong> et sécurité</li>
         </ul>
-        <div class="abo__gift">
+        <div class="sere__gift">
+          <p class="sere__gift-title">Offerte avec votre formule&nbsp;:</p>
           <p><span>Solo</span><span>—</span></p>
           <p><span>Business</span><span>1 mois offert</span></p>
           <p class="is-best"><span>Signature</span><span>6 mois offerts <small>soit 178,20&nbsp;€</small></span></p>
@@ -227,7 +309,7 @@
           <strong>Par mail</strong><span data-contact-text>contact@astelsia.fr</span>
         </a>
       </div>
-      <p class="contact__plan" hidden>Formule choisie&nbsp;: <strong></strong></p>
+      <p class="contact__plan" hidden></p>
     </section>
   </main>
 
@@ -240,6 +322,7 @@
   <script src="assets/vendor/ScrollTrigger.min.js" defer></script>
   <script src="assets/vendor/SplitText.min.js" defer></script>
   <script src="assets/vendor/lenis.min.js" defer></script>
+  <script src="assets/js/builder.js" defer></script>
   <script src="assets/js/scene.js" defer></script>
   <script src="assets/js/main.js" defer></script>
 </body>

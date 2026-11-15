@@ -57,7 +57,7 @@
     var dpr = Math.min(window.devicePixelRatio || 1, sw < 700 ? 1.5 : 2);
     cv.width = Math.round(sw * dpr); cv.height = Math.round(sh * dpr);
     ctx = cv.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    var r = rng(9), count = Math.min(380, Math.round(sw * sh / 2600));
+    var r = rng(9), count = Math.min(sw < 700 ? 150 : 320, Math.round(sw * sh / 3000));
     stars = [];
     for (var i = 0; i < count; i++) {
       stars.push({ x: r() * sw, y: r() * sh, s: r() < 0.08 ? 1.5 + r() : 0.4 + r() * 1.05, p: r() * 6.28, v: 0.5 + r() * 1.5, warm: r() < 0.15 });
@@ -93,9 +93,11 @@
     }
     ctx.globalAlpha = 1;
   }
+  var lastDraw = 0;
   function loop(t) {
     if (!active || document.hidden) { running = false; return; }
-    draw(t); requestAnimationFrame(loop);
+    if (t - lastDraw > 33) { draw(t); lastDraw = t; } // ~30 images/s : invisible à l'œil, deux fois moins de travail
+    requestAnimationFrame(loop);
   }
   function setStarsActive(on) {
     active = on;
