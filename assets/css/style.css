@@ -30,7 +30,7 @@ em { font-style: italic; color: var(--pink); }
 /* ================= DÉCOR ================= */
 .scene { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
 .sky { position: absolute; inset: 0; }
-.sky--night { background: radial-gradient(120% 80% at 50% 0%, #0d1440 0%, #060a22 45%, #04060f 100%); }
+.sky--night { background: radial-gradient(120% 80% at 50% 0%, #0d1440 0%, #070c2a 50%, #0a1236 100%); }
 .sky--dusk {
   background: linear-gradient(180deg,
     #0b2687 0%, #1d4ccc 28%, #3b74e4 44%, #8ea6ea 54%, #e8b9cd 62%, #f8d9ab 70%, #f8d9ab 100%);
@@ -124,7 +124,7 @@ em { font-style: italic; color: var(--pink); }
 /* ================= FORMULES ================= */
 .plans { display: grid; gap: 18px; align-items: start; }
 @media (min-width: 980px) { .plans { grid-template-columns: 1fr 1.08fr 1fr; align-items: center; } }
-.plan { position: relative; padding: 32px 26px; display: flex; flex-direction: column; overflow: hidden; }
+.plan { position: relative; padding: 32px 26px; background-color: rgba(12, 18, 52, .82); display: flex; flex-direction: column; overflow: hidden; }
 .plan::before { /* halo qui suit le doigt / la souris */
   content: ''; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .3s;
   background: radial-gradient(320px circle at var(--x, 50%) var(--y, 0%), rgba(244, 185, 214, .18), transparent 60%);
@@ -185,3 +185,50 @@ em { font-style: italic; color: var(--pink); }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+
+/* ================= CONTACT : 3 façons ================= */
+.ways { display: grid; gap: 14px; width: 100%; max-width: 900px; margin-top: 8px; }
+@media (min-width: 760px) { .ways { grid-template-columns: repeat(3, 1fr); } }
+.way {
+  display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 26px 18px; text-decoration: none;
+  background: rgba(10, 16, 46, .38); border: 1px solid rgba(255,255,255,.22); border-radius: 22px;
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); transition: transform .3s, background .3s;
+}
+.way:hover { transform: translateY(-4px); background: rgba(10, 16, 46, .55); }
+.way__ico { font-size: 26px; line-height: 1; }
+.way strong { font: 400 24px var(--serif); }
+.way span:last-child { color: rgba(255,255,255,.8); font-size: 14px; }
+
+/* ================= BANDE-ANNONCE ================= */
+.trailer__stage { padding: 12vh var(--pad); display: grid; gap: 40px; text-align: center; }
+.tl-line { margin: 0; font: 300 clamp(36px, 8vw, 96px)/1.05 var(--serif); letter-spacing: -.02em; }
+.tl-line--big { font-size: clamp(48px, 12vw, 150px); }
+.anim .trailer__stage { height: 100svh; padding: 0 var(--pad); position: relative; display: block; }
+.anim .tl-line { position: absolute; left: var(--pad); right: var(--pad); top: 50%; opacity: 0; }
+
+/* ================= TEXTE QUI S'ALLUME ================= */
+.hl { margin: 0; font: 300 clamp(28px, 5vw, 58px)/1.18 var(--serif); letter-spacing: -.01em; max-width: 24ch; }
+
+/* ================= ZOOM ================= */
+.zoom { display: none; }
+.anim .zoom { display: block; }
+.zoom__stage { height: 100svh; display: grid; place-items: center; overflow: hidden; }
+.zoom__word {
+  margin: 0; font: 400 clamp(64px, 18vw, 240px)/1 var(--serif); letter-spacing: -.03em;
+  background: linear-gradient(90deg, var(--pink), var(--gold)); -webkit-background-clip: text; background-clip: text; color: transparent;
+  will-change: transform;
+}
+
+/* ================= FORMULES EN PILE (ScrollStack) ================= */
+.plans__deck { display: contents; }
+.anim .plans { display: block; }
+.anim .plans__stage { height: 100svh; display: flex; flex-direction: column; justify-content: flex-start; padding: 78px 0 16px; }
+.anim .plans__deck { display: block; position: relative; width: min(100%, 440px); margin: 28px auto 0; height: min(540px, calc(100svh - 230px)); perspective: 1200px; }
+.anim .plans__deck .plan { position: absolute; inset: 0; transform-origin: 50% 0; justify-content: flex-start; }
+.anim .plans__deck .plan--featured { padding: 32px 26px; }
+.anim .plans__title { margin-bottom: 20px; text-align: center; margin-inline: auto; font-size: clamp(28px, 4.4vw, 48px); }
+@media (max-height: 700px) { .anim .plans__deck .plan ul { gap: 4px; margin: 14px 0 18px; } }
+.anim .plans__deck .plan--featured { background: rgba(22, 26, 74, .95); }
+.anim .plans__deck .plan:not(.plan--featured) { background: rgba(12, 18, 52, .93); }
+.plans .plan--featured { order: 1; }
+.plans__deck .plan:nth-child(2) { order: 2; }

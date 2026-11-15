@@ -9,15 +9,19 @@
 
   /* ---------- Coordonnées (assets/js/config.js) ---------- */
   var C = window.ASTELSIA_CONTACT || {};
+  function setText(a, t) { var el = a.querySelector('[data-contact-text]') || a; el.textContent = t; }
   document.querySelectorAll('[data-contact="phone"]').forEach(function (a) {
     if (!C.phone) return;
-    a.textContent = C.phone;
+    setText(a, C.phone);
     a.href = 'tel:+33' + C.phone.replace(/\D/g, '').replace(/^0/, '');
   });
   document.querySelectorAll('[data-contact="email"]').forEach(function (a) {
     if (!C.email) return;
-    a.textContent = C.email;
+    setText(a, C.email);
     a.href = 'mailto:' + C.email;
+  });
+  document.querySelectorAll('[data-contact="cafe"]').forEach(function (a) {
+    a.href = 'mailto:' + (C.cafe || C.email || '') + '?subject=' + encodeURIComponent('Un café pour parler de mon site');
   });
   document.querySelectorAll('[data-year]').forEach(function (el) { el.textContent = new Date().getFullYear(); });
 
@@ -26,8 +30,8 @@
   document.querySelectorAll('[data-plan]').forEach(function (btn) {
     btn.addEventListener('click', function () {
       var plan = btn.getAttribute('data-plan');
-      planBox.hidden = false;
-      planBox.querySelector('strong').textContent = plan;
+      if (planBox) planBox.hidden = false;
+      if (planBox) planBox.querySelector('strong').textContent = plan;
       document.querySelectorAll('[data-contact="email"]').forEach(function (a) {
         a.href = 'mailto:' + (C.email || '') + '?subject=' + encodeURIComponent('Formule ' + plan + ' — mon projet');
       });
@@ -79,6 +83,51 @@
     }
   });
 
+  /* =========================================================
+     BANDE-ANNONCE : plus on descend, plus ça s'anime
+     (créée avant la descente du ciel pour que les « pins » soient pris en compte)
+     ========================================================= */
+  if (!reduced) {
+    // 1. Les phrases de la bande-annonce, une par une
+    var lines = gsap.utils.toArray('.tl-line');
+    var tr = gsap.timeline({
+      scrollTrigger: { trigger: '.trailer', start: 'top top', end: '+=' + (lines.length * 90) + '%', pin: true, scrub: 0.8 }
+    });
+    lines.forEach(function (l, i) {
+      var last = i === lines.length - 1;
+      tr.fromTo(l, { opacity: 0, scale: 0.86, filter: 'blur(14px)', yPercent: -40 },
+                   { opacity: 1, scale: 1, filter: 'blur(0px)', yPercent: -50, duration: 1, ease: 'power2.out' });
+      if (!last) tr.to(l, { opacity: 0, scale: 1.12, filter: 'blur(10px)', yPercent: -60, duration: 0.8, ease: 'power2.in' }, '+=0.4');
+      else tr.to(l, { scale: 1.06, duration: 1 }, '+=0.2');
+    });
+
+    // 2. Le zoom : on passe à travers le mot « Astelsia »
+    gsap.timeline({
+      scrollTrigger: { trigger: '.zoom', start: 'top top', end: '+=160%', pin: true, scrub: 0.6 }
+    })
+      .fromTo('.zoom__word', { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.35, ease: 'power2.out' })
+      .to('.zoom__word', { scale: 38, duration: 1, ease: 'power3.in' })
+      .to('.zoom__word', { opacity: 0, duration: 0.2 }, '-=0.25');
+
+    // 3. Les formules en pile (ScrollStack)
+    var cards = gsap.utils.toArray('.plans__deck .plan');
+    gsap.set(cards.slice(1), { yPercent: 115, rotationX: -28, opacity: 0 });
+    var deck = gsap.timeline({
+      defaults: { ease: 'power3.out' },
+      scrollTrigger: { trigger: '.plans__stage', start: 'top top', end: '+=' + (cards.length * 100) + '%', pin: true, scrub: 0.8 }
+    });
+    deck.from(cards[0], { yPercent: 30, rotationX: -20, opacity: 0, duration: 1 });
+    cards.forEach(function (c, i) {
+      if (i === 0) return;
+      var at = i * 1.3;
+      deck.to(c, { yPercent: 0, rotationX: 0, opacity: 1, duration: 1 }, at);
+      for (var j = 0; j < i; j++) {
+        deck.to(cards[j], { scale: 1 - (i - j) * 0.06, yPercent: -(i - j) * 7, filter: 'brightness(' + (1 - (i - j) * 0.25) + ')', duration: 1 }, at);
+      }
+    });
+    deck.to({}, { duration: 0.6 });
+  }
+
   /* ---------- La descente : des étoiles au paysage ---------- */
   var scene = window.AstelsiaScene;
   var tl = gsap.timeline({
@@ -88,15 +137,15 @@
       onUpdate: function (self) { if (scene) scene.setStarsActive(self.progress < 0.75); }
     }
   });
-  tl.to('.sky--night', { opacity: 0, duration: 0.5 }, 0.2)
-    .to('.stars', reduced ? { opacity: 0, duration: 0.55 } : { opacity: 0, yPercent: -45, duration: 0.6 }, 0.1)
-    .fromTo('.moon', { opacity: 0, y: reduced ? 0 : '25vh' }, { opacity: 1, y: 0, duration: 0.35 }, 0.42)
-    .to('.glow', { opacity: 1, duration: 0.4 }, 0.6);
+  tl.to('.sky--night', { opacity: 0, duration: 0.3 }, 0.42)
+    .to('.stars', reduced ? { opacity: 0, duration: 0.55 } : { opacity: 0, yPercent: -45, duration: 0.55 }, 0.25)
+    .fromTo('.moon', { opacity: 0, y: reduced ? 0 : '25vh' }, { opacity: 1, y: 0, duration: 0.3 }, 0.55)
+    .to('.glow', { opacity: 1, duration: 0.3 }, 0.7);
   if (reduced) {
-    tl.fromTo('.land', { opacity: 0 }, { opacity: 1, duration: 0.45 }, 0.5);
+    tl.fromTo('.land', { opacity: 0 }, { opacity: 1, duration: 0.3 }, 0.7);
   } else {
-    [['.layer--far', 60], ['.layer--mid', 80], ['.layer--tree', 100], ['.layer--front', 130]].forEach(function (l, i) {
-      tl.fromTo(l[0], { yPercent: l[1] }, { yPercent: 0, duration: 0.5 - i * 0.03, ease: 'power1.out' }, 0.5);
+    [['.layer--far', 100], ['.layer--mid', 110], ['.layer--tree', 120], ['.layer--front', 140]].forEach(function (l, i) {
+      tl.fromTo(l[0], { yPercent: l[1] }, { yPercent: 0, duration: 0.3 - i * 0.02, ease: 'power1.out' }, 0.7);
     });
   }
   tl.to({}, { duration: 0.01 }, 0.99); // timeline = 1 exactement
@@ -154,6 +203,13 @@
         return intro;
       }
     });
+    document.querySelectorAll('[data-hl]').forEach(function (el) {
+      var sp = SplitText.create(el, { type: 'words' });
+      gsap.fromTo(sp.words, { opacity: 0.14 }, {
+        opacity: 1, stagger: 0.1, ease: 'none',
+        scrollTrigger: { trigger: el, start: 'top 80%', end: 'bottom 40%', scrub: true }
+      });
+    });
     document.querySelectorAll('[data-split]').forEach(function (el) {
       SplitText.create(el, {
         type: 'lines', mask: 'lines', autoSplit: true,
@@ -167,5 +223,5 @@
       });
     });
   }
-  (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(splitReveal);
+  (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(function () { splitReveal(); ScrollTrigger.refresh(); });
 })();

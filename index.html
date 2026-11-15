@@ -82,36 +82,35 @@
       </div>
     </div>
 
-    <!-- ============ CONSTAT ============ -->
-    <section class="section">
-      <h2 class="title" data-split>Vos clients vous cherchent sur leur téléphone. <em>Que trouvent-ils&nbsp;?</em></h2>
-      <div class="grid3">
-        <article class="card" data-reveal>
-          <span class="card__num">01</span>
-          <h3>Être trouvé</h3>
-          <p>Votre adresse, vos horaires, votre téléphone. Visibles en un instant, sur Google comme sur Maps.</p>
-        </article>
-        <article class="card" data-reveal>
-          <span class="card__num">02</span>
-          <h3>Faire bonne impression</h3>
-          <p>Votre site est souvent le premier contact. Il doit être à la hauteur de ce que vous faites.</p>
-        </article>
-        <article class="card" data-reveal>
-          <span class="card__num">03</span>
-          <h3>Faire venir</h3>
-          <p>Appeler, trouver l'itinéraire, réserver : tout se fait en un geste, depuis le téléphone.</p>
-        </article>
+
+    <!-- ============ BANDE-ANNONCE ============ -->
+    <section class="trailer" aria-label="Pourquoi un site">
+      <div class="trailer__stage">
+        <p class="tl-line">Il y a des commerces <em>qu'on remarque.</em></p>
+        <p class="tl-line">Et ceux <em>qu'on oublie.</em></p>
+        <p class="tl-line">La différence&nbsp;?</p>
+        <p class="tl-line tl-line--big">Souvent, <em>leur site.</em></p>
       </div>
-      <p class="proof" data-reveal>✦ Ce site est la démonstration : le scroll fluide, les textes qui se révèlent, le ciel qui change… <strong>votre site peut avoir tout cela.</strong></p>
+    </section>
+
+    <!-- ============ TEXTE QUI S'ALLUME ============ -->
+    <section class="section">
+      <p class="hl" data-hl>Vos clients vous cherchent sur leur téléphone. Avant même de pousser votre porte, ils ont déjà décidé. Astelsia crée le site qui leur donne envie de venir&nbsp;: rapide, élégant, à votre image. Comme celui que vous êtes en train de parcourir.</p>
+    </section>
+
+    <!-- ============ ZOOM ============ -->
+    <section class="zoom" aria-hidden="true">
+      <div class="zoom__stage"><p class="zoom__word">Astelsia</p></div>
     </section>
 
     <!-- ============ FORMULES ============ -->
     <section class="section" id="formules">
-      <h2 class="title" data-split>Trois formules. <em>Quelle image voulez-vous donner&nbsp;?</em></h2>
+      <div class="plans__stage">
+      <h2 class="title plans__title" data-split>Trois formules. <em>Quelle image voulez-vous donner&nbsp;?</em></h2>
 
-      <div class="plans">
+      <div class="plans"><div class="plans__deck">
         <!-- Signature en premier : effet d'ancrage -->
-        <article class="plan" data-reveal>
+        <article class="plan">
           <p class="plan__kicker">Pour marquer les esprits</p>
           <h3 class="plan__name">Signature</h3>
           <p class="plan__tag">Un site unique, à votre image. Celui dont on se souvient.</p>
@@ -125,7 +124,21 @@
           <a href="#contact" class="btn btn--ghost" data-plan="Signature">Choisir Signature</a>
         </article>
 
-        <article class="plan plan--featured" data-reveal>
+        <article class="plan">
+          <p class="plan__kicker">Pour être trouvé</p>
+          <h3 class="plan__name">Solo</h3>
+          <p class="plan__tag">L'essentiel pour être trouvé en ligne.</p>
+          <p class="plan__price"><s>290 €</s> <span data-count="249">249</span> €</p>
+          <p class="plan__offer">Offre de lancement : 3 premiers clients</p>
+          <ul>
+            <li>Une page vitrine</li>
+            <li>Présentation et horaires</li>
+            <li>Carte Google Maps</li>
+            <li>Contact en un geste</li>
+          </ul>
+          <a href="#contact" class="btn btn--ghost" data-plan="Solo">Choisir Solo</a>
+        </article>
+        <article class="plan plan--featured">
           <span class="badge">Recommandé</span>
           <p class="plan__kicker">Pour attirer</p>
           <h3 class="plan__name">Business</h3>
@@ -140,20 +153,7 @@
           <a href="#contact" class="btn" data-plan="Business">Choisir Business</a>
         </article>
 
-        <article class="plan" data-reveal>
-          <p class="plan__kicker">Pour être trouvé</p>
-          <h3 class="plan__name">Solo</h3>
-          <p class="plan__tag">L'essentiel pour être trouvé en ligne.</p>
-          <p class="plan__price"><s>290 €</s> <span data-count="249">249</span> €</p>
-          <p class="plan__offer">Offre de lancement : 3 premiers clients</p>
-          <ul>
-            <li>Une page vitrine</li>
-            <li>Présentation et horaires</li>
-            <li>Carte Google Maps</li>
-            <li>Contact en un geste</li>
-          </ul>
-          <a href="#contact" class="btn btn--ghost" data-plan="Solo">Choisir Solo</a>
-        </article>
+      </div></div>
       </div>
 
       <div class="option" data-reveal>
@@ -179,14 +179,20 @@
 
     <!-- ============ CONTACT (arrivée dans le paysage) ============ -->
     <section class="section contact" id="contact">
-      <h2 class="title title--big" data-split>Parlons de <em>votre commerce.</em></h2>
-      <p class="contact__lead" data-reveal>Un appel, un message, un café : choisissez.</p>
+      <h2 class="title title--big" data-split>On en parle&nbsp;? <em>Comme vous préférez.</em></h2>
       <!-- CONTACT : remplacez les valeurs dans assets/js/config.js -->
-      <div class="contact__links" data-reveal>
-        <a class="btn" data-contact="phone" href="tel:+33600000000">06 00 00 00 00</a>
-        <a class="btn btn--ghost" data-contact="email" href="mailto:contact@exemple.fr">contact@exemple.fr</a>
+      <div class="ways">
+        <a class="way" data-reveal data-contact="cafe" href="#contact">
+          <span class="way__ico">☕</span><strong>Autour d'un café</strong><span>Je passe dans votre commerce.</span>
+        </a>
+        <a class="way" data-reveal data-contact="email" href="mailto:contact@exemple.fr">
+          <span class="way__ico">✉</span><strong>Par mail</strong><span data-contact-text>contact@exemple.fr</span>
+        </a>
+        <a class="way" data-reveal data-contact="phone" href="tel:+33600000000">
+          <span class="way__ico">☎</span><strong>Par téléphone</strong><span data-contact-text>06 00 00 00 00</span>
+        </a>
       </div>
-      <p class="contact__plan" data-reveal hidden>Formule choisie : <strong></strong></p>
+      <p class="contact__plan" hidden>Formule choisie : <strong></strong></p>
     </section>
   </main>
 
