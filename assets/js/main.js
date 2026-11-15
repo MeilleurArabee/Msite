@@ -66,10 +66,20 @@
     gsap.ticker.add(function (t) { lenis.raf(t * 1000); });
     gsap.ticker.lagSmoothing(0);
   }
+  /* ---------- Clic sur un lien du menu : une longue descente, douce ---------- */
+  var easeIO = function (t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; };
+  var glide = null;
+  function stopGlide() { if (glide) { glide.kill(); glide = null; } }
+  ['wheel', 'touchstart', 'keydown'].forEach(function (ev) { window.addEventListener(ev, stopGlide, { passive: true }); });
   function scrollToTarget(target) {
-    if (lenis) lenis.scrollTo(target, { duration: 1.4 });
-    else if (target === 0) window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' });
-    else target.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' });
+    var y = target === 0 ? 0 : target.getBoundingClientRect().top + window.scrollY;
+    y = Math.max(0, Math.min(y, ScrollTrigger.maxScroll(window)));
+    var dist = Math.abs(y - window.scrollY);
+    var dur = Math.min(3.6, 1.4 + dist / 2600); // plus c'est loin, plus la descente dure
+    if (lenis) { lenis.scrollTo(y, { duration: dur, easing: easeIO, force: true }); return; }
+    stopGlide();
+    var o = { y: window.scrollY };
+    glide = gsap.to(o, { y: y, duration: reduced ? Math.min(dur, 1.6) : dur, ease: 'power2.inOut', onUpdate: function () { window.scrollTo(0, o.y); }, onComplete: function () { glide = null; } });
   }
   document.querySelectorAll('a[href^="#"]').forEach(function (a) {
     a.addEventListener('click', function (e) {
@@ -80,7 +90,7 @@
       scrollToTarget(target);
     });
   });
-  // l'aimant n'est utile qu'au doigt : au trackpad/souris, Lenis s'occupe de la douceur
+  // au doigt : aimant de ScrollTrigger. À la molette : aimant « une phrase par cran » (plus bas).
   var snap = !lenis;
 
   /* ---------- En-tête qui se cache en descendant ---------- */
@@ -201,6 +211,41 @@
     }
     land.to('.fireflies', { opacity: 1, duration: 0.3 }, 0.7);
   });
+
+  /* ---------- Aimant à la molette (ordinateur) ----------
+     Dans la bande-annonce et sur le nom, chaque cran de molette amène
+     doucement à la phrase suivante, quelle que soit la vitesse : on ne
+     saute jamais de texte, et un cran de plus suffit pour continuer. */
+  if (lenis) {
+    var stations = [], busy = false;
+    function computeStations() {
+      stations = [];
+      var trST = ScrollTrigger.getAll().filter(function (t) { return t.pin && t.trigger && t.trigger.classList.contains('trailer'); })[0];
+      var zoST = ScrollTrigger.getAll().filter(function (t) { return t.pin && t.trigger && t.trigger.classList.contains('zoom'); })[0];
+      if (trST && trST.animation && trST.labelToScroll) {
+        Object.keys(trST.animation.labels).forEach(function (l) { stations.push(Math.round(trST.labelToScroll(l))); });
+      }
+      if (zoST) { stations.push(Math.round(zoST.start)); stations.push(Math.round(zoST.end)); }
+      stations.sort(function (a, b) { return a - b; });
+    }
+    ScrollTrigger.addEventListener('refresh', computeStations);
+    lenis.options.virtualScroll = function (d) {
+      if (!stations.length || Math.abs(d.deltaY) < Math.abs(d.deltaX)) return true;
+      if (busy) { if (d.event.cancelable) d.event.preventDefault(); return false; }
+      var y = lenis.targetScroll, vh = window.innerHeight, down = d.deltaY > 0, to = null, i;
+      if (down) {
+        for (i = 0; i < stations.length; i++) if (stations[i] > y + 4) { to = stations[i]; break; }
+        if (to === null || (y < stations[0] && to - y > vh * 0.55)) return true;
+      } else {
+        for (i = stations.length - 1; i >= 0; i--) if (stations[i] < y - 4) { to = stations[i]; break; }
+        if (to === null || (y > stations[stations.length - 1] && y - to > vh * 0.55)) return true;
+      }
+      if (d.event.cancelable) d.event.preventDefault();
+      busy = true;
+      lenis.scrollTo(to, { duration: 1.15, easing: easeIO, lock: true, force: true, onComplete: function () { setTimeout(function () { busy = false; }, 260); } });
+      return false;
+    };
+  }
 
   /* ---------- Petite étoile d'altitude (ordinateur) ---------- */
   var dot = document.querySelector('.altitude span');

@@ -140,7 +140,7 @@ em { font-style: italic; color: var(--pink); }
   box-shadow: 0 0 0 1.5px #3a3a46, inset 0 0 0 1.5px #2a2a33, 0 30px 70px -20px rgba(0, 0, 0, .7);
   container-type: inline-size; z-index: 1;
 }
-.device__notch { position: absolute; top: 3.4%; left: 50%; width: 46%; height: 3.6%; transform: translateX(-50%); background: #121218; border-radius: 0 0 14cqw 14cqw; z-index: 3; }
+.device__notch { position: absolute; top: 1.57%; left: 50%; width: 46%; height: 3.6%; transform: translateX(-50%); background: #121218; border-radius: 0 0 14cqw 14cqw; z-index: 6; }
 .device__glow { position: absolute; inset: -18%; border-radius: 50%; background: radial-gradient(closest-side, rgba(244, 185, 214, .28), transparent 70%); z-index: 0; }
 .anim .device.is-done .device__glow { animation: glow 3s ease-in-out infinite; }
 @keyframes glow { 0%, 100% { opacity: .6; transform: scale(.96); } 50% { opacity: 1; transform: scale(1.04); } }
@@ -164,8 +164,11 @@ em { font-style: italic; color: var(--pink); }
 .mini[data-style="chaleureux"] .mini__hero { align-items: center; text-align: center; }
 .mini[data-style="chaleureux"] .mini__hero i { align-self: center; }
 .mini__scroll { padding-bottom: 8cqw; }
+.mini::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 9cqw; z-index: 4; background: var(--bg); }
+.mini[data-view="solo"]::before { background: #fff; }
+.mini[data-view="signature"]::before { background: #070b24; }
 .mini[data-view="business"] .mini__scroll, .mini[data-view="signature"] .mini__scroll { padding-bottom: 20cqw; }
-.mini__nav { display: flex; justify-content: space-between; align-items: baseline; gap: 4cqw; padding: 11cqw 5cqw 3cqw; }
+.mini__nav { display: flex; justify-content: space-between; align-items: baseline; gap: 4cqw; padding: 13cqw 5cqw 3cqw; }
 .mini__nav b { font: var(--w-title) 5.4cqw/1.1 var(--f-title); font-style: var(--title-style); text-transform: var(--tt); letter-spacing: var(--ls); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
 .mini__nav span { font-size: 3.1cqw; opacity: .65; white-space: nowrap; }
 .mini__hero {
@@ -238,7 +241,7 @@ em { font-style: italic; color: var(--pink); }
 .mini[data-view="signature"] .mini__pages, .mini[data-view="signature"] .mini__book { position: absolute; }
 .mini[data-view="signature"] .mini__nav span { opacity: .75; }
 .mini[data-view="signature"] .mini__hero { min-height: 88cqw; background: none; justify-content: center; text-align: center; align-items: center; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .14); }
-.mini[data-view="signature"] .mini__hero::before { content: ''; position: absolute; left: 50%; top: 14%; width: 16cqw; height: 16cqw; transform: translateX(-50%); border-radius: 50%;
+.mini[data-view="signature"] .mini__hero::before { content: ''; position: absolute; right: 7cqw; top: 6cqw; width: 11cqw; height: 11cqw; border-radius: 50%;
   background: radial-gradient(circle at 35% 35%, #fff6dd, hsl(var(--h, 232) 60% 75%)); box-shadow: 0 0 10cqw 3cqw hsl(var(--h, 232) 70% 70% / .45); }
 .mini[data-view="signature"] .mini__hero strong { font-size: 12cqw; background: linear-gradient(90deg, #f4b9d6, #f6d7a4, #f4b9d6); background-size: 200% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; }
 .mini[data-view="signature"] .mini__hero i { align-self: center; background: linear-gradient(90deg, #f4b9d6, #f6d7a4); color: #22122a; }
@@ -431,7 +434,7 @@ em { font-style: italic; color: var(--pink); }
 .plan__name { font: 400 clamp(34px, 4.4vw, 46px)/1.1 var(--serif); margin: 4px 0 6px; }
 .plan__tag { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.5; }
 .plan__price { font: 300 clamp(32px, 4vw, 40px)/1.1 var(--serif); margin: 14px 0 0; font-variant-numeric: tabular-nums; white-space: nowrap; }
-.plan__price s { font-size: .55em; color: var(--muted); margin-right: 4px; }
+.plan__price s { display: block; width: max-content; font-size: .5em; color: var(--muted); margin-bottom: 2px; }
 .plan__offer, .plan__perk { margin: 8px 0 0; font-size: 13px; font-weight: 700; }
 .plan__offer { color: var(--pink); }
 .plan__perk { color: var(--gold); }
