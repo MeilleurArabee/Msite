@@ -222,6 +222,30 @@
     land.to('.fireflies', { opacity: 1, duration: 0.3 }, 0.7);
   });
 
+  /* ---------- Aimant léger sur les phrases ----------
+     Quand on s'arrête de scroller près d'une phrase, elle se recentre doucement.
+     Rien n'est bloqué : si on continue de scroller, on passe à la suite. */
+  (function () {
+    var lines = gsap.utils.toArray('.tl-line'), idle = null, touching = false, settling = false;
+    function settle() {
+      if (touching || settling || root.classList.contains('menu-open')) return;
+      var mid = innerHeight / 2, best = null, bd = Infinity;
+      lines.forEach(function (l) {
+        var r = l.getBoundingClientRect(), d = r.top + r.height / 2 - mid;
+        if (Math.abs(d) < Math.abs(bd)) { bd = d; best = l; }
+      });
+      if (!best || Math.abs(bd) < 6 || Math.abs(bd) > innerHeight * 0.28) return;
+      var y = window.scrollY + bd;
+      settling = true;
+      if (lenis) lenis.scrollTo(y, { duration: 0.9, easing: easeIO, onComplete: function () { settling = false; } });
+      else { var o = { y: window.scrollY }; gsap.to(o, { y: y, duration: 0.7, ease: 'power2.out', onUpdate: function () { window.scrollTo(0, o.y); }, onComplete: function () { settling = false; } }); }
+    }
+    function arm() { clearTimeout(idle); if (!settling) idle = setTimeout(settle, 180); }
+    addEventListener('touchstart', function () { touching = true; clearTimeout(idle); }, { passive: true });
+    addEventListener('touchend', function () { touching = false; arm(); }, { passive: true });
+    addEventListener('scroll', arm, { passive: true });
+  })();
+
   /* ---------- Apparitions au scroll ---------- */
   gsap.set('[data-reveal]', { y: reduced ? 0 : 30 });
   ScrollTrigger.batch('[data-reveal]', {

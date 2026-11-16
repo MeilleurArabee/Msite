@@ -643,3 +643,8 @@ main { position: relative; z-index: 1; }
 .builder .builder__row { justify-content: space-between; }
 .builder .builder__row .builder__next { flex: none; width: auto; padding: 0 22px; }
 .builder .suggest { margin: 12px 0 4px; }
+
+/* Aucune animation ne doit élargir la page (sinon le téléphone dézoome) */
+html, body { overflow-x: clip; }
+.formules { overflow-x: clip; }
+.plans { overflow: visible; }
