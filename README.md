@@ -1,6 +1,6 @@
 # Astelsia — site vitrine
 
-Sites web pour les commerces de proximité. En ligne sur https://astelsia.fr (Netlify, branche `main`).
+Sites web pour les commerces de proximité. En ligne sur https://astelsia.fr (GitHub Pages, branche `main`, fichier `CNAME`).
 
 Le concept : on part des étoiles et, en descendant, on arrive dans un paysage à l'heure bleue
 (grand chêne, balançoire, herbes roses, lucioles). Chaque étape du scroll s'anime un peu plus.

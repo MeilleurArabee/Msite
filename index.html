@@ -6,6 +6,7 @@
   <title>Astelsia — Sites web pour les commerces de proximité</title>
   <meta name="description" content="Astelsia crée des sites web élégants et rapides pour les restaurants, coiffeurs, artisans et boutiques. Trois formules claires, à partir de 249,90 €.">
   <meta name="theme-color" content="#060a22">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'">
   <link rel="canonical" href="https://astelsia.fr/">
 
   <!-- Aperçu quand le lien est partagé (mail, SMS, réseaux) -->
@@ -23,11 +24,6 @@
   <link rel="preload" href="assets/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/manrope.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="assets/css/style.css">
-  <style>
-    /* Badge « Powered by Netlify » : masqué, quelle que soit sa forme */
-    body > a[href*="netlify"], body > div > a[href*="netlify"], [id*="netlify-badge" i], [class*="netlify-badge" i],
-    netlify-badge, iframe[src*="netlify"] { display: none !important; visibility: hidden !important; opacity: 0 !important; pointer-events: none !important; }
-  </style>
   <script>
         // Les animations restent actives partout. Si l'appareil demande à réduire les animations,
     // le site passe en « mode doux » : fondus uniquement, aucun mouvement brusque.
@@ -404,33 +400,6 @@
           setTimeout(done, Math.max(0, minT - (performance.now() - t0)));
         });
       });
-    })();
-  </script>
-  <script>
-    // Gardien : supprime tout badge ou bandeau ajouté par l'hébergeur (« Powered by Netlify »), même ajouté après coup.
-    (function () {
-      var ours = ['MAIN', 'HEADER', 'FOOTER', 'SCRIPT', 'STYLE', 'NOSCRIPT', 'LINK'];
-      function isBadge(el) {
-        if (!el || el.nodeType !== 1 || ours.indexOf(el.tagName) >= 0) return false;
-        if (el.closest && el.closest('main, header, footer, .scene, .menu, .loader')) return false;
-        var tag = el.tagName.toLowerCase();
-        if (tag.indexOf('netlify') >= 0) return true;
-        if (el.matches && el.matches('a[href*="netlify"], iframe[src*="netlify"]')) return true;
-        if (el.querySelector && el.querySelector('a[href*="netlify"], iframe[src*="netlify"]')) return true;
-        var txt = (el.textContent || '') + (el.shadowRoot ? el.shadowRoot.textContent : '');
-        return /powered\s*by\s*netlify/i.test(txt);
-      }
-      function sweep(root) {
-        Array.prototype.forEach.call((root || document.body).children, function (el) { if (isBadge(el)) el.remove(); });
-        Array.prototype.forEach.call(document.querySelectorAll('a[href*="netlify"]'), function (a) {
-          var box = a.closest('body > *') || a; if (isBadge(box)) box.remove(); else if (!a.closest('main, footer')) a.remove();
-        });
-      }
-      new MutationObserver(function (list) {
-        list.forEach(function (m) { m.addedNodes.forEach(function (n) { if (isBadge(n)) n.remove(); }); });
-      }).observe(document.documentElement, { childList: true, subtree: true });
-      document.addEventListener('DOMContentLoaded', function () { sweep(); });
-      addEventListener('load', function () { sweep(); setTimeout(sweep, 1500); setTimeout(sweep, 5000); });
     })();
   </script>
 </body>
