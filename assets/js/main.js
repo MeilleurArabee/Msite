@@ -227,11 +227,13 @@
      Rien n'est bloqué : si on continue de scroller, on passe à la suite. */
   (function () {
     var lines = gsap.utils.toArray('.tl-line'), idle = null, touching = false, settling = false;
+    // position réelle dans la page, sans tenir compte des animations en cours
+    function docTop(el) { var t = 0; while (el) { t += el.offsetTop; el = el.offsetParent; } return t; }
     function settle() {
       if (touching || settling || root.classList.contains('menu-open')) return;
       var mid = innerHeight / 2, best = null, bd = Infinity;
       lines.forEach(function (l) {
-        var r = l.getBoundingClientRect(), d = r.top + r.height / 2 - mid;
+        var d = docTop(l) - window.scrollY + l.offsetHeight / 2 - mid;
         if (Math.abs(d) < Math.abs(bd)) { bd = d; best = l; }
       });
       if (!best || Math.abs(bd) < 6 || Math.abs(bd) > innerHeight * 0.28) return;
@@ -240,7 +242,29 @@
       if (lenis) lenis.scrollTo(y, { duration: 0.9, easing: easeIO, onComplete: function () { settling = false; } });
       else { var o = { y: window.scrollY }; gsap.to(o, { y: y, duration: 0.7, ease: 'power2.out', onUpdate: function () { window.scrollTo(0, o.y); }, onComplete: function () { settling = false; } }); }
     }
-    function arm() { clearTimeout(idle); if (!settling) idle = setTimeout(settle, 180); }
+    function arm() { if (lenis) return; clearTimeout(idle); if (!settling) idle = setTimeout(settle, 180); }
+
+    /* Ordinateur : un cran de molette = une glissade douce jusqu'à la phrase suivante (ou précédente) */
+    if (lenis) {
+      var busy = false;
+      var stations = function () {
+        return lines.map(function (l) { return Math.round(docTop(l) + l.offsetHeight / 2 - innerHeight / 2); });
+      };
+      lenis.options.virtualScroll = function (d) {
+        if (Math.abs(d.deltaY) < Math.abs(d.deltaX) || root.classList.contains('menu-open')) return true;
+        var st = stations(), y = lenis.targetScroll, zone = innerHeight * 0.6;
+        if (y < st[0] - zone || y > st[st.length - 1] + zone) return true; // en dehors des phrases : scroll normal
+        if (busy) { if (d.event.cancelable) d.event.preventDefault(); return false; }
+        var to = null, i;
+        if (d.deltaY > 0) { for (i = 0; i < st.length; i++) if (st[i] > y + 4) { to = st[i]; break; } }
+        else { for (i = st.length - 1; i >= 0; i--) if (st[i] < y - 4) { to = st[i]; break; } }
+        if (to === null) return true; // après la dernière phrase (ou avant la première) : on continue normalement
+        if (d.event.cancelable) d.event.preventDefault();
+        busy = true;
+        lenis.scrollTo(to, { duration: 1.1, easing: easeIO, lock: true, force: true, onComplete: function () { setTimeout(function () { busy = false; }, 220); } });
+        return false;
+      };
+    }
     addEventListener('touchstart', function () { touching = true; clearTimeout(idle); }, { passive: true });
     addEventListener('touchend', function () { touching = false; arm(); }, { passive: true });
     addEventListener('scroll', arm, { passive: true });
