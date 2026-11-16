@@ -258,19 +258,29 @@ main { position: relative; z-index: 1; }
 @keyframes miniScroll { 0%, 12% { transform: translateY(0); } 88%, 100% { transform: translateY(-34%); } }
 .device.flash .device__frame { animation: flash .5s var(--ease); }
 @keyframes flash { from { transform: scale(.96); } to { transform: none; } }
-/* ---- SOLO : une page simple et claire ---- */
+/* ---- SOLO : une belle page claire et colorée ---- */
 .mini__open { display: flex; align-items: center; gap: 2cqw; margin: 4cqw 5cqw 0; font-size: 3.5cqw; font-weight: 700; }
-.mini__open span { width: 2.4cqw; height: 2.4cqw; border-radius: 50%; background: #2fa66a; }
-.mini[data-view="solo"] { background: #fff; }
-.mini[data-view="solo"] .mini__nav { padding-bottom: 2cqw; border-bottom: 1px solid rgba(0, 0, 0, .08); }
+.mini__open span { width: 2.4cqw; height: 2.4cqw; border-radius: 50%; background: #2fa66a; box-shadow: 0 0 0 1.2cqw rgba(47, 166, 106, .18); }
 .mini[data-view="solo"] .mini__nav span { display: none; }
-.mini[data-view="solo"] .mini__hero { background: none; color: var(--ink); min-height: 0; margin: 0; padding: 6cqw 5cqw 0; border-radius: 0; }
-.mini[data-view="solo"] .mini__hero strong { font-size: 8cqw; }
-.mini[data-view="solo"] .mini__hero small { color: var(--accent); opacity: 1; }
-.mini[data-view="solo"] .mini__hero i { display: none; }
-.mini[data-view="solo"] .mini__map { height: 30cqw; }
 
-/* ---- SIGNATURE : immersif, comme ce site ---- */
+/* ---- BUSINESS : élégant et sombre, plusieurs pages ---- */
+.mini[data-view="business"] { background: #0b0f2b; color: #f3efe8; }
+.mini[data-view="business"]::before { background: #0b0f2b; }
+.mini[data-view="business"] .mini__nav span { opacity: .7; }
+.mini[data-view="business"] .mini__hero {
+  min-height: 82cqw; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .1);
+  background: radial-gradient(120% 90% at 78% 0%, hsl(var(--h, 232) 60% 52% / .6), transparent 62%), linear-gradient(165deg, #1a1f4c, #0b0f2b);
+}
+.mini[data-view="business"] .mini__hero strong { background: linear-gradient(90deg, #f6d7a4, #f4b9d6); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.mini[data-view="business"] .mini__hero i { background: #f6d7a4; color: #1a1030; }
+.mini[data-view="business"] .mini__sec p { border-color: rgba(255, 255, 255, .12); }
+.mini[data-view="business"] .mini__gal span { box-shadow: 0 0 0 1px rgba(255, 255, 255, .12); }
+.mini[data-view="business"] .mini__map, .mini[data-view="signature"] .mini__map { filter: invert(.88) hue-rotate(180deg); }
+.mini[data-view="business"] .mini__map span, .mini[data-view="signature"] .mini__map span { background: #0a1a4a; }
+.mini[data-view="business"] .mini__pages { background: rgba(18, 22, 60, .94); color: #f3efe8; box-shadow: 0 0 0 1px rgba(255, 255, 255, .12); }
+.mini[data-view="business"] .mini__pages span.on { color: #f6d7a4; }
+
+/* ---- SIGNATURE : l'univers complet, animé, avec réservation ---- */
 .mini__sky { position: absolute; inset: 0; pointer-events: none; z-index: 0;
   background:
     radial-gradient(1px 1px at 12% 8%, #fff, transparent), radial-gradient(1px 1px at 72% 5%, #fff, transparent),
@@ -279,18 +289,32 @@ main { position: relative; z-index: 1; }
     radial-gradient(1px 1px at 90% 52%, #fff, transparent), radial-gradient(1px 1px at 44% 64%, #fff, transparent),
     radial-gradient(1.3px 1.3px at 8% 78%, #fff, transparent), radial-gradient(1px 1px at 66% 86%, #fff, transparent),
     radial-gradient(120% 60% at 50% 0%, hsl(var(--h, 232) 50% 22%), #070b24 70%); }
+.mini__sky::after { content: ''; position: absolute; inset: 0;
+  background: radial-gradient(1.6px 1.6px at 26% 14%, #fff, transparent), radial-gradient(1.4px 1.4px at 80% 36%, #ffe9b0, transparent),
+    radial-gradient(1.6px 1.6px at 52% 58%, #fff, transparent), radial-gradient(1.4px 1.4px at 16% 66%, #ffe9b0, transparent), radial-gradient(1.6px 1.6px at 84% 80%, #fff, transparent); }
+.anim .mini__sky::after { animation: twinkleSky 2.6s ease-in-out infinite alternate; }
+@keyframes twinkleSky { from { opacity: .15; } to { opacity: 1; } }
 .mini[data-view="signature"] { background: #070b24; color: #f6f2ec; }
-.mini[data-view="signature"] .mini__scroll, .mini[data-view="signature"] .mini__pages, .mini[data-view="signature"] .mini__book { position: relative; z-index: 1; }
-.mini[data-view="signature"] .mini__pages, .mini[data-view="signature"] .mini__book { position: absolute; }
+.mini[data-view="signature"]::before { background: #070b24; }
+.mini[data-view="signature"] .mini__scroll { z-index: 1; }
 .mini[data-view="signature"] .mini__nav span { opacity: .75; }
-.mini[data-view="signature"] .mini__hero { min-height: 88cqw; background: none; justify-content: center; text-align: center; align-items: center; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .14); }
-.mini[data-view="signature"] .mini__hero::before { content: ''; position: absolute; right: 7cqw; top: 6cqw; width: 11cqw; height: 11cqw; border-radius: 50%;
+.mini[data-view="signature"] .mini__hero { min-height: 92cqw; overflow: hidden; background: none; justify-content: center; text-align: center; align-items: center; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .14); }
+.mini[data-view="signature"] .mini__hero > * { position: relative; z-index: 1; }
+.mini__aurora { display: none; }
+.mini[data-view="signature"] .mini__aurora { display: block; position: absolute !important; inset: -30%; z-index: 0 !important; filter: blur(7cqw); opacity: .75;
+  background: radial-gradient(40% 30% at 30% 40%, hsl(var(--h, 232) 70% 55% / .9), transparent 70%), radial-gradient(35% 28% at 70% 60%, rgba(244, 185, 214, .7), transparent 70%), radial-gradient(30% 25% at 55% 25%, rgba(246, 215, 164, .55), transparent 70%); }
+.anim .mini[data-view="signature"] .mini__aurora { animation: aurora 9s ease-in-out infinite alternate; }
+@keyframes aurora { from { transform: rotate(0deg) scale(1); } to { transform: rotate(40deg) scale(1.15); } }
+.mini[data-view="signature"] .mini__hero::before { content: ''; position: absolute; right: 7cqw; top: 6cqw; width: 11cqw; height: 11cqw; border-radius: 50%; z-index: 1;
   background: radial-gradient(circle at 35% 35%, #fff6dd, hsl(var(--h, 232) 60% 75%)); box-shadow: 0 0 10cqw 3cqw hsl(var(--h, 232) 70% 70% / .45); }
-.mini[data-view="signature"] .mini__hero strong { font-size: 12cqw; background: linear-gradient(90deg, #f4b9d6, #f6d7a4, #f4b9d6); background-size: 200% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; }
+.mini[data-view="signature"] .mini__hero strong { font-size: 12cqw; background: linear-gradient(90deg, #f4b9d6, #f6d7a4, #fff6dd, #f4b9d6); background-size: 300% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; }
 .mini[data-view="signature"] .mini__hero i { align-self: center; background: linear-gradient(90deg, #f4b9d6, #f6d7a4); color: #22122a; }
 .mini[data-view="signature"] .mini__sec p { border-color: rgba(255, 255, 255, .14); }
-.mini[data-view="signature"] .mini__gal span { box-shadow: 0 0 0 1px rgba(255, 255, 255, .15); }
-.mini[data-view="signature"] .mini__map { filter: invert(.88) hue-rotate(180deg); }
+.mini[data-view="signature"] .mini__gal span { box-shadow: 0 0 0 1px rgba(255, 255, 255, .15); background-size: 180% 180%; }
+.anim .mini[data-view="signature"] .mini__gal span { animation: kenburns 7s ease-in-out infinite alternate; }
+.anim .mini[data-view="signature"] .mini__gal span:nth-child(2) { animation-delay: -2s; }
+.anim .mini[data-view="signature"] .mini__gal span:nth-child(3) { animation-delay: -4s; }
+@keyframes kenburns { from { background-position: 0% 0%; } to { background-position: 100% 100%; } }
 .mini[data-view="signature"] .mini__foot { opacity: .6; }
 .mini[data-view="signature"] .mini__pages { background: rgba(14, 18, 54, .92); color: #f6f2ec; box-shadow: 0 0 0 1px rgba(255, 255, 255, .15); }
 .mini[data-view="signature"] .mini__pages span.on { color: #f6d7a4; }
@@ -303,13 +327,28 @@ main { position: relative; z-index: 1; }
 .mini__slots { margin-top: 2cqw; }
 .mini__slots span { text-align: center; padding: 1.6cqw 0; border-radius: 99px; font-size: 3cqw; font-weight: 700; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .2); }
 .mini__days span.on, .mini__slots span.on { background: linear-gradient(90deg, #f4b9d6, #f6d7a4); color: #22122a; opacity: 1; box-shadow: none; }
-.anim .mini[data-view="signature"] .mini__hero strong { animation: goldShift 4s linear infinite; }
-@keyframes goldShift { to { background-position: -200% 0; } }
+.anim .mini[data-view="signature"] .mini__hero strong { animation: goldShift 5s linear infinite; }
+@keyframes goldShift { to { background-position: -300% 0; } }
 .anim .mini[data-view="signature"] .mini__hero::before { animation: moonGlow 3s ease-in-out infinite alternate; }
 @keyframes moonGlow { from { box-shadow: 0 0 6cqw 1cqw hsl(var(--h, 232) 70% 70% / .3); } to { box-shadow: 0 0 14cqw 4cqw hsl(var(--h, 232) 70% 70% / .55); } }
-.anim .mini[data-view="signature"] .mini__slots span.on { animation: bob 2.4s ease-in-out infinite; }
-/* l'aperçu des formules défile tout seul, comme un vrai site */
-.anim .device--plan .mini__scroll { animation: miniScroll 9s ease-in-out .6s infinite alternate; }
+/* Signature : les sections apparaissent quand on défile dans l'aperçu */
+.mini.is-live[data-view="signature"] .mini__reveal { opacity: 0; transform: translateY(5cqw); transition: opacity .7s ease, transform .8s var(--ease); }
+.mini.is-live[data-view="signature"] .mini__reveal.in { opacity: 1; transform: none; }
+
+/* ---- Aperçu vivant : on peut défiler et toucher dans l'iPhone ---- */
+.mini.is-live .mini__scroll {
+  position: absolute; inset: 0; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; animation: none !important; touch-action: pan-y;
+}
+.mini.is-live .mini__scroll::-webkit-scrollbar { display: none; }
+.mini.is-live :is(.mini__pages span, .mini__days span, .mini__slots span, .mini__call span, .mini__book, .mini__hero i) { cursor: pointer; }
+.mini__toast {
+  position: absolute; left: 50%; top: 12cqw; z-index: 6; transform: translate(-50%, -3cqw); opacity: 0; pointer-events: none;
+  padding: 2cqw 4cqw; border-radius: 99px; background: rgba(10, 14, 40, .92); color: #fff; font-size: 3cqw; font-weight: 700; white-space: nowrap;
+  transition: opacity .3s ease, transform .4s var(--ease);
+}
+.mini__toast.show { opacity: 1; transform: translate(-50%, 0); }
+.plan-preview__hint { display: block; margin-top: 8px; font: italic 400 13px var(--serif); color: var(--gold); }
 
 /* textes modifiables (étape 3) */
 .mini.is-editable [data-edit] { cursor: pointer; outline: 1.5px dashed rgba(244, 185, 214, .95); outline-offset: .8cqw; border-radius: 1cqw; }
@@ -648,3 +687,13 @@ main { position: relative; z-index: 1; }
 html, body { overflow-x: clip; }
 .formules { overflow-x: clip; }
 .plans { overflow: visible; }
+
+/* Les garanties, juste sous les formules */
+.trust { list-style: none; margin: 26px auto 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 22px; max-width: 760px; }
+.trust li { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--text); }
+.trust svg { width: 18px; height: 18px; flex: none; fill: none; stroke: var(--gold); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+@media (max-width: 599px) { .trust { flex-direction: column; align-items: flex-start; width: fit-content; } .device--plan { height: 340px; } }
+
+.plan-preview__text { flex: 1; min-width: 0; }
+.trust li { text-align: left; }
+@media (min-width: 900px) { .plan-preview__text { text-align: center; } }

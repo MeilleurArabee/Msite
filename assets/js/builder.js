@@ -125,9 +125,9 @@
   var PLANS = { solo: 'Solo', business: 'Business', signature: 'Signature' };
   var ORDER = ['solo', 'business', 'signature'];
   var CAPS = {
-    solo: '<strong>Solo</strong> · Une page simple et claire&nbsp;: vos horaires, votre adresse, un bouton pour vous appeler. L\'essentiel pour être trouvé.',
-    business: '<strong>Business</strong> · Un vrai site de plusieurs pages&nbsp;: grande photo d\'accueil, votre carte ou vos produits, une galerie, un menu de navigation.',
-    signature: '<strong>Signature</strong> · L\'expérience complète, comme ce site&nbsp;: un univers sur mesure, des animations, et la réservation en ligne intégrée.'
+    solo: '<strong>Solo</strong> · Une belle page, claire et colorée&nbsp;: votre accueil, vos horaires, votre adresse et un bouton pour vous appeler.',
+    business: '<strong>Business</strong> · Un site élégant de plusieurs pages&nbsp;: menu de navigation, votre carte ou vos produits, une galerie photo.',
+    signature: '<strong>Signature</strong> · L\'expérience complète, comme ce site&nbsp;: un univers animé sur mesure et la réservation en ligne intégrée.'
   };
 
   function norm(s) { return String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[’'\-_.]/g, ' ').replace(/\s+/g, ' ').trim(); }
@@ -296,6 +296,7 @@
     device.classList.toggle('is-done', step === 4);
     if (step !== 3) closeEditor();
     if (step === 4 && !state.done) { state.done = true; selectPlan(currentRec, 'force'); }
+    setLive(heroMini, step === 4);
     if (started) { // sur téléphone, si le panneau dépasse en bas de l'écran, on le remonte doucement
       var r = root.getBoundingClientRect(), over = r.bottom - window.innerHeight + 12;
       if (over > 0) window.scrollBy({ top: over, behavior: reduced ? 'auto' : 'smooth' });
@@ -345,6 +346,78 @@
   /* ---------- Formules : boutons + carte qui pivote + iPhone qui change ---------- */
   var cards = {}; ORDER.forEach(function (k) { cards[k] = document.querySelector('.plan[data-plan="' + k + '"]'); });
   var planMini = document.querySelector('.plan-preview .mini'), planCap = document.querySelector('.plan-preview__cap');
+
+  /* ---------- Aperçu vivant : on peut défiler et toucher dans l'iPhone ---------- */
+  var mouseHint = matchMedia('(hover: hover) and (pointer: fine)').matches;
+  var hintEl = document.querySelector('.plan-preview__hint');
+  if (hintEl) hintEl.textContent = mouseHint ? 'Faites défiler et cliquez dans l\'aperçu' : 'Faites défiler et touchez l\'aperçu';
+  function toast(m, text) {
+    var t = m.querySelector('.mini__toast'); if (!t) return;
+    t.textContent = text; t.classList.add('show');
+    clearTimeout(t._h); t._h = setTimeout(function () { t.classList.remove('show'); }, 1800);
+  }
+  function revealCheck(m) {
+    var sc = m.querySelector('.mini__scroll'), box = sc.getBoundingClientRect();
+    $all('.mini__reveal', m).forEach(function (el) {
+      var r = el.getBoundingClientRect();
+      if (r.top < box.bottom - box.height * 0.08) el.classList.add('in');
+    });
+  }
+  function scrollMiniTo(m, el) {
+    var sc = m.querySelector('.mini__scroll');
+    var y = el ? el.getBoundingClientRect().top - sc.getBoundingClientRect().top + sc.scrollTop - sc.clientHeight * 0.12 : 0;
+    sc.scrollTo({ top: Math.max(0, y), behavior: reduced ? 'auto' : 'smooth' });
+  }
+  function setLive(m, on) {
+    if (!m) return;
+    m.classList.toggle('is-live', on);
+    if (!on || m._live) return;
+    m._live = true;
+    var sc = m.querySelector('.mini__scroll'), demo = !reduced, dir = 1, last = 0, wait = 1200;
+    // petit défilement de démonstration, qui s'arrête dès que la personne touche l'aperçu
+    function stop() { demo = false; }
+    ['pointerdown', 'wheel', 'touchstart', 'keydown'].forEach(function (ev) { m.addEventListener(ev, stop, { passive: true }); });
+    function loop(now) {
+      if (!demo) return;
+      var dt = Math.min(50, now - (last || now)); last = now;
+      if (m.classList.contains('is-live') && m.getBoundingClientRect().bottom > 0 && m.getBoundingClientRect().top < innerHeight) {
+        if (wait > 0) wait -= dt;
+        else {
+          var max = sc.scrollHeight - sc.clientHeight;
+          sc.scrollTop += dir * dt * 0.035;
+          if (sc.scrollTop >= max - 1) { dir = -1; wait = 1400; } else if (sc.scrollTop <= 0) { dir = 1; wait = 1400; }
+        }
+      }
+      requestAnimationFrame(loop);
+    }
+    requestAnimationFrame(loop);
+    sc.addEventListener('scroll', function () { revealCheck(m); }, { passive: true });
+    revealCheck(m);
+    // ce qu'on peut toucher
+    m.addEventListener('click', function (e) {
+      if (!m.classList.contains('is-live')) return;
+      var view = m.getAttribute('data-view'), el;
+      if ((el = e.target.closest('.mini__pages span'))) {
+        $all('.mini__pages span', m).forEach(function (x) { x.classList.toggle('on', x === el); });
+        var i = $all('.mini__pages span', m).indexOf(el);
+        scrollMiniTo(m, i === 0 ? null : i === 1 ? m.querySelector('.mini__sec.mini__multi') : i === 2 ? m.querySelector('.mini__gal') : m.querySelector('.mini__map'));
+        return;
+      }
+      if ((el = e.target.closest('.mini__days span, .mini__slots span'))) {
+        $all('span', el.parentNode).forEach(function (x) { x.classList.toggle('on', x === el); });
+        var d = m.querySelector('.mini__days .on'), h = m.querySelector('.mini__slots .on');
+        toast(m, 'Réservé · ' + (d ? d.textContent.replace(/(\D+)(\d+)/, '$1 $2') : '') + ' à ' + (h ? h.textContent : '') + ' ✓');
+        return;
+      }
+      if ((el = e.target.closest('.mini__book, .mini__hero i'))) {
+        if (view === 'signature') scrollMiniTo(m, m.querySelector('.mini__resa'));
+        else { scrollMiniTo(m, m.querySelector('.mini__map')); toast(m, 'Exemple de bouton'); }
+        return;
+      }
+      if ((el = e.target.closest('.mini__call span'))) { toast(m, el.textContent + ' · exemple'); }
+    });
+  }
+  setLive(planMini, true);
   var timers = [], currentRec = 'business';
   function setRecommended(rec) {
     if (rec === currentRec && cards.business.dataset.recSet) return;
@@ -377,6 +450,8 @@
     }
     if (planMini) {
       planMini.setAttribute('data-view', key);
+      planMini.querySelector('.mini__scroll').scrollTop = 0;
+      revealCheck(planMini);
       if (!reduced) { var d = planMini.closest('.device'); d.classList.remove('flash'); void d.offsetWidth; d.classList.add('flash'); }
     }
     if (planCap) planCap.innerHTML = CAPS[key];
