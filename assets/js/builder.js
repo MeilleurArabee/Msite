@@ -438,11 +438,14 @@
     state.plan = key;
     if (key !== prev) {
       var incoming = cards[key], outgoing = cards[prev];
-      timers.forEach(clearTimeout); timers = [];
       ORDER.forEach(function (k) { if (k !== key && k !== prev) cards[k].classList.remove('is-on', 'to-left', 'to-right', 'from-left', 'from-right'); });
       outgoing.classList.remove('is-on', 'from-left', 'from-right');
       outgoing.classList.add(dir > 0 ? 'to-left' : 'to-right');
-      timers.push(setTimeout(function () { outgoing.classList.remove('to-left', 'to-right'); }, 700));
+      clearTimeout(outgoing._t);
+      outgoing._t = setTimeout(function () { if (!outgoing.classList.contains('is-on')) outgoing.classList.remove('to-left', 'to-right'); }, 700);
+      // la carte qui revient oublie toute sortie en cours : elle ne peut plus rester bloquée sur le côté
+      clearTimeout(incoming._t);
+      incoming.classList.remove('to-left', 'to-right');
       incoming.classList.add('no-trans', dir > 0 ? 'from-right' : 'from-left');
       void incoming.offsetWidth;
       incoming.classList.remove('no-trans', 'from-left', 'from-right');
