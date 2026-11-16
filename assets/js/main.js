@@ -3,8 +3,8 @@
    GSAP + ScrollTrigger + SplitText + Lenis.
    Plus on descend, plus ça s'anime. Rien ne bouge si
    l'appareil demande à réduire les animations.
-   Réactivité : sections épinglées courtes, effet « aimant »
-   (snap) sur téléphone, aucun retard entre le doigt et l'écran.
+   Scroll libre : rien n'est épinglé, les textes s'allument et
+   s'effacent au fil du scroll, le ciel change jusqu'au paysage.
    ========================================================= */
 (function () {
   'use strict';
@@ -61,7 +61,7 @@
   /* ---------- Scroll fluide Lenis (ordinateur) synchronisé avec GSAP ---------- */
   var lenis = null;
   if (!reduced && window.Lenis) {
-    lenis = new Lenis({ lerp: 0.13, wheelMultiplier: 1.05, autoRaf: false });
+    lenis = new Lenis({ lerp: 0.11, wheelMultiplier: 1, autoRaf: false });
     lenis.on('scroll', ScrollTrigger.update);
     gsap.ticker.add(function (t) { lenis.raf(t * 1000); });
     gsap.ticker.lagSmoothing(0);
@@ -90,9 +90,6 @@
       scrollToTarget(target);
     });
   });
-  // au doigt : aimant de ScrollTrigger. À la molette : aimant « une phrase par cran » (plus bas).
-  var snap = !lenis;
-
   /* ---------- En-tête qui se cache en descendant ---------- */
   var header = document.querySelector('.header');
   ScrollTrigger.create({
@@ -121,72 +118,33 @@
   var scene = window.AstelsiaScene;
 
   /* =========================================================
-     Les scènes. D'abord les sections épinglées (pin),
-     puis le ciel, qui se cale sur leurs positions.
+     Les scènes
      ========================================================= */
   var mm = gsap.matchMedia();
   mm.add({ mobile: '(max-width: 899px)', desktop: '(min-width: 900px)', reduce: '(prefers-reduced-motion: reduce)' }, function (ctx) {
-    var c = ctx.conditions;
+    var c = ctx.conditions, g = c.reduce; // mode doux : fondus uniquement
 
-    var g = c.reduce; // mode doux : fondus uniquement, aucun déplacement
-    {
-      /* 1. Bande-annonce : 3 phrases, une par « cran » */
-      var lines = gsap.utils.toArray('.tl-line');
-      var IN = g ? { opacity: 0, scale: 1, yPercent: -50 } : { opacity: 0, scale: 0.9, yPercent: -36 };
-      var OUT = g ? { opacity: 0, scale: 1, yPercent: -50 } : { opacity: 0, scale: 1.08, yPercent: -64 };
-      gsap.fromTo(lines[0], IN, {
-        opacity: 1, scale: 1, yPercent: -50, ease: 'power2.out',
-        scrollTrigger: { trigger: '.trailer', start: 'top 80%', end: 'top top', scrub: true }
-      });
-      var tr = gsap.timeline({
-        scrollTrigger: {
-          trigger: '.trailer', start: 'top top', end: '+=150%', pin: true, scrub: 0.3,
-          snap: snap ? { snapTo: 'labels', duration: { min: 0.25, max: 0.6 }, delay: 0.04, ease: 'power2.inOut' } : false
-        }
-      });
-      tr.addLabel('l0').to({}, { duration: 0.15 });
-      lines.forEach(function (l, i) {
-        if (i === 0) return;
-        tr.fromTo(lines[i - 1], { opacity: 1, scale: 1, yPercent: -50 }, Object.assign({ duration: 0.5, ease: 'power2.in', immediateRender: false }, OUT))
-          .fromTo(l, IN, { opacity: 1, scale: 1, yPercent: -50, duration: 0.6, ease: 'power2.out', immediateRender: false }, '-=0.15')
-          .addLabel('l' + i);
-      });
-      tr.to({}, { duration: 0.25 });
+    /* 1. Les phrases : chacune s'allume en arrivant au centre, puis s'efface en remontant */
+    gsap.utils.toArray('.tl-line').forEach(function (l) {
+      gsap.timeline({ scrollTrigger: { trigger: l, start: 'top 95%', end: 'bottom 5%', scrub: true } })
+        .fromTo(l, { opacity: 0, y: g ? 0 : 60, scale: g ? 1 : 0.96 }, { opacity: 1, y: 0, scale: 1, ease: 'power2.out', duration: 0.4 })
+        .to(l, { opacity: 1, duration: 0.2 })
+        .to(l, { opacity: 0, y: g ? 0 : -60, scale: g ? 1 : 1.03, ease: 'power2.in', duration: 0.4 });
+    });
 
-      /* 2. Le nom : la phrase apparaît, puis on traverse le mot */
-      // le mot arrive pendant qu'on approche : jamais d'écran vide
-      gsap.fromTo('.zoom__word', { scale: g ? 1 : 0.7, opacity: 0 }, {
-        scale: 1, opacity: 1, ease: 'power2.out',
-        scrollTrigger: { trigger: '.zoom', start: 'top 85%', end: 'top 15%', scrub: true }
+    /* 2. Formules (ordinateur) : les cartes se lèvent une fois */
+    if (c.desktop) {
+      gsap.from(['.plan-preview', '.plan[data-plan="solo"]', '.plan[data-plan="business"]', '.plan[data-plan="signature"]'], {
+        y: g ? 0 : 80, opacity: 0, duration: 1, stagger: 0.12, ease: 'power3.out', clearProps: 'transform,opacity',
+        scrollTrigger: { trigger: '.plans', start: 'top 85%', once: true }
       });
-      gsap.fromTo('.zoom__line', { opacity: 0, y: g ? 0 : 24 }, {
-        opacity: 1, y: 0, ease: 'power2.out',
-        scrollTrigger: { trigger: '.zoom', start: 'top 45%', end: 'top top', scrub: true }
-      });
-      gsap.timeline({
-        scrollTrigger: {
-          trigger: '.zoom', start: 'top top', end: '+=80%', pin: true, scrub: 0.3,
-          snap: snap ? { snapTo: [0, 1], duration: { min: 0.25, max: 0.6 }, delay: 0.04 } : false
-        }
-      })
-        .to({}, { duration: 0.2 })
-        .fromTo('.zoom__line', { opacity: 1, y: 0 }, { opacity: 0, y: g ? 0 : -20, duration: 0.2, immediateRender: false })
-        .fromTo('.zoom__word', { scale: 1, opacity: 1 }, { scale: g ? 1 : 12, opacity: 0, duration: 0.6, ease: 'power2.in', immediateRender: false }, '<');
-
-      /* 3. Formules (ordinateur) : les 3 cartes se lèvent une fois */
-      if (c.desktop) {
-        gsap.from(['.plan-preview', '.plan[data-plan="solo"]', '.plan[data-plan="business"]', '.plan[data-plan="signature"]'], {
-          y: g ? 0 : 80, opacity: 0, duration: 1, stagger: 0.12, ease: 'power3.out', clearProps: 'transform,opacity',
-          scrollTrigger: { trigger: '.plans', start: 'top 85%', once: true }
-        });
-      }
     }
 
-    /* 4. Le ciel : nuit → heure bleue → paysage */
-    var red = c.reduce, sc = red ? true : 0.5;
+    /* 3. Le ciel : nuit → heure bleue → paysage */
+    var sc = g ? true : 0.6;
     gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { trigger: '.trailer', start: 'top 70%', endTrigger: '#formules', end: 'top 30%', scrub: sc } })
       .to('.sky--night', { opacity: 0 }, 0)
-      .to('.stars', red ? { opacity: 0.55 } : { opacity: 0.55, yPercent: -15 }, 0);
+      .to('.stars', g ? { opacity: 0.55 } : { opacity: 0.55, yPercent: -15 }, 0);
 
     gsap.timeline({
       defaults: { ease: 'none' },
@@ -197,12 +155,12 @@
     })
       .to('.sky--twilight', { opacity: 0, duration: 1 }, 0)
       .fromTo('.clouds', { opacity: 0 }, { opacity: 1, duration: 0.9 }, 0.1)
-      .to('.stars', red ? { opacity: 0, duration: 1 } : { opacity: 0, yPercent: -35, duration: 1 }, 0)
-      .fromTo('.moon', { opacity: 0, y: red ? 0 : '20vh' }, { opacity: 1, y: 0, duration: 0.7 }, 0.3)
+      .to('.stars', g ? { opacity: 0, duration: 1 } : { opacity: 0, yPercent: -35, duration: 1 }, 0)
+      .fromTo('.moon', { opacity: 0, y: g ? 0 : '20vh' }, { opacity: 1, y: 0, duration: 0.7 }, 0.3)
       .to('.glow', { opacity: 1, duration: 0.6 }, 0.4);
 
     var land = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { trigger: '#contact', start: 'top 95%', endTrigger: '.footer', end: 'bottom bottom', scrub: sc } });
-    if (red) {
+    if (g) {
       land.fromTo('.land', { opacity: 0 }, { opacity: 1, duration: 1 }, 0);
     } else {
       [['.layer--far', 100], ['.layer--mid', 110], ['.layer--tree', 125], ['.layer--front', 150]].forEach(function (l, i) {
@@ -212,74 +170,14 @@
     land.to('.fireflies', { opacity: 1, duration: 0.3 }, 0.7);
   });
 
-  /* ---------- Aimant à la molette (ordinateur) ----------
-     Dans la bande-annonce et sur le nom, chaque cran de molette amène
-     doucement à la phrase suivante, quelle que soit la vitesse : on ne
-     saute jamais de texte, et un cran de plus suffit pour continuer. */
-  if (lenis) {
-    var stations = [], busy = false;
-    function computeStations() {
-      stations = [];
-      var trST = ScrollTrigger.getAll().filter(function (t) { return t.pin && t.trigger && t.trigger.classList.contains('trailer'); })[0];
-      var zoST = ScrollTrigger.getAll().filter(function (t) { return t.pin && t.trigger && t.trigger.classList.contains('zoom'); })[0];
-      if (trST && trST.animation && trST.labelToScroll) {
-        Object.keys(trST.animation.labels).forEach(function (l) { stations.push(Math.round(trST.labelToScroll(l))); });
-      }
-      if (zoST) { stations.push(Math.round(zoST.start)); stations.push(Math.round(zoST.end)); }
-      stations.sort(function (a, b) { return a - b; });
-    }
-    ScrollTrigger.addEventListener('refresh', computeStations);
-    lenis.options.virtualScroll = function (d) {
-      if (!stations.length || Math.abs(d.deltaY) < Math.abs(d.deltaX)) return true;
-      if (busy) { if (d.event.cancelable) d.event.preventDefault(); return false; }
-      var y = lenis.targetScroll, vh = window.innerHeight, down = d.deltaY > 0, to = null, i;
-      if (down) {
-        for (i = 0; i < stations.length; i++) if (stations[i] > y + 4) { to = stations[i]; break; }
-        if (to === null || (y < stations[0] && to - y > vh * 0.55)) return true;
-      } else {
-        for (i = stations.length - 1; i >= 0; i--) if (stations[i] < y - 4) { to = stations[i]; break; }
-        if (to === null || (y > stations[stations.length - 1] && y - to > vh * 0.55)) return true;
-      }
-      if (d.event.cancelable) d.event.preventDefault();
-      busy = true;
-      lenis.scrollTo(to, { duration: 1.15, easing: easeIO, lock: true, force: true, onComplete: function () { setTimeout(function () { busy = false; }, 260); } });
-      return false;
-    };
-  }
-
-  /* ---------- Petite étoile d'altitude (ordinateur) ---------- */
-  var dot = document.querySelector('.altitude span');
-  if (dot && finePointer) {
-    var bar = document.querySelector('.altitude'), setY = gsap.quickSetter(dot, 'y', 'px');
-    ScrollTrigger.create({
-      start: 0, end: function () { return ScrollTrigger.maxScroll(window); },
-      onUpdate: function (self) { setY(self.progress * Math.max(0, bar.offsetHeight - 7)); }
-    });
-  }
-
-  /* ---------- Bandeau qui accélère avec le scroll (ScrollVelocity) ---------- */
-  var loop = gsap.to('.marquee__track', { xPercent: -50, duration: reduced ? 70 : 30, ease: 'none', repeat: -1 });
-  loop.totalTime(loop.duration() * 100);
-  var dir = 1, settle = null;
-  ScrollTrigger.create({
-    trigger: '.marquee', start: 'top bottom', end: 'bottom top',
-    onUpdate: function (self) {
-      dir = self.direction;
-      var boost = reduced ? 0 : Math.min(Math.abs(self.getVelocity()) / 300, 5);
-      loop.timeScale(dir * (1 + boost));
-      if (settle) settle.kill();
-      settle = gsap.to(loop, { timeScale: dir, duration: 1, delay: 0.15 });
-    }
-  });
-
   /* ---------- Apparitions au scroll ---------- */
   gsap.set('[data-reveal]', { y: reduced ? 0 : 30 });
   ScrollTrigger.batch('[data-reveal]', {
-    start: 'top 92%', once: true,
+    start: 'top 90%', once: true,
     onEnter: function (els) { gsap.to(els, { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out', stagger: 0.08 }); }
   });
 
-  /* ---------- Textes qui se révèlent (SplitText) ---------- */
+  /* ---------- Textes qui se révèlent (SplitText) ; l'accueil attend la fin du chargement ---------- */
   function splitReveal() {
     if (!window.SplitText) { root.classList.remove('anim'); return; }
     var hero = document.querySelector('[data-hero-title]');
@@ -287,9 +185,10 @@
       type: 'words,lines', mask: 'lines', autoSplit: true,
       onSplit: function (s) {
         gsap.set(hero, { visibility: 'visible' });
-        var intro = gsap.timeline({ delay: 0.1 });
+        var intro = gsap.timeline({ delay: 0.35, paused: true });
         intro.from(s.words, reduced ? { opacity: 0, duration: 0.8, stagger: 0.05 } : { yPercent: 115, rotate: 4, duration: 1, ease: 'power4.out', stagger: 0.06 })
              .fromTo('.hero__in', { opacity: 0, y: reduced ? 0 : 24 }, { opacity: 1, y: 0, duration: 0.9, stagger: 0.12, ease: 'power3.out', clearProps: 'transform' }, '-=0.6');
+        (window.__loaderDone || Promise.resolve()).then(function () { intro.play(); });
         return intro;
       }
     });

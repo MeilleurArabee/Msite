@@ -192,6 +192,14 @@
   var root = document.querySelector('.builder');
   var heroMini = document.querySelector('.hero .mini');
   var device = document.querySelector('.hero .device');
+  var heroEl = document.querySelector('.hero');
+  var Stars = function () { return window.AstelsiaStars || { setBuilding: function () {}, pulse: function () {} }; };
+  // dès que la personne commence à créer son site, l'iPhone apparaît dans la lumière des étoiles
+  function setBuilding(on) {
+    if (heroEl.classList.contains('is-building') === on) return;
+    heroEl.classList.toggle('is-building', on);
+    Stars().setBuilding(on);
+  }
   if (!root || !heroMini) return;
   var minis = $all('.mini');
   var nameInput = document.getElementById('b-name'), jobInput = document.getElementById('b-job');
@@ -283,6 +291,8 @@
       if (on && !reduced) { s.classList.remove('enter'); void s.offsetWidth; s.classList.add('enter'); }
     });
     heroMini.classList.toggle('is-editable', step === 3);
+    if (step > 1) setBuilding(true);
+    if (step === 4) Stars().pulse();
     device.classList.toggle('is-done', step === 4);
     if (step !== 3) closeEditor();
     if (step === 4 && !state.done) { state.done = true; selectPlan(currentRec, 'force'); }
@@ -296,7 +306,11 @@
     f.addEventListener('submit', function (e) { e.preventDefault(); $all('input', f).forEach(function (i) { i.blur(); }); go(+f.getAttribute('data-s') + 1); });
   });
   $all('[data-go]', root).forEach(function (b) { b.addEventListener('click', function () { go(+b.getAttribute('data-go')); }); });
-  nameInput.addEventListener('input', function () { state.name = nameInput.value; render(); });
+  nameInput.addEventListener('input', function () {
+    state.name = nameInput.value; render();
+    setBuilding(state.name.trim().length > 0 || state.step > 1);
+    Stars().pulse();
+  });
   jobInput.addEventListener('input', function () { state.job = jobInput.value; render(); });
   if (hueInput) hueInput.addEventListener('input', function () { state.hue = +hueInput.value; render(); });
   $all('.style-btn').forEach(function (b) { b.addEventListener('click', function () { state.style = b.getAttribute('data-style'); render(); }); });
@@ -435,6 +449,7 @@
   render();
   selectPlan(currentRec, 'force');
   go(qName ? 4 : 1);
+  if (qName) setTimeout(function () { setBuilding(true); }, 0);
 
   window.AstelsiaBuilder = { state: state, selectPlan: selectPlan, findJob: findJob };
 })();

@@ -18,8 +18,9 @@
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
 
-  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="preload" href="assets/logo-star.png" as="image">
   <link rel="preload" href="assets/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/manrope.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="assets/css/style.css">
@@ -28,10 +29,18 @@
     // le site passe en « mode doux » : fondus uniquement, aucun mouvement brusque.
     document.documentElement.classList.add('anim');
     setTimeout(function () { if (!window.__astelsiaReady) document.documentElement.classList.remove('anim'); }, 3000);
+    // fin de l'écran de chargement : main.js attend ce signal pour lancer l'arrivée
+    window.__loaderDone = new Promise(function (r) { window.__finishLoader = r; });
   </script>
 </head>
 <body>
   <a class="skip" href="#formules">Aller aux formules</a>
+
+  <!-- ============ ÉCRAN DE CHARGEMENT : de petites étoiles qui rebondissent ============ -->
+  <div class="loader" id="loader" role="status" aria-label="Chargement du site">
+    <div class="loader__stars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+    <p class="loader__name" translate="no">Astelsia</p>
+  </div>
 
   <!-- ============ DÉCOR : des étoiles jusqu'au paysage ============ -->
   <!-- Le paysage est peint à l'avance (2 cadrages : écran large / téléphone) puis animé plan par plan. -->
@@ -75,13 +84,14 @@
     </div>
   </div>
 
-  <!-- Petite étoile qui « descend » avec vous -->
-  <div class="altitude" aria-hidden="true"><span></span></div>
+  <!-- Les trois étoiles dorées en 3D (assets/js/stars3d.js) -->
+  <canvas class="stars3d" aria-hidden="true"></canvas>
+  <img class="stars-fallback" src="assets/stars-gold.png" alt="" width="640" height="640" aria-hidden="true" loading="lazy">
 
   <!-- ============ EN-TÊTE ============ -->
   <header class="header">
     <a href="#top" class="logo" aria-label="Astelsia, retour en haut">
-      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 1.5l2.6 7.9 7.9 2.6-7.9 2.6L12 22.5l-2.6-7.9L1.5 12l7.9-2.6z" fill="currentColor"/></svg>
+      <img src="assets/logo-star.png" alt="" width="28" height="28">
       <span translate="no">Astelsia</span>
     </a>
     <nav class="nav" aria-label="Navigation principale">
@@ -186,33 +196,15 @@
           <a href="#film" class="btn builder__next">Découvrir la suite</a>
           <button type="button" class="builder__back builder__restart" data-go="3">Modifier mon site</button>
         </div>
-        <a href="#film" class="builder__skip">Ou découvrez simplement Astelsia</a>
+        <a href="#formules" class="builder__skip">Découvrir les offres</a>
       </div>
     </section>
 
-    <!-- ============ BANDEAU ============ -->
-    <div class="marquee" aria-hidden="true">
-      <div class="marquee__track">
-        <span>Restaurants ✦ Coiffeurs ✦ Artisans ✦ Boutiques ✦ Crêperies ✦ Fleuristes ✦ Boulangeries ✦ Instituts ✦ Garages ✦&nbsp;</span>
-        <span>Restaurants ✦ Coiffeurs ✦ Artisans ✦ Boutiques ✦ Crêperies ✦ Fleuristes ✦ Boulangeries ✦ Instituts ✦ Garages ✦&nbsp;</span>
-      </div>
-    </div>
-
-    <!-- ============ BANDE-ANNONCE ============ -->
+    <!-- ============ LES PHRASES : elles apparaissent et s'effacent au fil du scroll ============ -->
     <section class="trailer" id="film" aria-label="Pourquoi un site">
-      <div class="trailer__stage">
-        <p class="tl-line" data-b="tl1">Vous avez mis des années à construire <em>votre commerce.</em></p>
-        <p class="tl-line">Avant de pousser votre porte, vos clients vous cherchent <em>en ligne.</em></p>
-        <p class="tl-line tl-line--big">Faites-leur <em>bonne impression.</em></p>
-      </div>
-    </section>
-
-    <!-- ============ LE NOM ============ -->
-    <section class="zoom" aria-label="Le nom Astelsia">
-      <div class="zoom__stage">
-        <p class="zoom__word" translate="no">Astelsia</p>
-        <p class="zoom__line">vient des étoiles. Notre métier&nbsp;: faire briller votre commerce, <em>jusqu'à votre porte.</em></p>
-      </div>
+      <p class="tl-line" data-b="tl1">Vous avez mis des années à construire <em>votre commerce.</em></p>
+      <p class="tl-line">Avant de pousser votre porte, vos clients vous cherchent <em>en ligne.</em></p>
+      <p class="tl-line tl-line--big">Faites-leur <em>bonne impression.</em></p>
     </section>
 
     <!-- ============ FORMULES ============ -->
@@ -371,8 +363,30 @@
   <script src="assets/vendor/ScrollTrigger.min.js" defer></script>
   <script src="assets/vendor/SplitText.min.js" defer></script>
   <script src="assets/vendor/lenis.min.js" defer></script>
+  <script src="assets/js/stars3d.js" defer></script>
   <script src="assets/js/builder.js" defer></script>
   <script src="assets/js/scene.js" defer></script>
   <script src="assets/js/main.js" defer></script>
+  <script>
+    // L'écran de chargement reste le temps que tout soit prêt (3D, polices), au minimum 1,2 s, au maximum 5 s.
+    (function () {
+      var t0 = performance.now(), minT = matchMedia('(prefers-reduced-motion: reduce)').matches ? 300 : 1200;
+      function done() {
+        var l = document.getElementById('loader');
+        if (l.classList.contains('is-done')) return;
+        l.classList.add('is-done');
+        if (window.__finishLoader) window.__finishLoader();
+        if (window.AstelsiaStars) window.AstelsiaStars.startIntro();
+      }
+      setTimeout(done, 5000);
+      document.addEventListener('DOMContentLoaded', function () {
+        var stars = window.AstelsiaStars ? window.AstelsiaStars.ready : Promise.resolve();
+        var fonts = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
+        Promise.all([stars, fonts]).then(function () {
+          setTimeout(done, Math.max(0, minT - (performance.now() - t0)));
+        });
+      });
+    })();
+  </script>
 </body>
 </html>
