@@ -26,7 +26,7 @@
      1. La forme : une étoile arrondie, bombée, lisse
      --------------------------------------------------------- */
   function outline() { // contour arrondi, échantillonné finement
-    var R = 1, r = 0.58, tOut = 0.36, tIn = 0.24, P = [], out = [], i;
+    var R = 1, r = 0.55, tOut = 0.36, tIn = 0.42, P = [], out = [], i;
     for (i = 0; i < 10; i++) {
       var a = Math.PI / 2 + i * Math.PI / 5, rr = i % 2 ? r : R;
       P.push([Math.cos(a) * rr, Math.sin(a) * rr]);
@@ -48,7 +48,7 @@
   }
 
   function buildStar() {
-    var N = small ? 140 : 200, M = small ? 20 : 28, i, j, k;
+    var N = small ? 160 : 220, M = small ? 26 : 36, i, j, k;
     var pts = outline();
     var polar = pts.map(function (v) { return [Math.atan2(v[1], v[0]), Math.hypot(v[0], v[1])]; });
     var Rj = [];
@@ -60,39 +60,48 @@
       }
       Rj.push(best);
     }
-    var edge = [];
-    for (k = 0; k < pts.length; k += 2) edge.push(pts[k]);
-    var tau = 0.06;
-    function distToEdge(x, y) { // minimum « lissé » : aucun pli au centre
-      var s = 0;
-      for (var e = 0; e < edge.length; e++) s += Math.exp(-Math.hypot(edge[e][0] - x, edge[e][1] - y) / tau);
-      return Math.max(0, -tau * Math.log(s / 8));
+    // « gonflage » façon ballon : on résout une équation de pression sur une grille,
+    // la surface obtenue est parfaitement lisse (aucun pli), épaisse là où l'étoile est large
+    function radiusAt(th) {
+      var f = ((th + Math.PI) / (Math.PI * 2)) * N, j0 = Math.floor(f) % N, j1 = (j0 + 1) % N, w = f - Math.floor(f);
+      return Rj[j0] * (1 - w) + Rj[j1] * w;
     }
-    function height(x, y) {
-      var u = Math.min(1, distToEdge(x, y) / 0.42), round = Math.sqrt(1 - (1 - u) * (1 - u));
-      var c = Math.max(0, 1 - Math.hypot(x, y) / 0.9), dome = c * c * (3 - 2 * c);
-      return 0.44 * round + 0.16 * dome;
+    var G = small ? 96 : 128, ext = 1.06, hstep = (2 * ext) / (G - 1), phi = new Float32Array(G * G), inside = new Uint8Array(G * G), gx, gy;
+    for (gy = 0; gy < G; gy++) for (gx = 0; gx < G; gx++) {
+      var px = -ext + gx * hstep, py = -ext + gy * hstep;
+      inside[gy * G + gx] = Math.hypot(px, py) < radiusAt(Math.atan2(py, px)) - 0.004 ? 1 : 0;
+    }
+    var h2 = hstep * hstep;
+    for (var it = 0; it < (small ? 260 : 340); it++) {
+      for (gy = 1; gy < G - 1; gy++) for (gx = 1; gx < G - 1; gx++) {
+        var q = gy * G + gx; if (!inside[q]) continue;
+        var nv = (phi[q - 1] + phi[q + 1] + phi[q - G] + phi[q + G] + h2) * 0.25;
+        phi[q] += 1.9 * (nv - phi[q]);
+      }
+    }
+    var pmax = 0; for (k = 0; k < phi.length; k++) if (phi[k] > pmax) pmax = phi[k];
+    function sample(x, y) {
+      var fx = (x + ext) / hstep, fy = (y + ext) / hstep, x0 = Math.max(0, Math.min(G - 2, Math.floor(fx))), y0 = Math.max(0, Math.min(G - 2, Math.floor(fy)));
+      var tx = Math.min(1, Math.max(0, fx - x0)), ty = Math.min(1, Math.max(0, fy - y0));
+      var v = phi[y0 * G + x0] * (1 - tx) * (1 - ty) + phi[y0 * G + x0 + 1] * tx * (1 - ty) + phi[(y0 + 1) * G + x0] * (1 - tx) * ty + phi[(y0 + 1) * G + x0 + 1] * tx * ty;
+      return Math.max(0, v / pmax);
+    }
+    function height(x, y, t) {
+      var v = sample(x, y);
+      // bord parfaitement rond : on rapproche le profil d'un quart de cercle près du contour
+      var edgeRound = Math.sqrt(Math.max(0, 1 - t * t));
+      return 0.64 * Math.pow(v, 0.5) * 0.75 + 0.64 * 0.25 * edgeRound * Math.pow(v, 0.25);
     }
     var xy = [], zf = [];
     for (i = 1; i <= M; i++) {
       var t = Math.sin((i / M) * Math.PI / 2);
       for (j = 0; j < N; j++) {
         var a = -Math.PI + (j / N) * Math.PI * 2, rr = t * Rj[j], x = Math.cos(a) * rr, y = Math.sin(a) * rr;
-        xy.push([x, y]); zf.push(i === M ? 0 : height(x, y));
+        xy.push([x, y]); zf.push(i === M ? 0 : height(x, y, t));
       }
     }
     var at = function (i, j) { return (i - 1) * N + ((j + N) % N); };
-    var zc = height(0, 0);
-    for (var it = 0; it < 22; it++) { // lissage du relief, le bord reste fixe
-      var nz = zf.slice(), ring1 = 0;
-      for (i = 1; i < M; i++) for (j = 0; j < N; j++) {
-        var inner = i === 1 ? zc : zf[at(i - 1, j)];
-        nz[at(i, j)] = zf[at(i, j)] * 0.4 + (zf[at(i, j - 1)] + zf[at(i, j + 1)] + inner + zf[at(i + 1, j)]) * 0.15;
-      }
-      for (j = 0; j < N; j++) ring1 += zf[at(1, j)];
-      zc = zc * 0.5 + (ring1 / N) * 0.5;
-      zf = nz;
-    }
+    var zc = height(0, 0, 0);
     var pos = [], idx = [], front = [], back = [];
     pos.push(0, 0, zc);
     for (i = 1; i <= M; i++) { front.push(pos.length / 3); for (j = 0; j < N; j++) { k = at(i, j); pos.push(xy[k][0], xy[k][1], zf[k]); } }
@@ -161,25 +170,22 @@
       'varying vec3 vN; varying vec3 vW; uniform vec3 uCam; uniform float uAlpha;' +
       'vec3 env(vec3 r){' +
       '  float up = r.y * 0.5 + 0.5;' +
-      '  vec3 c = mix(vec3(0.30, 0.13, 0.02), vec3(1.0, 0.84, 0.52), smoothstep(0.15, 0.95, up));' +
-      '  float sb = pow(max(dot(r, normalize(vec3(-0.5, 0.75, 0.55))), 0.0), 36.0);' +
-      '  float sb2 = pow(max(dot(r, normalize(vec3(0.65, 0.45, 0.6))), 0.0), 16.0);' +
-      '  float rim = pow(max(dot(r, normalize(vec3(0.7, -0.2, -0.7))), 0.0), 5.0);' +
-      '  return c + vec3(1.0, 0.98, 0.92) * sb * 3.2 + vec3(1.0, 0.9, 0.72) * sb2 * 1.1 + vec3(0.96, 0.6, 0.8) * rim * 0.7;' +
+      '  vec3 c = mix(vec3(0.78, 0.5, 0.03), vec3(1.0, 0.95, 0.7), smoothstep(0.15, 0.9, up));' +
+      '  float sb = pow(max(dot(r, normalize(vec3(-0.45, 0.7, 0.55))), 0.0), 10.0);' +
+      '  float sb2 = pow(max(dot(r, normalize(vec3(0.6, 0.25, 0.75))), 0.0), 9.0);' +
+      '  return c + vec3(1.0, 1.0, 0.95) * sb * 2.0 + vec3(1.0, 0.95, 0.8) * sb2 * 0.45;' +
       '}' +
       'void main(){' +
       '  vec3 N = normalize(vN); vec3 V = normalize(uCam - vW);' +
       '  if (dot(N, V) < 0.0) N = -N;' +
-      '  vec3 base = vec3(1.0, 0.66, 0.05);' +
-      '  vec3 L = normalize(vec3(-0.45, 0.6, 0.66));' +
-      '  float diff = max(dot(N, L), 0.0) * 0.7 + 0.3;' +
-      '  float fres = pow(1.0 - max(dot(N, V), 0.0), 3.0);' +
-      '  vec3 refl = env(reflect(-V, N));' +
-      '  vec3 col = base * diff * 0.7 + base * refl * 0.62 + refl * fres * 0.3;' +
-      '  vec3 H = normalize(L + V);' +
-      '  col += vec3(1.0, 0.97, 0.9) * pow(max(dot(N, H), 0.0), 110.0) * 1.3;' +
-      '  col += vec3(0.98, 0.55, 0.75) * pow(fres, 2.0) * 0.4;' +
-      '  col = col / (col + vec3(0.8)) * 1.5;' +
+      '  vec3 base = vec3(1.0, 0.82, 0.04);' +
+      '  vec3 L = normalize(vec3(-0.45, 0.6, 0.66)); vec3 H = normalize(L + V);' +
+      '  float diff = max(dot(N, L), 0.0) * 0.45 + 0.6;' +
+      '  float fres = pow(1.0 - max(dot(N, V), 0.0), 2.2);' +
+      '  vec3 col = base * env(reflect(-V, N)) * diff;' +
+      '  col = mix(col, col * vec3(0.85, 0.55, 0.1), fres * 0.55);' +
+      '  col += vec3(1.0, 0.99, 0.94) * (pow(max(dot(N, H), 0.0), 40.0) * 0.9 + pow(max(dot(N, H), 0.0), 8.0) * 0.18);' +
+      '  col = col / (col + vec3(0.5)) * 1.42;' +
       '  gl_FragColor = vec4(col * uAlpha, uAlpha);' +
       '}');
     glowProg = program(
@@ -247,12 +253,12 @@
      --------------------------------------------------------- */
   var LAYOUT = window.__starsLayout || {
     tall: {
-      idle: [[0, 0.13, 0.26], [0.66, -0.06, 0.09], [-0.64, 0.3, 0.065]],
-      build: [[-0.72, 0.26, 0.11], [0.74, 0.34, 0.07], [0.7, 0.08, 0.05]],
+      idle: [[0, 0.1, 0.22], [0.62, 0.26, 0.07], [-0.62, -0.02, 0.055]],
+      build: [[-0.72, 0.12, 0.1], [0.72, 0.24, 0.065], [0.7, -0.02, 0.045]],
       sky: [[-0.8, 0.86, 0.05], [-0.2, 1.4, 0.03], [-0.75, 1.5, 0.025]]
     },
     wide: {
-      idle: [[0.46, 0.02, 0.5], [0.86, 0.5, 0.14], [0.2, -0.56, 0.1]],
+      idle: [[0.5, 0.04, 0.42], [0.86, 0.48, 0.12], [0.26, -0.5, 0.085]],
       build: [[0.22, 0.6, 0.2], [0.88, 0.46, 0.1], [0.84, -0.62, 0.08]],
       sky: [[-0.56, 0.74, 0.07], [-0.3, 1.4, 0.03], [-0.8, 1.5, 0.025]]
     }

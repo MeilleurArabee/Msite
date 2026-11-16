@@ -134,16 +134,18 @@ main { position: relative; z-index: 1; }
 .header > .btn { grid-area: cta; }
 .header.is-scrolled { background-color: rgba(6, 10, 34, .82); }
 .header.is-hidden { transform: translateY(-100%); }
-.logo { display: flex; align-items: center; gap: 8px; font: 500 22px var(--serif); text-decoration: none; letter-spacing: .01em; }
-.logo img { width: 28px; height: 28px; filter: drop-shadow(0 0 8px rgba(255, 196, 80, .45)); }
+.logo { display: flex; align-items: center; gap: 7px; font: 400 18px var(--serif); text-decoration: none; letter-spacing: .02em; }
+.logo__mark { width: 17px; height: 17px; }
 .nav { display: flex; gap: 28px; }
 .nav a { text-decoration: none; color: var(--muted); font-size: 15px; transition: color .2s; white-space: nowrap; }
 .nav a:hover { color: var(--text); }
 @media (max-width: 899px) {
-  .header { grid-template-columns: auto auto; grid-template-areas: "logo cta" "nav nav"; justify-content: space-between; row-gap: 6px; padding-bottom: 8px; }
-  .header .nav { justify-self: stretch; justify-content: space-around; gap: 8px; padding-top: 6px; border-top: 1px solid var(--line); }
-  .nav a { font-size: 13.5px; }
+  .header { grid-template-columns: auto 1fr; grid-template-areas: "logo nav"; }
+  .header .nav { justify-self: end; gap: 16px; }
+  .nav a { font-size: 13px; }
 }
+.header { grid-template-columns: auto 1fr; grid-template-areas: "logo nav"; }
+.header .nav { justify-self: end; }
 
 .btn {
   display: inline-flex; align-items: center; justify-content: center; cursor: pointer;
@@ -163,7 +165,7 @@ main { position: relative; z-index: 1; }
    ========================================================= */
 .hero {
   min-height: 100svh; max-width: 1180px; margin: 0 auto;
-  padding: 112px var(--pad) 18px;
+  padding: 84px var(--pad) 18px;
   display: flex; flex-direction: column; align-items: center; gap: 14px;
 }
 .hero__text { text-align: center; position: relative; z-index: 2; }
@@ -171,7 +173,7 @@ main { position: relative; z-index: 1; }
 .hero .device > * { transition: opacity .7s ease, transform .9s cubic-bezier(.2, .8, .2, 1); }
 .hero:not(.is-building) .device > * { opacity: 0; transform: scale(.55) translateY(4%); }
 .hero:not(.is-building) .device { pointer-events: none; }
-.hero__title { font: 300 clamp(28px, 7.8vw, 76px)/1.04 var(--serif); letter-spacing: -.02em; }
+.hero__title { font: 300 clamp(26px, 6.6vw, 58px)/1.08 var(--serif); letter-spacing: -.015em; }
 .hero__sub { margin: 6px 0 0; color: var(--muted); font-size: clamp(13px, 1.6vw, 17px); }
 
 /* --- L'iPhone --- */
@@ -335,7 +337,8 @@ main { position: relative; z-index: 1; }
 .builder__row .builder__next { margin-top: 0; flex: 1; }
 .builder__back { background: none; border: 0; padding: 8px 4px; color: var(--muted); font-size: 14px; font-weight: 600; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
 .builder__restart { display: block; margin: 6px auto 0; }
-.builder__skip { display: block; margin-top: 10px; text-align: center; font: italic 400 14px var(--serif); color: var(--muted); text-underline-offset: 3px; }
+.builder__skip { display: block; margin-top: 12px; text-align: center; font: 400 13px var(--sans); color: rgba(246, 242, 236, .55); text-decoration: none; }
+.builder__skip:hover { color: var(--text); }
 .builder__done { text-align: center; }
 .builder__q--done { font-size: clamp(21px, 2.6vw, 26px); margin-top: 4px; }
 .builder__from { margin: 0 0 4px; color: var(--muted); font-size: 14px; }
@@ -381,7 +384,7 @@ main { position: relative; z-index: 1; }
 }
 /* Petits téléphones : on resserre */
 @media (max-height: 700px) and (max-width: 899px) {
-  .hero { padding-top: 104px; gap: 10px; }
+  .hero { padding-top: 76px; gap: 10px; }
   .device { height: 32svh; }
   .builder { padding: 12px 14px 10px; }
   .builder__q { font-size: 18px; margin-bottom: 8px; }
@@ -569,3 +572,25 @@ main { position: relative; z-index: 1; }
 }
 /* Solo tient sur un écran : pas besoin de défiler */
 .anim .device--plan .mini[data-view="solo"] .mini__scroll { animation: none; }
+
+/* =========================================================
+   MINIMALISME : le créateur sans boîte, une ligne de saisie et une flèche
+   ========================================================= */
+.builder { background: none; border: 0; box-shadow: none; padding: 0; max-width: 400px; }
+.builder__count { font: 400 12px var(--sans); letter-spacing: .04em; color: rgba(246, 242, 236, .5); }
+.builder__q { font-size: clamp(17px, 2.2vw, 20px); color: var(--text); }
+.builder__line { display: flex; align-items: center; gap: 10px; border-bottom: 1px solid rgba(246, 242, 236, .35); transition: border-color .3s; }
+.builder__line:focus-within { border-color: var(--gold); }
+.builder__line .builder__input { flex: 1; min-width: 0; height: 48px; padding: 0; background: transparent; color: var(--text); border: 0; border-radius: 0; font: 400 18px var(--sans); }
+.builder__line .builder__input::placeholder { color: rgba(246, 242, 236, .38); }
+.builder__line .builder__input:focus-visible { outline: none; }
+.builder__go { flex: none; width: 40px; height: 40px; display: grid; place-items: center; border-radius: 50%; border: 0; cursor: pointer; background: var(--text); color: #0a0f2a; transition: transform .25s, background-color .25s; }
+.builder__go:hover { transform: translateX(3px); background: var(--gold); }
+.builder__go svg { width: 20px; height: 20px; }
+.builder .builder__input:not(.builder__line .builder__input) { background: rgba(246, 242, 236, .08); color: var(--text); border: 1px solid rgba(246, 242, 236, .2); }
+.builder .builder__next { min-height: 44px; }
+
+.hero { justify-content: center; }
+.builder__done .builder__next { width: auto; min-height: 44px; padding: 0 22px; font-size: 15px; }
+.builder__done .builder__q--done { font-size: clamp(18px, 2.4vw, 22px); }
+.builder__done .builder__from { font-size: 13px; color: rgba(246, 242, 236, .55); }

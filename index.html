@@ -18,9 +18,8 @@
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
 
-  <link rel="icon" href="assets/favicon.png" type="image/png">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
-  <link rel="preload" href="assets/logo-star.png" as="image">
   <link rel="preload" href="assets/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/manrope.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="assets/css/style.css">
@@ -91,7 +90,7 @@
   <!-- ============ EN-TÊTE ============ -->
   <header class="header">
     <a href="#top" class="logo" aria-label="Astelsia, retour en haut">
-      <img src="assets/logo-star.png" alt="" width="28" height="28">
+      <svg class="logo__mark" viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="lg-gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff0b8"/><stop offset="1" stop-color="#f0ad2c"/></linearGradient></defs><path d="M12 1.5c.7 5.6 2.9 7.8 8.5 8.5-5.6.7-7.8 2.9-8.5 8.5-.7-5.6-2.9-7.8-8.5-8.5 5.6-.7 7.8-2.9 8.5-8.5z" fill="url(#lg-gold)"/><circle cx="19.5" cy="19" r="1.6" fill="url(#lg-gold)"/></svg>
       <span translate="no">Astelsia</span>
     </a>
     <nav class="nav" aria-label="Navigation principale">
@@ -99,7 +98,6 @@
       <a href="#serenite">Offre Sérénité</a>
       <a href="#contact">Contact</a>
     </nav>
-    <a href="#contact" class="btn btn--small">Parler de mon projet</a>
   </header>
 
   <main id="top">
@@ -108,7 +106,6 @@
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero__text">
         <h1 class="hero__title" id="hero-title" data-hero-title>Créez votre site. <em>Là, maintenant.</em></h1>
-        <p class="hero__sub hero__in">Astelsia — Sites web pour les commerces de proximité.</p>
       </div>
 
       <!-- L'iPhone : le site se construit en direct -->
@@ -153,8 +150,10 @@
         <form class="builder__step" data-s="1" novalidate>
           <p class="builder__count">Étape 1 sur 3</p>
           <label class="builder__q" for="b-name">Comment s'appelle votre commerce&nbsp;?</label>
-          <input class="builder__input" id="b-name" name="nom" type="text" maxlength="32" autocomplete="organization" placeholder="Ex. : Le Fournil…" enterkeyhint="next">
-          <button class="btn builder__next" type="submit">Suivant</button>
+          <div class="builder__line">
+            <input class="builder__input" id="b-name" name="nom" type="text" maxlength="32" autocomplete="organization" placeholder="Ex. : Le Fournil…" enterkeyhint="next">
+            <button class="builder__go" type="submit" aria-label="Suivant"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h12m-5-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          </div>
         </form>
 
         <form class="builder__step" data-s="2" novalidate hidden>
