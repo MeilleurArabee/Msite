@@ -330,8 +330,9 @@
       var bob = reduced ? 0 : Math.sin(t * 1.2 + PHASE[i]) * 0.035 * st.s;
       var z = -(1 - e) * (24 + i * 6);
       var pulse = i === 0 ? 1 + Math.sin(state.pulse * Math.PI) * 0.08 : 1;
-      var ry = (reduced ? 0 : Math.sin(t * 0.55 + PHASE[i]) * 0.5) + (1 - e) * (5 + i);
-      var rx = reduced ? 0 : Math.sin(t * 0.4 + PHASE[i]) * 0.12;
+      // sur ordinateur, les étoiles se tournent vers la souris
+      var ry = (reduced ? 0 : Math.sin(t * 0.55 + PHASE[i]) * 0.5) + (1 - e) * (5 + i) + look.x * 1.1;
+      var rx = (reduced ? 0 : Math.sin(t * 0.4 + PHASE[i]) * 0.12) + look.y * 0.7;
       var rz = (reduced ? 0 : Math.sin(t * 0.33 + PHASE[i]) * 0.07) + (i === 1 ? 0.25 : i === 2 ? -0.2 : 0);
       draw.push({ m: model(st.x, st.y + bob, z, rx, ry, rz, st.s * pulse), a: st.a, c: [st.x, st.y + bob, z - st.s * 0.5], s: st.s });
     });

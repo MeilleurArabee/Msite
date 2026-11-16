@@ -53,6 +53,58 @@
     }
   })();
 
+  /* ---------- Le logo recharge la page ---------- */
+  var logo = document.querySelector('.logo');
+  if (logo) logo.addEventListener('click', function (e) {
+    e.preventDefault();
+    try { history.scrollRestoration = 'manual'; } catch (err) {}
+    window.scrollTo(0, 0);
+    location.reload();
+  });
+
+  /* ---------- Menu plein écran ---------- */
+  var menuBtn = document.querySelector('.menu-btn'), menu = document.getElementById('menu');
+  function setMenu(open) {
+    root.classList.toggle('menu-open', open);
+    menuBtn.setAttribute('aria-expanded', String(open));
+    menuBtn.querySelector('.menu-btn__label').textContent = open ? 'Fermer' : 'Menu';
+    menu.setAttribute('aria-hidden', String(!open));
+  }
+  if (menuBtn && menu) {
+    menuBtn.addEventListener('click', function () { setMenu(!root.classList.contains('menu-open')); });
+    menu.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { setMenu(false); }); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setMenu(false); });
+    var mail = menu.querySelector('[data-contact-mail]'); if (mail && C.email) mail.textContent = C.email;
+  }
+
+  /* ---------- Poussière d'étoile derrière la souris (ordinateur) ---------- */
+  if (finePointer && !reduced) (function () {
+    var cv = document.createElement('canvas'); cv.className = 'sparkles'; cv.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(cv);
+    var ctx = cv.getContext('2d'), parts = [], runningS = false, dprS = Math.min(devicePixelRatio || 1, 2), lx = null, ly = null;
+    function size() { cv.width = innerWidth * dprS; cv.height = innerHeight * dprS; ctx.setTransform(dprS, 0, 0, dprS, 0, 0); }
+    size(); addEventListener('resize', size);
+    addEventListener('pointermove', function (e) {
+      var d = lx === null ? 0 : Math.hypot(e.clientX - lx, e.clientY - ly); lx = e.clientX; ly = e.clientY;
+      var n = Math.min(4, 1 + Math.floor(d / 14));
+      for (var i = 0; i < n; i++) parts.push({ x: e.clientX + (Math.random() - 0.5) * 6, y: e.clientY + (Math.random() - 0.5) * 6, vx: (Math.random() - 0.5) * 0.4, vy: 0.2 + Math.random() * 0.5, r: 0.6 + Math.random() * 1.8, life: 1, gold: Math.random() < 0.7 });
+      if (parts.length > 160) parts.splice(0, parts.length - 160);
+      if (!runningS) { runningS = true; requestAnimationFrame(tick); }
+    }, { passive: true });
+    function tick() {
+      ctx.clearRect(0, 0, innerWidth, innerHeight);
+      for (var i = parts.length - 1; i >= 0; i--) {
+        var p = parts[i]; p.x += p.vx; p.y += p.vy; p.life -= 0.022;
+        if (p.life <= 0) { parts.splice(i, 1); continue; }
+        ctx.globalAlpha = p.life * p.life;
+        ctx.fillStyle = p.gold ? '#ffd98a' : '#ffffff';
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r * p.life, 0, 7); ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+      if (parts.length) requestAnimationFrame(tick); else runningS = false;
+    }
+  })();
+
   if (!window.gsap || !window.ScrollTrigger) { root.classList.remove('anim'); return; }
   gsap.registerPlugin(ScrollTrigger);
   if (window.SplitText) gsap.registerPlugin(SplitText);

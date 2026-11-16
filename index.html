@@ -89,16 +89,22 @@
 
   <!-- ============ EN-TÊTE ============ -->
   <header class="header">
-    <a href="#top" class="logo" aria-label="Astelsia, retour en haut">
+    <a href="./" class="logo" aria-label="Astelsia, recharger la page">
       <svg class="logo__mark" viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="lg-gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff0b8"/><stop offset="1" stop-color="#f0ad2c"/></linearGradient></defs><path d="M12 1.5c.7 5.6 2.9 7.8 8.5 8.5-5.6.7-7.8 2.9-8.5 8.5-.7-5.6-2.9-7.8-8.5-8.5 5.6-.7 7.8-2.9 8.5-8.5z" fill="url(#lg-gold)"/><circle cx="19.5" cy="19" r="1.6" fill="url(#lg-gold)"/></svg>
       <span translate="no">Astelsia</span>
     </a>
-    <nav class="nav" aria-label="Navigation principale">
-      <a href="#formules">Formules</a>
-      <a href="#serenite">Offre Sérénité</a>
-      <a href="#contact">Contact</a>
-    </nav>
+    <button type="button" class="menu-btn" aria-expanded="false" aria-controls="menu"><span class="menu-btn__label">Menu</span><span class="menu-btn__icon" aria-hidden="true"><i></i><i></i></span></button>
   </header>
+
+  <!-- ============ MENU : discret, il s'ouvre en plein écran ============ -->
+  <div class="menu" id="menu" aria-hidden="true">
+    <nav class="menu__nav" aria-label="Navigation principale">
+      <a href="#formules"><small>01</small>Formules</a>
+      <a href="#serenite"><small>02</small>Offre Sérénité</a>
+      <a href="#contact"><small>03</small>Contact</a>
+    </nav>
+    <p class="menu__foot"><span data-contact-mail>contact@astelsia.fr</span></p>
+  </div>
 
   <main id="top">
 
@@ -148,7 +154,6 @@
       <!-- Le panneau de création, en 3 étapes -->
       <div class="builder hero__in" data-step="1">
         <form class="builder__step" data-s="1" novalidate>
-          <p class="builder__count">Étape 1 sur 3</p>
           <label class="builder__q" for="b-name">Comment s'appelle votre commerce&nbsp;?</label>
           <div class="builder__line">
             <input class="builder__input" id="b-name" name="nom" type="text" maxlength="32" autocomplete="organization" placeholder="Ex. : Le Fournil…" enterkeyhint="next">
@@ -157,18 +162,16 @@
         </form>
 
         <form class="builder__step" data-s="2" novalidate hidden>
-          <p class="builder__count">Étape 2 sur 3</p>
           <label class="builder__q" for="b-job">Quel est votre métier&nbsp;?</label>
-          <input class="builder__input" id="b-job" name="metier" type="text" maxlength="40" autocomplete="off" spellcheck="false" placeholder="Ex. : fleuriste, garage, ostéopathe…" enterkeyhint="next">
-          <div class="suggest chips" aria-label="Suggestions"></div>
-          <div class="builder__row">
-            <button type="button" class="builder__back" data-go="1">Retour</button>
-            <button type="submit" class="btn builder__next">Suivant</button>
+          <div class="builder__line">
+            <input class="builder__input" id="b-job" name="metier" type="text" maxlength="40" autocomplete="off" spellcheck="false" placeholder="Ex. : fleuriste, garage…" enterkeyhint="next">
+            <button class="builder__go" type="submit" aria-label="Suivant"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h12m-5-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
           </div>
+          <div class="suggest chips" aria-label="Suggestions"></div>
+          <button type="button" class="builder__back" data-go="1">Retour</button>
         </form>
 
         <div class="builder__step" data-s="3" hidden>
-          <p class="builder__count">Étape 3 sur 3</p>
           <p class="builder__q">À vous de jouer&nbsp;: <em>tout se change.</em></p>
           <label class="builder__label" for="b-hue">Couleur</label>
           <input class="hue" id="b-hue" type="range" min="0" max="359" step="1" value="232" aria-label="Couleur du site">
@@ -195,7 +198,6 @@
           <a href="#film" class="btn builder__next">Découvrir la suite</a>
           <button type="button" class="builder__back builder__restart" data-go="3">Modifier mon site</button>
         </div>
-        <a href="#formules" class="builder__skip">Découvrir les offres</a>
       </div>
     </section>
 
