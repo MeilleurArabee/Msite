@@ -42,7 +42,7 @@ le message est déjà rédigé (SMS sur téléphone, mail sur ordinateur). Aucun
 Des sites de commerces **fictifs**, clairement marqués « site d'exemple », pour montrer chaque formule :
 - **Solo** — cordonnerie « Talon & Clé » : `https://astelsia.fr/demo/cordonnerie/`
 - **Business** — bistrot « L'Ardoise » (4 pages : accueil, carte, photos, infos) : `https://astelsia.fr/demo/restaurant/`
-- **Signature** — boulangerie « Aube » (le jour se lève au scroll, commande en ligne avec retrait) : `https://astelsia.fr/demo/boulangerie/`
+- **Signature** — boulangerie « Aube » (accueil vitrine : les produits montent un à un, le ruban de noms glisse ; commande en ligne avec retrait) : `https://astelsia.fr/demo/boulangerie/`
 
 Ils s'affichent en direct dans l'iPhone des formules (onglets Solo / Business / Signature, liste `DEMOS` dans `assets/js/builder.js`).
 Photos des exemples : Pexels (libres de droits, usage commercial autorisé).

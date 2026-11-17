@@ -300,96 +300,168 @@
   function toast(html) { tEl.innerHTML = html; tEl.classList.add('is-on'); clearTimeout(tt); tt = setTimeout(function () { tEl.classList.remove('is-on'); }, 3000); }
   var MSG = { call: '<b>Site d’exemple</b> : sur un vrai site, ce bouton appelle la boulangerie.', route: '<b>Site d’exemple</b> : sur un vrai site, ce bouton ouvre l’itinéraire dans votre GPS.' };
   d.addEventListener('click', function (e) { var a = e.target.closest && e.target.closest('[data-demo]'); if (!a) return; e.preventDefault(); toast(MSG[a.getAttribute('data-demo')] || ''); });
-  /* ---------- 12. L'accueil « vitrine » : un produit au centre, le décor change avec lui ---------- */
-  var h2 = $('[data-hero2]');
-  if (h2) (function () {
-    var LIST = [
-      { title: 'Croissant <em>pur beurre</em>', text: 'Feuilleté à la main, doré au four dès 5h. Il croustille, il s’effrite, il fond.', img: 'v-croissant', alt: 'Croissant pur beurre', bg: '#2b1810', glow: '#c98a3e', word: 'Viennoiserie' },
-      { title: 'Baguette <em>de tradition</em>', text: 'Pétrie la nuit, longue fermentation, une croûte qui chante en refroidissant.', img: 'v-baguettes', alt: 'Baguettes de tradition sorties du four', bg: '#33200f', glow: '#d8a04f', word: 'Tradition' },
-      { title: 'Pain <em>au levain</em>', text: 'Un levain nourri chaque jour, une mie dense et parfumée qui se garde.', img: 'v-levain', alt: 'Pains au levain bien dorés', bg: '#1c2217', glow: '#a9a65c', word: 'Levain' },
-      { title: 'Tartelette <em>aux fruits</em>', text: 'Pâte sablée, crème légère, fruits frais posés à la main chaque matin.', img: 'v-tarte', alt: 'Tartelette fraise et banane', bg: '#2a1118', glow: '#d0707a', word: 'Pâtisserie' }
-    ];
-    LIST.forEach(function (x) { var i = new Image(); i.src = 'img/' + x.img + '.webp?v=5'; }); // préchargées : le changement est instantané
-    var prod = $('[data-prod]', h2), left = $('.hero2__left', h2), title = $('[data-prod-title]', h2), text = $('[data-prod-text]', h2);
-    var word = $('.hero2__word', h2), wordT = $('[data-word]', h2), thumbs = $$('[data-pick]', h2), cur = 0, busy = false, timer = 0, touched = false;
-    function pick(i) {
-      if (i === cur || busy) return;
-      busy = true; cur = i;
-      var x = LIST[i];
-      thumbs.forEach(function (b, j) { b.classList.toggle('on', j === i); b.setAttribute('aria-selected', String(j === i)); });
-      h2.style.setProperty('--bg', x.bg); h2.style.setProperty('--glow', x.glow);
-      prod.classList.add('is-out'); left.classList.add('is-out'); word.classList.add('is-out');
-      setTimeout(function () {
-        prod.src = 'img/' + x.img + '.webp?v=5'; prod.alt = x.alt;
-        title.innerHTML = x.title; text.textContent = x.text; wordT.textContent = x.word;
-        requestAnimationFrame(function () { prod.classList.remove('is-out'); left.classList.remove('is-out'); word.classList.remove('is-out'); });
-        setTimeout(function () { busy = false; }, 500);
-      }, soft ? 150 : 380);
-    }
-    thumbs.forEach(function (b) { b.addEventListener('click', function () { touched = true; clearInterval(timer); pick(+b.getAttribute('data-pick')); }); });
-    // tant qu'on n'a rien touché, les produits défilent seuls
-    var inView = true;
-    if ('IntersectionObserver' in window) new IntersectionObserver(function (e) { inView = e[0].isIntersecting; }).observe(h2);
-    timer = setInterval(function () { if (!touched && inView && !d.hidden) pick((cur + 1) % LIST.length); }, 5200);
+  /* ---------- 12. L'accueil « vitrine » ----------
+     Le produit choisi monte du bas de l'écran, le ruban de noms glisse jusqu'à lui,
+     les textes se fondent, le décor change de couleur et de petits éléments flottent. */
+  var vit = $('[data-vit]');
+  if (vit) (function () {
+    var thumbs = $$('[data-pick]', vit), prods = $$('[data-prod]', vit), track = $('[data-track]', vit), segs = $$('span', track);
+    var title = $('[data-title]', vit), lead = $('[data-lead]', vit), cta = $('[data-cta]', vit), deco = $('[data-deco]', vit);
+    var N = thumbs.length, cur = 0, pos = N, busy = false, touched = false, inView = true, token = 0;
+    var UP = 'cubic-bezier(.16, 1, .3, 1)';
+    var waapi = typeof vit.animate === 'function';
+    function info(i) { var b = thumbs[i]; return { t1: b.getAttribute('data-t1'), t2: b.getAttribute('data-t2'), lead: b.getAttribute('data-lead'), bg: b.getAttribute('data-bg'), glow: b.getAttribute('data-glow'), deco: b.getAttribute('data-deco') }; }
+    function rnd(a, b) { return a + Math.random() * (b - a); }
+    function anim(el, k, o) { return waapi ? el.animate(k, o) : null; }
 
-    // les grains de blé qui flottent autour du produit
-    var box = $('.hero2__grains', h2), n = innerWidth < 700 ? 10 : 16;
-    var GRAIN = '<svg viewBox="0 0 40 24"><defs><linearGradient id="gr" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f3d18e"/><stop offset="1" stop-color="#9b6526"/></linearGradient></defs><ellipse cx="20" cy="12" rx="18" ry="10" fill="url(#gr)"/><path d="M5 12c8-2 22-2 30 0" stroke="#7a4a1a" stroke-width="1.6" fill="none" opacity=".7"/></svg>';
-    // jamais devant un texte, un bouton, une vignette ou le cœur du produit : on mesure la vraie place de chacun
-    function rect(el, m) {
-      var rg = d.createRange(); rg.selectNodeContents(el);
-      var r = rg.getBoundingClientRect(), H = h2.getBoundingClientRect();
-      return { l: r.left - H.left - m - 38, t: r.top - H.top - m - 24, r: r.right - H.left + m, b: r.bottom - H.top + m + 50 }; // + la taille du grain et sa montée
+    // le ruban : le nom du produit choisi se cale sur le bord gauche
+    function ribbonTo(p, instant) {
+      var s = segs[p]; if (!s) return;
+      var x = -s.offsetLeft + innerWidth * (innerWidth < 900 ? 0.05 : -0.02);
+      if (instant) track.classList.add('no-anim');
+      track.style.transform = 'translate3d(' + x.toFixed(1) + 'px,0,0)';
+      if (instant) { void track.offsetWidth; track.classList.remove('no-anim'); }
     }
-    function spread() {
-      box.textContent = '';
-      var W = h2.offsetWidth, Ht = h2.offsetHeight, P = prod.getBoundingClientRect(), H = h2.getBoundingClientRect();
-      var pc = { x: P.left - H.left + P.width / 2, y: P.top - H.top + P.height / 2, r: P.width * 0.42 };
-      var no = $$('.hero2__kicker, [data-prod-title], [data-prod-text], .hero2__cta, .hero2__tag, .hero2__text, .hero2__thumbs, .hero2__hint', h2)
-        .filter(function (el) { return el.offsetWidth; }).map(function (el) { return rect(el, 26); });
-      function free(x, y) {
-        if (y < 130 || y > Ht - 30) return false; // ni sous l'en-tête, ni collé en bas
-        if (Math.hypot(x - pc.x, y - pc.y) < pc.r) return false;
-        for (var j = 0; j < no.length; j++) { var q = no[j]; if (x > q.l && x < q.r && y > q.t && y < q.b) return false; }
-        return true;
-      }
-      for (var k = 0; k < n; k++) {
-        var gx, gy, tries = 0;
-        do { gx = Math.random() * W; gy = Math.random() * Ht; } while (!free(gx, gy) && ++tries < 60);
-        if (tries >= 60) continue;
-        grain(gx / W * 100, gy / Ht * 100);
-      }
+    function settle() { if (pos >= 2 * N || pos < N) { pos = N + ((pos % N) + N) % N; ribbonTo(pos, true); } }
+    ribbonTo(pos, true);
+    track.addEventListener('transitionend', settle);
+    addEventListener('resize', function () { ribbonTo(pos, true); });
+    if (d.fonts && d.fonts.ready) d.fonts.ready.then(function () { ribbonTo(pos, true); });
+
+    // les petits éléments qui flottent, différents pour chaque produit
+    var DEFS = '<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>' +
+      '<linearGradient id="v-gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe6a8"/><stop offset=".5" stop-color="#dc9d48"/><stop offset="1" stop-color="#8a4f1c"/></linearGradient>' +
+      '<linearGradient id="v-grain" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f3d18e"/><stop offset="1" stop-color="#9b6526"/></linearGradient>' +
+      '<radialGradient id="v-puff"><stop offset="0" stop-color="#fffaf0" stop-opacity=".7"/><stop offset=".55" stop-color="#fff3e0" stop-opacity=".28"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>' +
+      '<radialGradient id="v-berry" cx=".35" cy=".3"><stop offset="0" stop-color="#ff6b7d"/><stop offset=".6" stop-color="#c81d3c"/><stop offset="1" stop-color="#6e0a1f"/></radialGradient>' +
+      '<linearGradient id="v-leaf" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#2f6b2c"/><stop offset="1" stop-color="#8fca5e"/></linearGradient>' +
+      '</defs></svg>';
+    var SH = {
+      flake: '<svg viewBox="0 0 40 30"><path d="M3 18 12 5l12-2 13 8-4 11-13 5-12-1z" fill="url(#v-gold)"/><path d="M8 20 30 10M11 24l22-9" stroke="#fff3d0" stroke-opacity=".55" stroke-width="1.2" fill="none"/></svg>',
+      shard: '<svg viewBox="0 0 40 24"><path d="M2 13 10 4l11 2 8-5 9 8-6 7-11-2-10 7z" fill="url(#v-gold)"/><path d="M7 13l12-4 12 1" stroke="#fff3d0" stroke-opacity=".5" stroke-width="1" fill="none"/></svg>',
+      crumb: '<svg viewBox="0 0 20 18"><path d="M3 8 8 2l8 2 2 8-6 5-8-2z" fill="url(#v-gold)"/></svg>',
+      grain: '<svg viewBox="0 0 40 24"><ellipse cx="20" cy="12" rx="18" ry="10" fill="url(#v-grain)"/><path d="M5 12c8-2 22-2 30 0" stroke="#7a4a1a" stroke-width="1.6" fill="none" opacity=".7"/></svg>',
+      ear: '<svg viewBox="0 0 30 80"><path d="M15 80V18" stroke="#c99a52" stroke-width="2" fill="none"/>' +
+        [12, 22, 32, 42, 52].map(function (y) { return '<ellipse cx="10" cy="' + y + '" rx="5" ry="8" transform="rotate(-28 10 ' + y + ')" fill="url(#v-grain)"/><ellipse cx="20" cy="' + (y + 4) + '" rx="5" ry="8" transform="rotate(28 20 ' + (y + 4) + ')" fill="url(#v-grain)"/>'; }).join('') +
+        '<ellipse cx="15" cy="7" rx="4.5" ry="7.5" fill="url(#v-grain)"/></svg>',
+      puff: '<svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="19" fill="url(#v-puff)"/></svg>',
+      rasp: '<svg viewBox="0 0 30 30">' + [[10, 9], [18, 8], [24, 14], [7, 16], [14, 15], [21, 21], [12, 22], [17, 27]].map(function (c) { return '<circle cx="' + c[0] + '" cy="' + c[1] + '" r="5.6" fill="url(#v-berry)"/>'; }).join('') + '</svg>',
+      slice: '<svg viewBox="0 0 40 42"><path d="M20 2c14 0 20 14 10 28-4 6-8 10-10 10s-6-4-10-10C0 16 6 2 20 2z" fill="#d2283f"/><path d="M20 8c8 0 11 9 6 19-2 4-5 7-6 7s-4-3-6-7C9 17 12 8 20 8z" fill="#f7b0ad"/>' +
+        [[14, 12], [26, 13], [12, 22], [28, 22], [18, 30], [23, 31]].map(function (c) { return '<ellipse cx="' + c[0] + '" cy="' + c[1] + '" rx="1" ry="1.6" fill="#ffe08a"/>'; }).join('') + '</svg>',
+      leaf: '<svg viewBox="0 0 40 40"><path d="M4 36C4 16 20 4 36 4c0 18-12 32-32 32z" fill="url(#v-leaf)"/><path d="M6 34 32 8" stroke="#24521f" stroke-width="1.4" fill="none"/></svg>'
+    };
+    var SIZE = { flake: 1, shard: .9, crumb: .5, grain: .8, ear: .62, puff: 1.15, rasp: .85, slice: 1, leaf: .9 };
+    var SETS = { flake: ['flake', 'shard', 'crumb', 'flake', 'shard'], grain: ['grain', 'ear', 'grain', 'grain', 'ear'], flour: ['grain', 'puff', 'ear', 'grain', 'puff', 'grain'], berry: ['rasp', 'slice', 'leaf', 'rasp', 'leaf'] };
+    var big = innerWidth >= 900;
+    // [x %, y %, profondeur] : jamais sur les textes ni sur les vignettes
+    var SPOTS = big
+      ? [[3, 19, 1.35], [17, 10, .6], [31, 27, .8], [61, 25, .7], [86, 13, 1], [96, 31, .5], [5, 84, 1.5], [41, 88, .9], [61, 81, .6], [80, 88, 1.2], [49, 13, .45], [24, 82, .55]]
+      : [[4, 22, .9], [90, 21, .7], [6, 42, 1.1], [90, 46, 1.25], [2, 64, .5], [94, 72, .6], [62, 19, .45]];
+    deco.innerHTML = DEFS;
+    function makeSet(kind, first) {
+      var list = SETS[kind] || SETS.grain, frag = d.createDocumentFragment(), els = [];
+      SPOTS.forEach(function (sp, k) {
+        var depth = sp[2], name = list[k % list.length], el = d.createElement('i');
+        el.className = 'dec'; el.style.left = sp[0] + '%'; el.style.top = sp[1] + '%';
+        el.style.setProperty('--d', depth);
+        el.style.setProperty('--s', Math.round((big ? 46 : 28) * depth * SIZE[name]) + 'px');
+        el.style.setProperty('--b', depth > 1.25 ? '3px' : depth < .55 ? '1.5px' : '0px');
+        el.style.setProperty('--r', Math.round(rnd(-70, 70)) + 'deg');
+        el.style.setProperty('--rr', Math.round(rnd(-40, 40)) + 'deg');
+        el.style.setProperty('--t', rnd(6, 10).toFixed(1) + 's');
+        el.style.setProperty('--dl', (-rnd(0, 8)).toFixed(1) + 's');
+        el.style.setProperty('--dx', Math.round(rnd(-14, 14)) + 'px');
+        el.style.setProperty('--dy', Math.round(rnd(-30, -10)) + 'px');
+        el.innerHTML = '<span class="dec__f"><span class="dec__in">' + SH[name] + '</span></span>';
+        frag.appendChild(el); els.push(el);
+      });
+      deco.appendChild(frag);
+      if (!first) els.forEach(function (el, k) {
+        anim($('.dec__in', el), soft ? [{ opacity: 0 }, { opacity: 1 }] : [{ opacity: 0, translate: '0 60px', scale: '.4' }, { opacity: 1, translate: '0 0', scale: '1' }],
+          { duration: soft ? 500 : 1000, delay: soft ? 150 : 260 + k * 45, easing: UP, fill: 'backwards' });
+      });
+      return els;
     }
-    function grain(gx, gy) {
-      var g = d.createElement('i'), far = Math.random() < 0.35;
-      g.className = 'grain'; g.innerHTML = GRAIN;
-      g.style.left = gx + '%'; g.style.top = gy + '%';
-      g.style.setProperty('--s', (far ? 12 + Math.random() * 10 : 20 + Math.random() * 18) + 'px');
-      g.style.setProperty('--r', Math.round(Math.random() * 360) + 'deg');
-      g.style.setProperty('--b', far ? '2px' : '0px');
-      g.style.setProperty('--t', (7 + Math.random() * 6).toFixed(1) + 's');
-      g.style.setProperty('--d', (-Math.random() * 8).toFixed(1) + 's');
-      g.style.setProperty('--dx', ((Math.random() - 0.5) * 40).toFixed(0) + 'px');
-      g.style.setProperty('--dy', (-10 - Math.random() * 40).toFixed(0) + 'px');
-      box.appendChild(g);
+    var decs = makeSet(info(0).deco, true);
+    function decoSwap(kind) {
+      decs.forEach(function (el, k) {
+        var a = anim($('.dec__in', el), soft ? [{ opacity: 1 }, { opacity: 0 }] : [{ opacity: 1 }, { opacity: 0, translate: '0 -50px', scale: '.5' }], { duration: soft ? 300 : 480, delay: soft ? 0 : k * 22, easing: 'ease-in', fill: 'forwards' });
+        if (a) a.onfinish = function () { el.remove(); }; else el.remove();
+      });
+      decs = makeSet(kind);
     }
-    spread();
-    if (d.fonts && d.fonts.ready) d.fonts.ready.then(spread); // une fois les polices là, les textes ont leur vraie taille
-    var lastW = innerWidth;
-    addEventListener('resize', function () { if (Math.abs(innerWidth - lastW) > 80) { lastW = innerWidth; spread(); } });
+
+    // les textes : ils s'effacent, puis reviennent ligne par ligne
+    function setText(x) {
+      title.textContent = '';
+      var a = d.createElement('span'), b = d.createElement('span'), em = d.createElement('em');
+      a.className = b.className = 'ln'; a.textContent = x.t1; em.textContent = x.t2; b.appendChild(em);
+      title.appendChild(a); title.appendChild(d.createTextNode(' ')); title.appendChild(b);
+      lead.textContent = x.lead;
+    }
+    function swapText(x, tok) {
+      if (!waapi) { setText(x); return; }
+      var outs = [title, lead, cta].map(function (el, k) {
+        return el.animate([{ opacity: 1, filter: 'blur(0px)' }, { opacity: 0, filter: 'blur(5px)' }], { duration: soft ? 200 : 280, delay: k * 40, easing: 'ease', fill: 'forwards' });
+      });
+      outs[outs.length - 1].onfinish = function () {
+        if (tok !== token) return;
+        setText(x);
+        outs.forEach(function (a) { a.cancel(); });
+        $$('.ln', title).concat([lead, cta]).forEach(function (el, k) {
+          el.animate(soft ? [{ opacity: 0 }, { opacity: 1 }] : [{ opacity: 0, translate: '0 16px', filter: 'blur(6px)' }, { opacity: 1, translate: '0 0', filter: 'blur(0px)' }],
+            { duration: soft ? 400 : 800, delay: 120 + k * 95, easing: UP, fill: 'backwards' });
+        });
+      };
+    }
+
+    function pick(i, auto) {
+      if (i === cur || busy) return;
+      busy = true; var prev = cur, tok = ++token; cur = i;
+      var x = info(i), o = prods[prev], n = prods[i];
+      thumbs.forEach(function (b, j) { b.classList.toggle('on', j === i); b.setAttribute('aria-selected', String(j === i)); b.tabIndex = j === i ? 0 : -1; });
+      vit.style.setProperty('--bg', x.bg); vit.style.setProperty('--glow', x.glow);
+      var step = i - prev; if (auto && step < 0) step += N;
+      pos += step; ribbonTo(pos);
+      // le nouveau produit monte du bas, devant l'ancien qui s'efface
+      prods.forEach(function (p) { p.classList.remove('is-front'); });
+      if (waapi) n.getAnimations().forEach(function (a) { a.cancel(); });
+      n.classList.add('is-on', 'is-front'); n.removeAttribute('aria-hidden'); o.setAttribute('aria-hidden', 'true');
+      anim(n, soft ? [{ opacity: 0 }, { opacity: 1 }] : [{ translate: '0 90vh', rotate: '14deg' }, { translate: '0 0', rotate: '0deg' }], { duration: soft ? 500 : 1150, easing: UP });
+      var oa = anim(o, soft ? [{ opacity: 1 }, { opacity: 0 }] : [{ opacity: 1 }, { opacity: 0, translate: '0 -12%', scale: '.9', rotate: '-6deg' }], { duration: soft ? 500 : 700, delay: soft ? 0 : 160, easing: 'ease', fill: 'forwards' });
+      if (oa) oa.onfinish = function () { if (prods[cur] !== o) o.classList.remove('is-on'); oa.cancel(); };
+      else o.classList.remove('is-on');
+      swapText(x, tok);
+      decoSwap(x.deco);
+      setTimeout(function () { busy = false; }, 760);
+    }
+    thumbs.forEach(function (b, j) {
+      b.tabIndex = j === 0 ? 0 : -1;
+      b.addEventListener('click', function () { touched = true; pick(j); });
+      b.addEventListener('keydown', function (e) {
+        var k = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0; if (!k) return;
+        e.preventDefault(); touched = true; var t = (cur + k + N) % N; busy = false; pick(t); thumbs[t].focus();
+      });
+    });
+    // tant qu'on n'a rien touché, les produits défilent seuls
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (e) { inView = e[0].isIntersecting; }).observe(vit);
+    setInterval(function () { if (!touched && inView && !d.hidden) pick((cur + 1) % N, true); }, 5200);
+
+    // profondeur : à la souris le décor bouge un peu ; au scroll le produit monte et le ruban file
     if (soft) return;
-    // profondeur : à la souris, le décor bouge un peu ; au scroll, le produit monte et tourne doucement
-    var center = $('.hero2__center', h2), mx = 0, my = 0, sy = 0, ticking = false;
-    function paint() {
-      ticking = false;
-      box.style.transform = 'translate(' + (mx * 18).toFixed(1) + 'px,' + (my * 14 - sy * 0.15).toFixed(1) + 'px)';
-      center.style.translate = (mx * -10).toFixed(1) + 'px ' + (my * -8 - sy * 0.22).toFixed(1) + 'px';
-      center.style.rotate = (sy * 0.012 + mx * 2).toFixed(2) + 'deg';
-      word.style.translate = (sy * -0.35 + mx * 24).toFixed(1) + 'px 0';
+    if (fine) {
+      vit.addEventListener('pointermove', function (e) {
+        var r = vit.getBoundingClientRect();
+        vit.style.setProperty('--mx', ((e.clientX - r.left) / r.width - 0.5).toFixed(3));
+        vit.style.setProperty('--my', ((e.clientY - r.top) / r.height - 0.5).toFixed(3));
+      });
+      vit.addEventListener('pointerleave', function () { vit.style.setProperty('--mx', 0); vit.style.setProperty('--my', 0); });
     }
-    function ask() { if (!ticking) { ticking = true; requestAnimationFrame(paint); } }
-    if (fine) h2.addEventListener('pointermove', function (e) { var r = h2.getBoundingClientRect(); mx = (e.clientX - r.left) / r.width - 0.5; my = (e.clientY - r.top) / r.height - 0.5; ask(); });
-    addEventListener('scroll', function () { sy = Math.min(window.scrollY, innerHeight); ask(); }, { passive: true });
+    var tk = false;
+    addEventListener('scroll', function () {
+      if (tk) return; tk = true;
+      requestAnimationFrame(function () { tk = false; vit.style.setProperty('--sy', (Math.min(window.scrollY, innerHeight) * 0.2).toFixed(1)); });
+    }, { passive: true });
   })();
 
   $$('[data-year]').forEach(function (n) { n.textContent = new Date().getFullYear(); });

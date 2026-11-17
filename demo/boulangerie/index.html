@@ -10,10 +10,10 @@
   <meta name="theme-color" content="#16122f">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="preload" href="fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="fonts/dm-sans.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="style.css?v=5">
-  <script src="boot.js?v=5"></script>
+  <link rel="preload" href="fonts/playfair-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/jost-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="style.css?v=6">
+  <script src="boot.js?v=6"></script>
 </head>
 <body class="page-home">
   <aside class="demo-bar" aria-label="Site d'exemple">
@@ -31,31 +31,23 @@
   <nav class="sheet" id="sheet" aria-label="Menu"><a href="index.html" aria-current="page">Accueil</a><a href="nos-produits.html">Nos produits</a><a href="commander.html">Commander</a><a href="infos.html">Infos</a><p>02 61 91 47 30 · 2 rue du Levain, 56100 Lorient</p></nav>
 
   <main>
-    <section class="hero2" aria-labelledby="titre" data-hero2>
+    <section class="vit" aria-labelledby="titre" data-vit style="--bg:#2b1810;--glow:#c98a3e">
       <canvas class="flour" aria-hidden="true"></canvas>
-      <div class="hero2__word" aria-hidden="true"><span data-word>Viennoiserie</span></div>
-      <div class="hero2__grains" aria-hidden="true"></div>
-      <div class="hero2__center">
-        <div class="hero2__glow" aria-hidden="true"></div>
-        <img class="hero2__prod" data-prod src="img/v-croissant.webp" alt="Croissant pur beurre" width="900" height="900" fetchpriority="high">
+      <div class="vit__glow" aria-hidden="true"></div>
+      <div class="vit__ribbon" aria-hidden="true"><div class="vit__track" data-track><span>Croissant pur beurre</span><span>Baguette de tradition</span><span>Pain au levain</span><span>Tartelette aux fruits</span><span>Croissant pur beurre</span><span>Baguette de tradition</span><span>Pain au levain</span><span>Tartelette aux fruits</span><span>Croissant pur beurre</span><span>Baguette de tradition</span><span>Pain au levain</span><span>Tartelette aux fruits</span></div></div>
+      <div class="vit__deco" aria-hidden="true" data-deco></div>
+      <div class="vit__stage"><div class="vit__float"><img class="vit__prod vit__prod--croissant is-on" data-prod="0" src="img/p-croissant.webp?v=6" alt="Croissant pur beurre" width="1200" height="486" fetchpriority="high"><img class="vit__prod vit__prod--baguette" data-prod="1" src="img/p-baguette.webp?v=6" alt="Baguette de tradition" width="1200" height="305" decoding="async" aria-hidden="true"><img class="vit__prod vit__prod--levain" data-prod="2" src="img/p-levain.webp?v=6" alt="Pain au levain" width="1000" height="948" decoding="async" aria-hidden="true"><img class="vit__prod vit__prod--tarte" data-prod="3" src="img/p-tarte.webp?v=6" alt="Tartelette fraise et banane" width="907" height="663" decoding="async" aria-hidden="true"></div></div>
+      <div class="vit__left">
+        <h1 id="titre" class="vit__title" data-title><span class="ln">Croissant</span> <span class="ln"><em>pur beurre</em></span></h1>
+        <p class="vit__lead" data-lead>Feuilleté à la main, doré au four dès 5 h. Il croustille, il s'effrite, il fond.</p>
+        <a class="vit__cta" href="commander.html" data-cta>Commander</a>
       </div>
-      <div class="hero2__left">
-        <p class="hero2__kicker">Boulangerie artisanale · Lorient</p>
-        <h1 id="titre" data-prod-title>Croissant <em>pur beurre</em></h1>
-        <p class="hero2__lead" data-prod-text>Feuilleté à la main, doré au four dès 5h. Il croustille, il s'effrite, il fond.</p>
-        <a class="btn btn--gold hero2__cta" href="commander.html">Commander<span aria-hidden="true">→</span></a>
+      <div class="vit__right">
+        <p class="vit__tag">Pétri la nuit, doré à l'aube.</p>
+        <p class="vit__text">Farine de meule, levain maison, four à sole. Chaud chaque matin dès 7&nbsp;h, à Lorient.</p>
+        <div class="vit__thumbs" role="tablist" aria-label="Choisir un produit"><button type="button" role="tab" aria-selected="true" aria-label="Croissant" class="on" data-pick="0" data-t1="Croissant" data-t2="pur beurre" data-lead="Feuilleté à la main, doré au four dès 5 h. Il croustille, il s&#x27;effrite, il fond." data-bg="#2b1810" data-glow="#c98a3e" data-deco="flake"><img src="img/t-croissant.webp?v=6" alt="" width="120" height="120"></button><button type="button" role="tab" aria-selected="false" aria-label="Baguette" data-pick="1" data-t1="Baguette" data-t2="de tradition" data-lead="Pétrie la nuit, longue fermentation, une croûte qui chante en refroidissant." data-bg="#33200f" data-glow="#d8a04f" data-deco="grain"><img src="img/t-baguette.webp?v=6" alt="" width="120" height="120"></button><button type="button" role="tab" aria-selected="false" aria-label="Pain au levain" data-pick="2" data-t1="Pain" data-t2="au levain" data-lead="Un levain nourri chaque jour, une mie dense et parfumée qui se garde." data-bg="#1b2216" data-glow="#a3a457" data-deco="flour"><img src="img/t-levain.webp?v=6" alt="" width="120" height="120"></button><button type="button" role="tab" aria-selected="false" aria-label="Tartelette" data-pick="3" data-t1="Tartelette" data-t2="aux fruits" data-lead="Pâte sablée, crème légère, fruits frais posés à la main chaque matin." data-bg="#2a1118" data-glow="#d0707a" data-deco="berry"><img src="img/t-tarte.webp?v=6" alt="" width="120" height="120"></button></div>
       </div>
-      <div class="hero2__right">
-        <p class="hero2__tag">Pétri la nuit, doré à l'aube.</p>
-        <p class="hero2__text">Farine de meule, levain maison, cuisson au four à sole. Chaud chaque matin dès 7h.</p>
-        <div class="hero2__thumbs" role="tablist" aria-label="Choisir un produit">
-          <button type="button" role="tab" aria-selected="true" aria-label="Viennoiseries" class="on" data-pick="0"><img src="img/v-croissant.webp" alt=""></button>
-          <button type="button" role="tab" aria-selected="false" aria-label="Pain de tradition" data-pick="1"><img src="img/v-baguettes.webp" alt=""></button>
-          <button type="button" role="tab" aria-selected="false" aria-label="Pain au levain" data-pick="2"><img src="img/v-levain.webp?v=5" alt=""></button>
-          <button type="button" role="tab" aria-selected="false" aria-label="Pâtisseries" data-pick="3"><img src="img/v-tarte.webp" alt=""></button>
-        </div>
-      </div>
-      <p class="hero2__hint">✦ Touchez la farine.</p>
+      <p class="vit__hint">✦ Touchez la farine.</p>
     </section>
 
     <section class="story" aria-label="La nuit du boulanger">
@@ -176,8 +168,8 @@
   </div>
 
   <div class="toast" role="status" aria-live="polite"></div>
-  <script src="data.js?v=5"></script>
+  <script src="data.js?v=6"></script>
   <script src="lenis.min.js" defer></script>
-  <script src="app.js?v=5" defer></script>
+  <script src="app.js?v=6" defer></script>
 </body>
 </html>
