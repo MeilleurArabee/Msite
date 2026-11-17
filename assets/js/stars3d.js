@@ -26,7 +26,7 @@
      1. La forme : une étoile arrondie, bombée, lisse
      --------------------------------------------------------- */
   function outline() { // contour arrondi, échantillonné finement
-    var R = 1, r = 0.55, tOut = 0.36, tIn = 0.42, P = [], out = [], i;
+    var R = 1, r = 0.47, tOut = 0.17, tIn = 0.3, P = [], out = [], i;
     for (i = 0; i < 10; i++) {
       var a = Math.PI / 2 + i * Math.PI / 5, rr = i % 2 ? r : R;
       P.push([Math.cos(a) * rr, Math.sin(a) * rr]);
@@ -427,7 +427,7 @@
   api.poke = function (i, x) { // la toucher : elle part en tournant du côté opposé au doigt
     var st = stars[i]; if (!st) return null;
     var dir = x < st.px ? -1 : 1;
-    if (!reduced) { st.spinV += dir * (13 + Math.random() * 5); st.hopV += 4; st.sqV += 2.4; }
+    if (!reduced) { st.spinV += dir * (6 + Math.random() * 2); st.hopV += 3.2; st.sqV += 2; }
     st.flash = 1; // mode doux : elle brille, sans bouger
     return { x: st.px, y: st.py, r: st.pr };
   };

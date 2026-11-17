@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Astelsia — Sites web pour les commerces de proximité</title>
   <meta name="description" content="Astelsia crée des sites web élégants et rapides pour les restaurants, coiffeurs, artisans et boutiques. Trois formules claires, à partir de 249,90 €.">
-  <meta name="theme-color" content="#060a22">
+  <meta name="theme-color" content="#110b24">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; frame-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
   <link rel="canonical" href="https://astelsia.fr/">
 
@@ -42,7 +42,7 @@
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   <link rel="preload" href="assets/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/manrope.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/style.css?v=20261117-10">
+  <link rel="stylesheet" href="assets/css/style.css?v=20261117-11">
   <script>
     // Les animations restent actives partout. Si l'appareil demande à réduire les animations,
     // le site passe en « mode doux » : fondus uniquement, aucun mouvement brusque.
@@ -121,10 +121,9 @@
   <!-- ============ MENU : discret, il s'ouvre en plein écran ============ -->
   <div class="menu" id="menu" aria-hidden="true">
     <nav class="menu__nav" aria-label="Navigation principale">
-      <a href="#exemples"><small>01</small>Exemples</a>
-      <a href="#formules"><small>02</small>Formules</a>
-      <a href="#serenite"><small>03</small>Offre Sérénité</a>
-      <a href="#contact"><small>04</small>Contact</a>
+      <a href="#formules"><small>01</small>Formules</a>
+      <a href="#serenite"><small>02</small>Offre Sérénité</a>
+      <a href="#contact"><small>03</small>Contact</a>
     </nav>
     <p class="menu__foot"><span data-contact-mail>contact@astelsia.fr</span><span class="menu__dot" aria-hidden="true">·</span><span data-contact-phone>06 23 67 26 92</span></p>
   </div>
@@ -238,31 +237,6 @@
       <p class="tl-line tl-line--big">Faites-leur <em>bonne impression.</em></p>
     </section>
 
-    <!-- ============ EXEMPLES : un vrai site, qu'on peut toucher ============ -->
-    <section class="section examples" id="exemples">
-      <div class="examples__text">
-        <h2 class="title" data-split>Un vrai site, <em>à toucher.</em></h2>
-        <p class="lead" data-reveal>Talon &amp; Clé, une cordonnerie imaginaire réalisée en formule&nbsp;Solo. Faites défiler, touchez le porte-clés.</p>
-        <a class="link-arrow" href="demo/cordonnerie/" target="_blank" rel="noopener" data-reveal>Ouvrir l'exemple en grand<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 16 16 8m-6.5 0H16v6.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        <p class="examples__note" data-reveal>Exemple&nbsp;: commerce, adresse et numéro fictifs.</p>
-      </div>
-      <div class="phone" data-reveal>
-        <div class="phone__frame">
-          <div class="phone__display">
-            <div class="phone__status" aria-hidden="true">
-              <span>9:41</span><i class="phone__island"></i>
-              <span class="phone__icons"><svg viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg><svg viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="currentColor" opacity=".5"/><rect x="2.4" y="2.4" width="16" height="7.2" rx="1.8"/><rect x="23.6" y="4" width="1.6" height="4" rx=".8" opacity=".5"/></svg></span>
-            </div>
-            <div class="phone__screen">
-              <iframe title="Exemple de site : Talon et Clé, cordonnerie fictive" data-src="demo/cordonnerie/" loading="lazy"></iframe>
-              <div class="phone__wait" aria-hidden="true"><i></i><i></i><i></i></div>
-            </div>
-          </div>
-        </div>
-        <div class="phone__glow" aria-hidden="true"></div>
-      </div>
-    </section>
-
     <!-- ============ FORMULES ============ -->
     <section class="formules" id="formules">
       <h2 class="title plans__title" data-reveal><span data-b="plans-title">Trois formules.</span> <em>Zéro surprise.</em></h2>
@@ -310,12 +284,21 @@
                 <div class="mini__book mini__sig"><span data-b="cta">Réserver</span></div>
                 <div class="mini__toast" role="status"></div>
               </div>
+              <!-- un vrai site d'exemple, quand la formule en a un (builder.js, liste DEMOS) -->
+              <div class="plan-site" hidden>
+                <div class="phone__status" aria-hidden="true"><span>9:41</span><span class="phone__icons"><svg viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg><svg viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="currentColor" opacity=".5"/><rect x="2.4" y="2.4" width="16" height="7.2" rx="1.8"/><rect x="23.6" y="4" width="1.6" height="4" rx=".8" opacity=".5"/></svg></span></div>
+                <div class="plan-site__screen">
+                  <iframe title="Exemple de site réalisé par Astelsia"></iframe>
+                  <div class="phone__wait" aria-hidden="true"><i></i><i></i><i></i></div>
+                </div>
+              </div>
             </div>
             <div class="device__glow" aria-hidden="true"></div>
           </div>
           <div class="plan-preview__text">
             <p class="plan-preview__cap"></p>
             <span class="plan-preview__hint">Faites défiler et touchez l'aperçu</span>
+            <a class="link-arrow plan-preview__link" href="demo/cordonnerie/" target="_blank" rel="noopener" hidden>Voir le site en grand<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 16 16 8m-6.5 0H16v6.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           </div>
         </div>
 
@@ -442,16 +425,16 @@
     <p>© <span data-year>2026</span> <span translate="no">Astelsia</span> · <a href="mentions-legales.html">Mentions légales</a></p>
   </footer>
 
-  <script src="assets/js/config.js?v=20261117-10"></script>
+  <script src="assets/js/config.js?v=20261117-11"></script>
   <script src="assets/vendor/gsap.min.js" defer></script>
   <script src="assets/vendor/ScrollTrigger.min.js" defer></script>
   <script src="assets/vendor/SplitText.min.js" defer></script>
   <script src="assets/vendor/lenis.min.js" defer></script>
-  <script src="assets/js/stars3d.js?v=20261117-10" defer></script>
-  <script src="assets/js/builder.js?v=20261117-10" defer></script>
-  <script src="assets/js/scene.js?v=20261117-10" defer></script>
-  <script src="assets/js/fx.js?v=20261117-10" defer></script>
-  <script src="assets/js/main.js?v=20261117-10" defer></script>
+  <script src="assets/js/stars3d.js?v=20261117-11" defer></script>
+  <script src="assets/js/builder.js?v=20261117-11" defer></script>
+  <script src="assets/js/scene.js?v=20261117-11" defer></script>
+  <script src="assets/js/fx.js?v=20261117-11" defer></script>
+  <script src="assets/js/main.js?v=20261117-11" defer></script>
   <script>
     // L'écran de chargement reste le temps que tout soit prêt (3D, polices), au minimum 1 s, au maximum 5 s.
     (function () {

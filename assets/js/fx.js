@@ -221,7 +221,6 @@
     if (dir) { SC.pushSwing(dir); burst(x, y, { n: 8, r: 10, power: 0.4 }); return; }
     if (SC && SC.hitMeadow && SC.hitMeadow(x, y)) { fireflies(x, y); whisper('Chut… les lucioles dormaient ✦', 'flies', y); return; }
     comet(x, y);
-    whisper('Faites un vœu ✦', 'wish', y);
   }
   var down = null;
   document.addEventListener('pointerdown', function (e) {

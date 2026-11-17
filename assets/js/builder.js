@@ -125,7 +125,7 @@
   var PLANS = { solo: 'Solo', business: 'Business', signature: 'Signature' };
   var ORDER = ['solo', 'business', 'signature'];
   var CAPS = {
-    solo: '<strong>Solo</strong> · Une belle page, claire et colorée&nbsp;: votre accueil, vos horaires, votre adresse et un bouton pour vous appeler.',
+    solo: '<strong>Solo</strong> · Un vrai exemple&nbsp;: Talon &amp; Clé, une cordonnerie imaginaire. Une belle page claire, avec horaires, tarifs, carte et bouton pour appeler.',
     business: '<strong>Business</strong> · Un site élégant de plusieurs pages&nbsp;: menu de navigation, votre carte ou vos produits, une galerie photo.',
     signature: '<strong>Signature</strong> · L\'expérience complète, comme ce site&nbsp;: un univers animé sur mesure et la réservation en ligne intégrée.'
   };
@@ -422,6 +422,36 @@
     });
   }
   setLive(planMini, true);
+
+  /* ---------- Les vrais sites d'exemple, dans le téléphone des formules ----------
+     Ajouter ici les exemples Business et Signature quand ils seront prêts. */
+  var DEMOS = { solo: 'demo/cordonnerie/' };
+  var site = document.querySelector('.plan-site'), siteScreen = site && site.querySelector('.plan-site__screen');
+  var siteFrame = site && site.querySelector('iframe'), siteLink = document.querySelector('.plan-preview__link');
+  function fitSite() {
+    if (!site || site.hidden) return;
+    var w = siteScreen.clientWidth, h = siteScreen.clientHeight;
+    if (!w || !h) return;
+    var k = w / 390; // le site s'affiche exactement comme sur un vrai iPhone
+    siteFrame.style.height = Math.round(h / k) + 'px';
+    siteFrame.style.transform = 'scale(' + k + ')';
+  }
+  if (siteScreen && window.ResizeObserver) new ResizeObserver(fitSite).observe(siteScreen);
+  function showSite(key) {
+    if (!site) return;
+    var url = DEMOS[key];
+    site.hidden = !url;
+    planMini.style.visibility = url ? 'hidden' : '';
+    if (hintEl) hintEl.hidden = !!url;
+    if (siteLink) { siteLink.hidden = !url; if (url) siteLink.href = url; }
+    if (!url) return;
+    if (siteFrame.getAttribute('src') !== url) {
+      site.classList.remove('is-loaded');
+      siteFrame.onload = function () { site.classList.add('is-loaded'); };
+      siteFrame.setAttribute('src', url);
+    }
+    requestAnimationFrame(fitSite);
+  }
   var timers = [], currentRec = 'business';
   function setRecommended(rec) {
     if (rec === currentRec && cards.business.dataset.recSet) return;
@@ -462,6 +492,7 @@
       if (!reduced) { var d = planMini.closest('.device'); d.classList.remove('flash'); void d.offsetWidth; d.classList.add('flash'); }
     }
     if (planCap) planCap.innerHTML = CAPS[key];
+    showSite(key);
     syncTabs();
     updateContact();
   }

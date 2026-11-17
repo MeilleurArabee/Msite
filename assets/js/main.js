@@ -125,35 +125,6 @@
   })();
   window.AstelsiaTrailer = Trailer;
 
-  /* =========================================================
-     EXEMPLES : le vrai site dans l'iPhone, chargé quand on approche
-     ========================================================= */
-  (function () {
-    var phone = document.querySelector('.phone');
-    if (!phone) return;
-    var screen = phone.querySelector('.phone__screen'), frame = screen.querySelector('iframe');
-    var BASE = 390; // largeur d'un iPhone : le site s'affiche exactement comme sur un vrai téléphone
-    function fit() {
-      var w = screen.clientWidth, h = screen.clientHeight;
-      if (!w || !h) return;
-      var s = w / BASE;
-      frame.style.width = BASE + 'px';
-      frame.style.height = Math.round(h / s) + 'px';
-      frame.style.transform = 'scale(' + s + ')';
-    }
-    fit();
-    if (window.ResizeObserver) new ResizeObserver(fit).observe(screen); else addEventListener('resize', fit);
-    function load() {
-      if (frame.getAttribute('src')) return;
-      frame.addEventListener('load', function () { phone.classList.add('is-loaded'); });
-      frame.setAttribute('src', frame.getAttribute('data-src'));
-    }
-    if ('IntersectionObserver' in window) {
-      var io = new IntersectionObserver(function (e) { if (e[0].isIntersecting) { load(); io.disconnect(); } }, { rootMargin: '900px 0px' });
-      io.observe(phone);
-    } else load();
-  })();
-
   if (!window.gsap || !window.ScrollTrigger) { root.classList.remove('anim'); return; }
   gsap.registerPlugin(ScrollTrigger);
   if (window.SplitText) gsap.registerPlugin(SplitText);
@@ -177,6 +148,11 @@
   ['wheel', 'touchstart', 'keydown'].forEach(function (ev) { window.addEventListener(ev, stopGlide, { passive: true }); });
   function scrollToTarget(target) {
     var y = target === 0 ? 0 : target.getBoundingClientRect().top + window.scrollY;
+    // « Découvrir la suite » : on s'arrête pile sur la première phrase, au centre de l'écran
+    if (target && target.classList && target.classList.contains('trailer')) {
+      var first = target.querySelector('.tl-line');
+      if (first) y = first.getBoundingClientRect().top + window.scrollY + first.offsetHeight / 2 - innerHeight / 2;
+    }
     y = Math.max(0, Math.min(y, ScrollTrigger.maxScroll(window)));
     var dist = Math.abs(y - window.scrollY);
     var dur = Math.min(3.6, 1.4 + dist / 2600); // plus c'est loin, plus la descente dure
@@ -218,7 +194,7 @@
     var sc = g ? true : 0.6;
 
     /* 1. Fin des phrases → exemples : la nuit s'éclaircit (heure bleue profonde) */
-    gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { trigger: '.tl-line--big', start: 'top 60%', endTrigger: '#exemples', end: 'top 15%', scrub: sc } })
+    gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { trigger: '.tl-line--big', start: 'top 60%', endTrigger: '#formules', end: 'top 30%', scrub: sc } })
       .to('.sky--night', { opacity: 0 }, 0)
       .to('.stars', g ? { opacity: 0.6 } : { opacity: 0.6, yPercent: -12 }, 0);
 
@@ -255,13 +231,6 @@
       });
     }
 
-    /* 5. L'iPhone d'exemple se redresse en arrivant */
-    if (!g) {
-      gsap.fromTo('.phone__frame', { rotateX: 14, rotateZ: -3, y: 40 }, {
-        rotateX: 0, rotateZ: 0, y: 0, ease: 'none', transformPerspective: 900,
-        scrollTrigger: { trigger: '.phone', start: 'top 95%', end: 'center 60%', scrub: 0.6 }
-      });
-    }
   });
 
   /* ---------- Ordinateur : un cran de molette = une glissade douce jusqu'à la phrase suivante ---------- */
