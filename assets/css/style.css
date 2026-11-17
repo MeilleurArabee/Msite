@@ -513,7 +513,7 @@ main { position: relative; z-index: 1; }
    ========================================================= */
 .trailer { position: relative; text-align: center; padding: 16vh var(--pad) 6vh; }
 .tl-line {
-  margin: 0 auto 36vh; max-width: 15ch;
+  margin: 0 auto 46vh; max-width: 15ch;
   font: 400 clamp(31px, 8.6vw, 82px)/1.14 var(--serif); letter-spacing: -.02em;
 }
 .tl-line:last-child { margin-bottom: 10vh; }
