@@ -42,7 +42,7 @@
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   <link rel="preload" href="assets/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/manrope.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/style.css?v=20261117-13">
+  <link rel="stylesheet" href="assets/css/style.css?v=20261117-14">
   <script>
     // Les animations restent actives partout. Si l'appareil demande à réduire les animations,
     // le site passe en « mode doux » : fondus uniquement, aucun mouvement brusque.
@@ -306,7 +306,6 @@
           <article class="plan plan--solo" id="p-solo" role="tabpanel" aria-labelledby="t-solo" data-plan="solo">
             <p class="plan__kicker">Pour être trouvé</p>
             <h3 class="plan__name">Solo</h3>
-            <p class="plan__tag">L'essentiel, en une belle page. Idéal pour un artisan ou un petit commerce.</p>
             <p class="plan__price">249,90&nbsp;€</p>
             <p class="plan__offer">Prix de lancement pour mes 3 premiers clients, puis 349,90&nbsp;€</p>
             <ul>
@@ -322,7 +321,6 @@
             <span class="badge">Recommandé</span>
             <p class="plan__kicker">Pour attirer</p>
             <h3 class="plan__name">Business</h3>
-            <p class="plan__tag">Le site qui donne envie de venir. Idéal pour un restaurant, une boutique, un salon.</p>
             <p class="plan__price">649,90&nbsp;€</p>
             <p class="plan__perk">+ 1 mois d'offre Sérénité offert</p>
             <ul>
@@ -338,7 +336,6 @@
             <span class="badge badge--gold">Le plus complet</span>
             <p class="plan__kicker">Pour marquer les esprits</p>
             <h3 class="plan__name">Signature</h3>
-            <p class="plan__tag">Un univers rien qu'à vous. Le site dont vos clients parlent.</p>
             <p class="plan__price">1&nbsp;349,90&nbsp;€</p>
             <p class="plan__perk">+ 6 mois d'offre Sérénité offerts</p>
             <ul>
@@ -352,6 +349,13 @@
         </div>
       </div>
       <p class="plans__hint" aria-hidden="true">Glissez la carte pour comparer</p>
+      <div class="compare" data-reveal>
+        <table>
+          <caption>Ce que contient chaque formule</caption>
+          <thead><tr><td></td><th scope="col">Solo</th><th scope="col" class="is-rec">Business</th><th scope="col">Signature</th></tr></thead>
+          <tbody><tr><th scope="row">Une belle page, horaires, carte, bouton appeler</th><td class="y" aria-label="oui">✦</td><td class="y" aria-label="oui">✦</td><td class="y" aria-label="oui">✦</td></tr><tr><th scope="row">Plusieurs pages : carte, photos, infos</th><td class="n" aria-label="non">–</td><td class="y" aria-label="oui">✦</td><td class="y" aria-label="oui">✦</td></tr><tr><th scope="row">Galerie photo</th><td class="n" aria-label="non">–</td><td class="y" aria-label="oui">✦</td><td class="y" aria-label="oui">✦</td></tr><tr><th scope="row">Animations soignées</th><td class="n" aria-label="non">–</td><td class="y" aria-label="oui">✦</td><td class="y" aria-label="oui">✦</td></tr><tr><th scope="row">Commande ou réservation en ligne</th><td class="n" aria-label="non">–</td><td class="n" aria-label="non">–</td><td class="y" aria-label="oui">✦</td></tr><tr><th scope="row">Un univers animé rien qu'à vous</th><td class="n" aria-label="non">–</td><td class="n" aria-label="non">–</td><td class="y" aria-label="oui">✦</td></tr><tr><th scope="row">Des petits secrets à toucher</th><td class="n" aria-label="non">–</td><td class="n" aria-label="non">–</td><td class="y" aria-label="oui">✦</td></tr><tr class="gift"><th scope="row">Offre Sérénité offerte</th><td class="n">–</td><td>1&nbsp;mois</td><td>6&nbsp;mois</td></tr></tbody>
+        </table>
+      </div>
       <ul class="trust" data-reveal>
         <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg>Chaque site est créé sur mesure, rapide et parfait sur téléphone</li>
         <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg>Vous validez la maquette avant la création</li>
@@ -426,16 +430,16 @@
     <p>© <span data-year>2026</span> <span translate="no">Astelsia</span> · <a href="mentions-legales.html">Mentions légales</a></p>
   </footer>
 
-  <script src="assets/js/config.js?v=20261117-13"></script>
+  <script src="assets/js/config.js?v=20261117-14"></script>
   <script src="assets/vendor/gsap.min.js" defer></script>
   <script src="assets/vendor/ScrollTrigger.min.js" defer></script>
   <script src="assets/vendor/SplitText.min.js" defer></script>
   <script src="assets/vendor/lenis.min.js" defer></script>
-  <script src="assets/js/stars3d.js?v=20261117-13" defer></script>
-  <script src="assets/js/builder.js?v=20261117-13" defer></script>
-  <script src="assets/js/scene.js?v=20261117-13" defer></script>
-  <script src="assets/js/fx.js?v=20261117-13" defer></script>
-  <script src="assets/js/main.js?v=20261117-13" defer></script>
+  <script src="assets/js/stars3d.js?v=20261117-14" defer></script>
+  <script src="assets/js/builder.js?v=20261117-14" defer></script>
+  <script src="assets/js/scene.js?v=20261117-14" defer></script>
+  <script src="assets/js/fx.js?v=20261117-14" defer></script>
+  <script src="assets/js/main.js?v=20261117-14" defer></script>
   <script>
     // L'écran de chargement reste le temps que tout soit prêt (3D, polices), au minimum 1 s, au maximum 5 s.
     (function () {
