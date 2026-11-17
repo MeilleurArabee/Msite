@@ -28,6 +28,9 @@
   --bar: 36px;
 }
 
+/* fondu doux quand on passe d'une page (ou d'un exemple) à l'autre */
+@view-transition { navigation: auto; }
+
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: 24px; }
 html.soft { scroll-behavior: auto; }

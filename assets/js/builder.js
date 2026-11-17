@@ -126,8 +126,8 @@
   var ORDER = ['solo', 'business', 'signature'];
   var CAPS = {
     solo: '<strong>Solo</strong> · Un vrai exemple&nbsp;: Talon &amp; Clé, une cordonnerie imaginaire. Une belle page claire, avec horaires, tarifs, carte et bouton pour appeler.',
-    business: '<strong>Business</strong> · Un site élégant de plusieurs pages&nbsp;: menu de navigation, votre carte ou vos produits, une galerie photo.',
-    signature: '<strong>Signature</strong> · L\'expérience complète, comme ce site&nbsp;: un univers animé sur mesure et la réservation en ligne intégrée.'
+    business: '<strong>Business</strong> · Un vrai exemple&nbsp;: L\'Ardoise, un bistrot de quartier. Quatre pages, la carte, une galerie photo et des animations élégantes.',
+    signature: '<strong>Signature</strong> · Un vrai exemple&nbsp;: Aube, une boulangerie. Le jour se lève quand on fait défiler, on commande en ligne, et la farine s\'envole sous le doigt.'
   };
 
   function norm(s) { return String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[’'\-_.]/g, ' ').replace(/\s+/g, ' ').trim(); }
@@ -425,7 +425,7 @@
 
   /* ---------- Les vrais sites d'exemple, dans le téléphone des formules ----------
      Ajouter ici les exemples Business et Signature quand ils seront prêts. */
-  var DEMOS = { solo: 'demo/cordonnerie/' };
+  var DEMOS = { solo: 'demo/cordonnerie/', business: 'demo/restaurant/', signature: 'demo/boulangerie/' };
   var site = document.querySelector('.plan-site'), siteScreen = site && site.querySelector('.plan-site__screen');
   var siteFrame = site && site.querySelector('iframe'), siteLink = document.querySelector('.plan-preview__link');
   function fitSite() {
@@ -445,12 +445,24 @@
     if (hintEl) hintEl.hidden = !!url;
     if (siteLink) { siteLink.hidden = !url; if (url) siteLink.href = url; }
     if (!url) return;
-    if (siteFrame.getAttribute('src') !== url) {
-      site.classList.remove('is-loaded');
-      siteFrame.onload = function () { site.classList.add('is-loaded'); };
-      siteFrame.setAttribute('src', url);
-    }
+    wanted = url;
+    if (near) loadSite();
     requestAnimationFrame(fitSite);
+  }
+  // le vrai site ne se charge que quand on approche des formules : l'accueil reste rapide
+  var wanted = null, near = !('IntersectionObserver' in window);
+  function loadSite() {
+    if (!wanted || siteFrame.getAttribute('src') === wanted) return;
+    site.classList.remove('is-loaded');
+    siteFrame.onload = function () { site.classList.add('is-loaded'); };
+    siteFrame.setAttribute('src', wanted);
+  }
+  if (site && !near) {
+    var siteIO = new IntersectionObserver(function (e) {
+      if (!e[0].isIntersecting) return;
+      near = true; siteIO.disconnect(); loadSite();
+    }, { rootMargin: '700px 0px' });
+    siteIO.observe(site.closest('.plan-preview'));
   }
   var timers = [], currentRec = 'business';
   function setRecommended(rec) {

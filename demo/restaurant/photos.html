@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Les photos — L'Ardoise (site d'exemple)</title>
+  <meta name="description" content="Les photos du bistrot fictif L'Ardoise : les assiettes, la salle, la terrasse.">
+  <!-- Commerce fictif : on demande aux moteurs de recherche de ne pas l'indexer -->
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#26292c">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="fonts/bricolage.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/caveat.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="style.css?v=1">
+  <script src="boot.js?v=1"></script>
+</head>
+<body class="page-photos">
+  <aside class="demo-bar" aria-label="Site d'exemple">
+    <p>Site d'exemple · commerce fictif</p>
+    <a href="../../" target="_top">par <span translate="no">Astelsia</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.7 5.6 2.9 7.8 8.5 8.5-5.6.7-7.8 2.9-8.5 8.5-.7-5.6-2.9-7.8-8.5-8.5 5.6-.7 7.8-2.9 8.5-8.5z"/></svg></a>
+  </aside>
+  <header class="top">
+    <a class="brand" href="index.html" translate="no"><b>L'Ardoise</b><span>bistrot</span></a>
+    <nav class="nav" aria-label="Pages"><a href="index.html">Accueil</a><a href="carte.html">La carte</a><a href="photos.html" aria-current="page">Photos</a><a href="infos.html">Infos</a></nav>
+    <a class="btn" href="tel:+33261912358" data-demo="call"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>Réserver</a>
+    <button type="button" class="menu-btn" aria-expanded="false" aria-controls="sheet"><span>Menu</span><i aria-hidden="true"></i></button>
+  </header>
+  <nav class="sheet" id="sheet" aria-label="Menu"><a href="index.html">Accueil</a><a href="carte.html">La carte</a><a href="photos.html" aria-current="page">Photos</a><a href="infos.html">Infos</a><p>Réservations au 02 61 91 23 58</p></nav>
+
+  <main>
+    <header class="head">
+      <div class="head__img"><img src="img/salle.webp" alt="La salle du bistrot" width="1000" height="1250" fetchpriority="high"></div>
+      <div class="head__text">
+        <p class="eyebrow" style="color:var(--mustard)">Venez voir avant de venir</p>
+        <h1>Les photos</h1>
+        <p>Les assiettes, la salle, la terrasse. Touchez une photo pour l'agrandir.</p>
+      </div>
+    </header>
+    <div class="filters" role="group" aria-label="Filtrer les photos">
+      <button type="button" data-filter="tout" aria-pressed="true">Tout</button>
+      <button type="button" data-filter="assiettes" aria-pressed="false">Les assiettes</button>
+      <button type="button" data-filter="ambiance" aria-pressed="false">L'ambiance</button>
+    </div>
+    <div class="gallery">
+        <button type="button" data-cat="assiettes" data-reveal><img src="img/burger.webp" alt="Le burger de L’Ardoise" width="1000" height="666" loading="lazy" decoding="async"></button>
+        <button type="button" data-cat="ambiance" data-reveal><img src="img/salle.webp" alt="La salle, le soir" width="1000" height="1250" loading="lazy" decoding="async"></button>
+        <button type="button" data-cat="assiettes" data-reveal><img src="img/croque.webp" alt="Croque-monsieur maison" width="1000" height="652" loading="lazy" decoding="async"></button>
+        <button type="button" data-cat="ambiance" data-reveal><img src="img/terrasse.webp" alt="La terrasse sous les guirlandes" width="1000" height="666" loading="lazy" decoding="async"></button>
+        <button type="button" data-cat="assiettes" data-reveal><img src="img/magret.webp" alt="Magret, sauce aux fruits rouges" width="867" height="1300" loading="lazy" decoding="async"></button>
+        <button type="button" data-cat="ambiance" data-reveal><img src="img/cuisine.webp" alt="En cuisine, à la flamme" width="1000" height="1250" loading="lazy" decoding="async"></button>
+        <button type="button" data-cat="assiettes" data-reveal><img src="img/gambas.webp" alt="Gambas sautées à l’ail" width="1000" height="666" loading="lazy" decoding="async"></button>
+        <button type="button" data-cat="ambiance" data-reveal><img src="img/bar.webp" alt="Le comptoir et ses ardoises" width="1000" height="666" loading="lazy" decoding="async"></button>
+        <button type="button" data-cat="assiettes" data-reveal><img src="img/fondant.webp" alt="Fondant au chocolat" width="1000" height="667" loading="lazy" decoding="async"></button>
+        <button type="button" data-cat="ambiance" data-reveal><img src="img/midi.webp" alt="Le service du midi" width="890" height="1300" loading="lazy" decoding="async"></button>
+        <button type="button" data-cat="assiettes" data-reveal><img src="img/framboise.webp" alt="Layer cake framboise" width="867" height="1300" loading="lazy" decoding="async"></button>
+        <button type="button" data-cat="ambiance" data-reveal><img src="img/soir.webp" alt="Une table pour deux" width="867" height="1300" loading="lazy" decoding="async"></button>
+        <button type="button" data-cat="ambiance" data-reveal><img src="img/salle-convives.webp" alt="Entre amis, à L’Ardoise" width="1600" height="1073" loading="lazy" decoding="async"></button>
+    </div>
+    <div class="lightbox" role="dialog" aria-modal="true" aria-label="Photo agrandie" aria-hidden="true">
+      <button type="button" class="lb-close" aria-label="Fermer">✕</button>
+      <button type="button" class="lb-prev" aria-label="Photo précédente">‹</button>
+      <figure><img src="data:," alt=""><figcaption></figcaption></figure>
+      <button type="button" class="lb-next" aria-label="Photo suivante">›</button>
+    </div>
+  </main>
+
+  <footer class="foot">
+    <div class="foot__in">
+      <div>
+        <a class="brand" href="index.html" translate="no"><b>L'Ardoise</b><span>bistrot</span></a>
+        <p>5 rue de la Craie, 56100 Lorient<br>02 61 91 23 58</p>
+      </div>
+      <div>
+        <p class="hand" style="font-size:25px;color:var(--mustard)">Les horaires</p>
+        <p>Du mardi au samedi<br>12h – 14h · 19h – 22h<br>jusqu'à 23h vendredi et samedi</p>
+      </div>
+      <nav aria-label="Pages"><a href="index.html">Accueil</a><a href="carte.html">La carte</a><a href="photos.html">Photos</a><a href="infos.html">Infos</a></nav>
+    </div>
+  </footer>
+  <div class="credit">
+    <svg class="credit__star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.7 5.6 2.9 7.8 8.5 8.5-5.6.7-7.8 2.9-8.5 8.5-.7-5.6-2.9-7.8-8.5-8.5 5.6-.7 7.8-2.9 8.5-8.5z"/></svg>
+    <p>Ce site est un exemple de la formule <strong>Business</strong> d'<span translate="no">Astelsia</span>&nbsp;: plusieurs pages, la carte, une galerie photo.</p>
+    <small>Commerce, adresse, carte, prix et numéro fictifs. Photos&nbsp;: Pexels.</small>
+    <a class="btn" href="../../" target="_top">Créer le mien</a>
+  </div>
+
+  <div class="dock" aria-hidden="true">
+    <a class="btn" href="tel:+33261912358" data-demo="call" tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>Réserver</a>
+    <a class="btn btn--ghost" href="carte.html" tabindex="-1">La carte</a>
+  </div>
+  <div class="toast" role="status" aria-live="polite"></div>
+  <script src="app.js?v=1" defer></script>
+</body>
+</html>

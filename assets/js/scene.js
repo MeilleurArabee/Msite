@@ -14,7 +14,7 @@
 
   /* Position de la balançoire dans les images (en pixels de l'image) */
   var SWING = {
-    wide: { w: 2400, h: 1000, x1: 759.2, x2: 816.1, y1: 611.8, seatY: 788.2, posX: 0.22 },
+    wide: { w: 2400, h: 1000, x1: 903.2, x2: 960.1, y1: 611.8, seatY: 788.2, posX: 0.22 },
     tall: { w: 1100, h: 1500, x1: 513.2, x2: 570.1, y1: 931.8, seatY: 1108.2, posX: 0.3 }
   };
 

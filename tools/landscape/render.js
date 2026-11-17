@@ -1,6 +1,7 @@
 const { chromium } = require('playwright');
 const fs = require('fs');
-const R = process.argv[2], OUT = process.argv[3]  // R : dossier de paint.js, OUT : dossier de sortie, modes = (process.argv[4] || 'wide,tall').split(',');
+// R : dossier de paint.js, OUT : dossier de sortie, modes : wide et/ou tall
+const R = process.argv[2], OUT = process.argv[3], modes = (process.argv[4] || 'wide,tall').split(',');
 (async () => {
   const b = await chromium.launch();
   const p = await b.newPage();

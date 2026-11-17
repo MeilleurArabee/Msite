@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Nos produits — Aube (site d'exemple)</title>
+  <meta name="description" content="Les pains, viennoiseries et pâtisseries de la boulangerie fictive Aube.">
+  <!-- Commerce fictif : on demande aux moteurs de recherche de ne pas l'indexer -->
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#16122f">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/dm-sans.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="style.css?v=1">
+  <script src="boot.js?v=1"></script>
+</head>
+<body class="page-produits">
+  <aside class="demo-bar" aria-label="Site d'exemple">
+    <p>Site d'exemple · commerce fictif</p>
+    <a href="../../" target="_top">par <span translate="no">Astelsia</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.7 5.6 2.9 7.8 8.5 8.5-5.6.7-7.8 2.9-8.5 8.5-.7-5.6-2.9-7.8-8.5-8.5 5.6-.7 7.8-2.9 8.5-8.5z"/></svg></a>
+  </aside>
+  <header class="top">
+    <a class="brand" href="index.html" translate="no"><svg viewBox="0 0 32 32" aria-hidden="true"><defs><linearGradient id="lg-sun" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe7a8"/><stop offset="1" stop-color="#f19a45"/></linearGradient></defs><path d="M6 21a10 10 0 0 1 20 0z" fill="url(#lg-sun)"/><path d="M3 24.5h26" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M16 5v3M7.5 9.5l2 2M24.5 9.5l-2 2" stroke="#f3c66f" stroke-width="2" stroke-linecap="round"/></svg><span><b>Aube</b><br><small>boulangerie</small></span></a>
+    <nav class="nav" aria-label="Pages"><a href="index.html">Accueil</a><a href="nos-produits.html" aria-current="page">Nos produits</a><a href="commander.html">Commander</a><a href="infos.html">Infos</a></nav>
+    <div class="top__right">
+      <a class="cart-btn" href="commander.html" aria-label="Ma commande"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1.2 12H6.2z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span>Commande</span><span data-count="0">0</span></a>
+      <button type="button" class="menu-btn" aria-expanded="false" aria-controls="sheet" aria-label="Menu"><i aria-hidden="true"></i></button>
+    </div>
+  </header>
+  <nav class="sheet" id="sheet" aria-label="Menu"><a href="index.html">Accueil</a><a href="nos-produits.html" aria-current="page">Nos produits</a><a href="commander.html">Commander</a><a href="infos.html">Infos</a><p>02 61 91 47 30 · 2 rue du Levain, 56100 Lorient</p></nav>
+
+  <main>
+    <header class="head">
+      <div class="head__img"><img src="img/etageres.webp" alt="Les étagères de la boulangerie" width="975" height="1300" fetchpriority="high"></div>
+      <div class="head__text">
+        <p class="eyebrow">Tout est fait ici</p>
+        <h1>Nos produits</h1>
+        <p>Ajoutez ce qui vous fait envie&nbsp;: vous choisirez l'heure de passage à la fin.</p>
+      </div>
+    </header>
+    <nav class="chips" aria-label="Catégories"><a class="chip is-on" href="#pains">Pains</a><a class="chip" href="#viennoiseries">Viennoiseries</a><a class="chip" href="#patisseries">Pâtisseries</a></nav>
+    
+    <section class="cat" id="pains">
+      <h2 data-reveal>Les <em>pains</em></h2>
+      <div class="products" data-stagger><article class="product" data-id="baguette" data-reveal><figure><img src="img/baguette.webp" alt="Baguette de tradition" width="1000" height="663" loading="lazy" decoding="async"></figure><div class="product__body"><h3>Baguette de tradition</h3><p>Pétrie la nuit, croustillante au matin.</p><div class="product__foot"><span class="price">1,30&nbsp;€</span><button type="button" class="add" aria-label="Ajouter Baguette de tradition à ma commande">+</button></div></div></article><article class="product" data-id="campagne" data-reveal><figure><img src="img/pains.webp" alt="Pain de campagne au levain" width="1000" height="666" loading="lazy" decoding="async"></figure><div class="product__body"><h3>Pain de campagne au levain</h3><p>Levain naturel, croûte épaisse.</p><div class="product__foot"><span class="price">3,90&nbsp;€ <small style="font:500 13px var(--sans);color:var(--muted)">500 g</small></span><button type="button" class="add" aria-label="Ajouter Pain de campagne au levain à ma commande">+</button></div></div></article><article class="product" data-id="fournee" data-reveal><figure><img src="img/etageres.webp" alt="Le pain du jour" width="975" height="1300" loading="lazy" decoding="async"></figure><div class="product__body"><h3>Le pain du jour</h3><p>Graines, seigle ou noix : selon l’humeur du boulanger.</p><div class="product__foot"><span class="price">4,20&nbsp;€ <small style="font:500 13px var(--sans);color:var(--muted)">400 g</small></span><button type="button" class="add" aria-label="Ajouter Le pain du jour à ma commande">+</button></div></div></article></div>
+      
+    </section>
+    <section class="cat" id="viennoiseries">
+      <h2 data-reveal>Les <em>viennoiseries</em></h2>
+      <div class="products" data-stagger><article class="product" data-id="croissant" data-reveal><figure><img src="img/croissant.webp" alt="Croissant pur beurre" width="1000" height="1000" loading="lazy" decoding="async"></figure><div class="product__body"><h3>Croissant pur beurre</h3><p>Feuilleté, doré, qui laisse des miettes.</p><div class="product__foot"><span class="price">1,20&nbsp;€</span><button type="button" class="add" aria-label="Ajouter Croissant pur beurre à ma commande">+</button></div></div></article><article class="product" data-id="amandes" data-reveal><figure><img src="img/croissants-assiettes.webp" alt="Croissant aux amandes" width="1000" height="666" loading="lazy" decoding="async"></figure><div class="product__body"><h3>Croissant aux amandes</h3><p>Crème d’amande, sucre glace.</p><div class="product__foot"><span class="price">2,10&nbsp;€</span><button type="button" class="add" aria-label="Ajouter Croissant aux amandes à ma commande">+</button></div></div></article></div>
+      <ul class="extras"><li class="product" data-id="chocolat"><div><h3>Pain au chocolat</h3><p>Deux barres de chocolat noir.</p></div><span class="price">1,30&nbsp;€</span><button type="button" class="add" aria-label="Ajouter Pain au chocolat à ma commande">+</button></li><li class="product" data-id="kouign"><div><h3>Kouign-amann</h3><p>Le beurre et le sucre, à la bretonne.</p></div><span class="price">3,20&nbsp;€ <small>la part</small></span><button type="button" class="add" aria-label="Ajouter Kouign-amann à ma commande">+</button></li></ul>
+    </section>
+    <section class="cat" id="patisseries">
+      <h2 data-reveal>Les <em>pâtisseries</em></h2>
+      <div class="products" data-stagger><article class="product" data-id="tarte" data-reveal><figure><img src="img/tarte-fraises.webp" alt="Tarte aux fraises" width="1000" height="667" loading="lazy" decoding="async"></figure><div class="product__body"><h3>Tarte aux fraises</h3><p>Pâte sablée, crème vanille, fraises.</p><div class="product__foot"><span class="price">18&nbsp;€ <small style="font:500 13px var(--sans);color:var(--muted)">4 parts</small></span><button type="button" class="add" aria-label="Ajouter Tarte aux fraises à ma commande">+</button></div></div></article><article class="product" data-id="tartelette" data-reveal><figure><img src="img/tarte-fruits.webp" alt="Tartelette fraise & banane" width="1000" height="666" loading="lazy" decoding="async"></figure><div class="product__body"><h3>Tartelette fraise & banane</h3><p>Fruits frais, crème légère.</p><div class="product__foot"><span class="price">4,20&nbsp;€</span><button type="button" class="add" aria-label="Ajouter Tartelette fraise & banane à ma commande">+</button></div></div></article><article class="product" data-id="fraisier" data-reveal><figure><img src="img/tarte-fraises2.webp" alt="Gâteau aux fraises" width="867" height="1300" loading="lazy" decoding="async"></figure><div class="product__body"><h3>Gâteau aux fraises</h3><p>Pour les grandes occasions.</p><div class="product__foot"><span class="price">26&nbsp;€ <small style="font:500 13px var(--sans);color:var(--muted)">6 parts</small></span><button type="button" class="add" aria-label="Ajouter Gâteau aux fraises à ma commande">+</button></div></div></article></div>
+      <ul class="extras"><li class="product" data-id="flan"><div><h3>Flan pâtissier</h3><p>Vanille, pâte croustillante.</p></div><span class="price">3&nbsp;€ <small>la part</small></span><button type="button" class="add" aria-label="Ajouter Flan pâtissier à ma commande">+</button></li><li class="product" data-id="far"><div><h3>Far breton</h3><p>Aux pruneaux, comme chez mamie.</p></div><span class="price">2,80&nbsp;€ <small>la part</small></span><button type="button" class="add" aria-label="Ajouter Far breton à ma commande">+</button></li></ul>
+    </section>
+    <div style="height:110px"></div>
+  </main>
+
+  <footer class="foot">
+    <div class="foot__in">
+      <div>
+        <a class="brand" href="index.html" translate="no"><svg viewBox="0 0 32 32" aria-hidden="true"><defs><linearGradient id="lg-sun" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe7a8"/><stop offset="1" stop-color="#f19a45"/></linearGradient></defs><path d="M6 21a10 10 0 0 1 20 0z" fill="url(#lg-sun)"/><path d="M3 24.5h26" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M16 5v3M7.5 9.5l2 2M24.5 9.5l-2 2" stroke="#f3c66f" stroke-width="2" stroke-linecap="round"/></svg><span><b>Aube</b><br><small>boulangerie</small></span></a>
+        <p>2 rue du Levain, 56100 Lorient<br>02 61 91 47 30</p>
+      </div>
+      <div>
+        <p class="label">Les horaires</p>
+        <p>Du mardi au samedi, 7h – 19h30<br>Le dimanche, 7h – 13h</p>
+      </div>
+      <nav aria-label="Pages"><a href="index.html">Accueil</a><a href="nos-produits.html">Nos produits</a><a href="commander.html">Commander</a><a href="infos.html">Infos</a></nav>
+    </div>
+  </footer>
+  <div class="credit">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.7 5.6 2.9 7.8 8.5 8.5-5.6.7-7.8 2.9-8.5 8.5-.7-5.6-2.9-7.8-8.5-8.5 5.6-.7 7.8-2.9 8.5-8.5z"/></svg>
+    <p>Ce site est un exemple de la formule <strong>Signature</strong> d'<span translate="no">Astelsia</span>&nbsp;: un univers à part, la commande en ligne, et des petits secrets à toucher.</p>
+    <small>Commerce, adresse, prix et numéro fictifs. Photos&nbsp;: Pexels.</small>
+    <a class="btn btn--gold" href="../../" target="_top">Créer le mien</a>
+  </div>
+
+  <div class="basket" aria-live="polite">
+    <p><span data-items>Votre panier est vide</span><b data-total>0&nbsp;€</b></p>
+    <a class="btn btn--gold" href="commander.html" data-go-order>Ma commande</a>
+  </div>
+  <div class="toast" role="status" aria-live="polite"></div>
+  <script src="data.js?v=1"></script>
+  <script src="lenis.min.js" defer></script>
+  <script src="app.js?v=1" defer></script>
+</body>
+</html>

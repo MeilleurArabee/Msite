@@ -446,7 +446,7 @@
     var hy = H * (tall ? 0.62 : 0.6);
     var opt = tall
       ? { tall: true, S: 470, tx: W * 0.3, by: H * 0.72, path: 0.55 }
-      : { tall: false, S: 470, tx: W * 0.24, by: H * 0.76, path: 0.42 };
+      : { tall: false, S: 470, tx: W * 0.3, by: H * 0.76, path: 0.48 }; // chêne un peu à droite : jamais coupé sur grand écran
     var cw = tall ? 1000 : 2400, ch = tall ? 2000 : 1350;
     var t0 = performance.now();
     var res = {
