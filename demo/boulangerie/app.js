@@ -306,10 +306,10 @@
     var LIST = [
       { title: 'Croissant <em>pur beurre</em>', text: 'Feuilleté à la main, doré au four dès 5h. Il croustille, il s’effrite, il fond.', img: 'v-croissant', alt: 'Croissant pur beurre', bg: '#2b1810', glow: '#c98a3e', word: 'Viennoiserie' },
       { title: 'Baguette <em>de tradition</em>', text: 'Pétrie la nuit, longue fermentation, une croûte qui chante en refroidissant.', img: 'v-baguettes', alt: 'Baguettes de tradition sorties du four', bg: '#33200f', glow: '#d8a04f', word: 'Tradition' },
-      { title: 'Pain <em>au levain</em>', text: 'Un levain nourri chaque jour, une mie dense et parfumée qui se garde.', img: 'v-levain', alt: 'Pâton de pain au levain façonné à la main', bg: '#1c2217', glow: '#a9a65c', word: 'Levain' },
+      { title: 'Pain <em>au levain</em>', text: 'Un levain nourri chaque jour, une mie dense et parfumée qui se garde.', img: 'v-levain', alt: 'Pains au levain bien dorés', bg: '#1c2217', glow: '#a9a65c', word: 'Levain' },
       { title: 'Tartelette <em>aux fruits</em>', text: 'Pâte sablée, crème légère, fruits frais posés à la main chaque matin.', img: 'v-tarte', alt: 'Tartelette fraise et banane', bg: '#2a1118', glow: '#d0707a', word: 'Pâtisserie' }
     ];
-    LIST.forEach(function (x) { var i = new Image(); i.src = 'img/' + x.img + '.webp'; }); // préchargées : le changement est instantané
+    LIST.forEach(function (x) { var i = new Image(); i.src = 'img/' + x.img + '.webp?v=5'; }); // préchargées : le changement est instantané
     var prod = $('[data-prod]', h2), left = $('.hero2__left', h2), title = $('[data-prod-title]', h2), text = $('[data-prod-text]', h2);
     var word = $('.hero2__word', h2), wordT = $('[data-word]', h2), thumbs = $$('[data-pick]', h2), cur = 0, busy = false, timer = 0, touched = false;
     function pick(i) {
@@ -320,7 +320,7 @@
       h2.style.setProperty('--bg', x.bg); h2.style.setProperty('--glow', x.glow);
       prod.classList.add('is-out'); left.classList.add('is-out'); word.classList.add('is-out');
       setTimeout(function () {
-        prod.src = 'img/' + x.img + '.webp'; prod.alt = x.alt;
+        prod.src = 'img/' + x.img + '.webp?v=5'; prod.alt = x.alt;
         title.innerHTML = x.title; text.textContent = x.text; wordT.textContent = x.word;
         requestAnimationFrame(function () { prod.classList.remove('is-out'); left.classList.remove('is-out'); word.classList.remove('is-out'); });
         setTimeout(function () { busy = false; }, 500);
