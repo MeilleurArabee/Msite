@@ -26,9 +26,22 @@ Le commerçant ouvre le site et voit son propre site déjà créé, avec son nom
 
 Les métiers reconnus et leurs textes sont dans `assets/js/builder.js` (liste `JOBS`).
 
+## Les petits secrets à toucher (formule Signature, `assets/js/fx.js`)
+- **Les étoiles dorées** : on les touche, elles tournent, rebondissent et jettent des étincelles.
+  Cinq étoiles touchées : une pluie d'étoiles filantes.
+- **Le ciel** : un doigt posé dans le ciel lance une étoile filante (« Faites un vœu ✦ »).
+- **La lune** vacille, **la balançoire** part quand on la pousse, **l'herbe** laisse s'envoler des lucioles.
+- À la souris : une poussière d'étoile suit le pointeur.
+- Mode doux (moins d'animations demandé par l'appareil) : tout devient fondu, rien ne file.
+
+## Le contact
+Téléphone, mail pré-rempli, et **« Être rappelé »** : on choisit un moment (matin, midi, après-midi, soirée),
+le message est déjà rédigé (SMS sur téléphone, mail sur ordinateur). Aucun serveur, aucune donnée stockée.
+
 ## Sites d'exemple (`demo/`)
 Des sites de commerces **fictifs**, clairement marqués « site d'exemple », pour montrer chaque formule :
 - **Solo** — cordonnerie « Talon & Clé » : `https://astelsia.fr/demo/cordonnerie/`
+  (aussi visible en direct dans l'iPhone de la section « Exemples » de l'accueil)
 
 Les numéros affichés sont réservés à la fiction (02 61 91 xx xx) ; les boutons « Appeler » et « Itinéraire »
 affichent un petit message au lieu d'appeler. Les pages d'exemple ne sont pas indexées par Google (`noindex`).
@@ -48,7 +61,9 @@ puis ouvrir http://localhost:8000
 - `assets/css/style.css` — styles (mobile d'abord)
 - `assets/js/main.js` — animations (GSAP, ScrollTrigger, SplitText, Lenis)
 - `assets/js/builder.js` — le créateur de site, les formules à onglets, le mail pré-rempli
-- `assets/js/scene.js` — étoiles, chargement du paysage, balançoire
+- `assets/js/scene.js` — étoiles, chargement du paysage, balançoire (vrai pendule), lune
+- `assets/js/fx.js` — étincelles, étoiles filantes, lucioles : tout ce qui se touche
+- `assets/js/stars3d.js` — les 3 étoiles dorées en 3D (WebGL fait maison), qu'on peut toucher
 - `assets/scene/` — paysage peint en calques WebP (cadrage large + cadrage téléphone)
 - `assets/fonts/` — Fraunces et Manrope, hébergées sur le site (licence SIL OFL)
 - `assets/vendor/` — GSAP 3.15 et Lenis 1.3

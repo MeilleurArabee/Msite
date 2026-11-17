@@ -222,7 +222,7 @@
   }
 
   /* ---------- Rendu de tous les mini-sites ---------- */
-  var lastName = null, lastLabel = null;
+  var lastName = null, lastLabel = null, lastTl = null;
   function render() {
     var t = template(), name = state.name.trim();
     var hue = state.hue !== null ? state.hue : t.hue;
@@ -251,7 +251,11 @@
     $all('.builder [data-b="name"]').forEach(function (el) { el.textContent = name || 'votre commerce'; });
     $all('[data-b="plans-title"]').forEach(function (el) { el.textContent = name ? 'Le site de ' + name + '.' : 'Trois formules.'; });
     var tl1 = document.querySelector('[data-b="tl1"]');
-    if (tl1) tl1.innerHTML = name ? esc(name) + ', vous avez mis des années à construire <em>votre commerce.</em>' : 'Vous avez mis des années à construire <em>votre commerce.</em>';
+    if (tl1 && name !== lastTl) {
+      lastTl = name;
+      tl1.innerHTML = name ? esc(name) + ', vous avez mis des années à construire <em>votre commerce.</em>' : 'Vous avez mis des années à construire <em>votre commerce.</em>';
+      if (window.AstelsiaTrailer) window.AstelsiaTrailer.refresh(); // les mots de la phrase se rallument au scroll
+    }
     $all('.style-btn').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-style') === state.style)); });
 
     // le conseil selon le métier, et la formule recommandée qui suit
@@ -466,6 +470,8 @@
       var on = t.getAttribute('data-plan-tab') === state.plan;
       t.classList.toggle('is-on', on); t.setAttribute('aria-selected', String(on)); t.tabIndex = on ? 0 : -1;
     });
+    var tl = document.querySelector('.tabs'); // la pastille glisse sous l'onglet choisi
+    if (tl) tl.style.setProperty('--i', ORDER.indexOf(state.plan));
   }
   $all('[data-plan-tab]').forEach(function (t) { t.addEventListener('click', function () { selectPlan(t.getAttribute('data-plan-tab'), true); }); });
   var tablist = document.querySelector('.tabs[role="tablist"]');
@@ -509,7 +515,43 @@
     $all('[data-contact="email"]').forEach(function (a) {
       a.href = 'mailto:' + C.email + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
     });
+
+    // le rappel : un SMS sur téléphone, un mail sur ordinateur, déjà rédigés avec le moment choisi
+    var send = document.querySelector('[data-rappel]'), note = document.querySelector('[data-rappel-note]');
+    if (send) {
+      var who = name ? 'le site de ' + name + (state.job.trim() ? ' (' + t.label.toLowerCase() + ')' : '') : 'mon site';
+      var msg = 'Bonjour, pouvez-vous me rappeler ' + moment + ' ? C’est pour ' + who + (chosen ? ', formule ' + PLANS[state.plan] : '') + '. Merci !';
+      if (touchDevice && C.phone) {
+        send.href = 'sms:+33' + C.phone.replace(/\D/g, '').replace(/^0/, '') + '?&body=' + encodeURIComponent(msg);
+        if (note) note.textContent = 'Le message est déjà rédigé : il part de votre téléphone. Je vous rappelle dès que possible.';
+      } else {
+        send.href = 'mailto:' + C.email + '?subject=' + encodeURIComponent('Être rappelé' + (name ? ' — ' + name : '')) + '&body=' + encodeURIComponent(msg + '\n\nMon numéro : ');
+        if (note) note.textContent = 'Le mail est déjà rédigé : ajoutez simplement votre numéro. Je vous rappelle dès que possible.';
+      }
+    }
     if (chosen) showChoice();
+  }
+
+  /* ---------- « Être rappelé » : on choisit un moment, rien d'autre à faire ---------- */
+  var callBtn = document.querySelector('.way--call'), rappel = document.getElementById('rappel'), moment = 'le midi';
+  var touchDevice = matchMedia('(hover: none), (pointer: coarse)').matches;
+  if (callBtn && rappel) {
+    callBtn.addEventListener('click', function () {
+      var open = rappel.hidden;
+      rappel.hidden = !open;
+      callBtn.setAttribute('aria-expanded', String(open));
+      if (open) {
+        updateContact();
+        if (!reduced) { rappel.classList.remove('is-open'); void rappel.offsetWidth; rappel.classList.add('is-open'); }
+      }
+    });
+    $all('[data-moment]', rappel).forEach(function (b) {
+      b.addEventListener('click', function () {
+        moment = b.getAttribute('data-moment');
+        $all('[data-moment]', rappel).forEach(function (x) { x.setAttribute('aria-checked', String(x === b)); });
+        updateContact();
+      });
+    });
   }
 
   /* ---------- Lien personnalisé (démarchage) ---------- */

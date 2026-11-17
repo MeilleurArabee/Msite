@@ -6,7 +6,7 @@
   <title>Astelsia — Sites web pour les commerces de proximité</title>
   <meta name="description" content="Astelsia crée des sites web élégants et rapides pour les restaurants, coiffeurs, artisans et boutiques. Trois formules claires, à partir de 249,90 €.">
   <meta name="theme-color" content="#060a22">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; frame-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
   <link rel="canonical" href="https://astelsia.fr/">
 
   <!-- Aperçu quand le lien est partagé (mail, SMS, réseaux) -->
@@ -23,11 +23,12 @@
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   <link rel="preload" href="assets/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/manrope.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/style.css?v=202611170236">
+  <link rel="stylesheet" href="assets/css/style.css?v=20261117-10">
   <script>
-        // Les animations restent actives partout. Si l'appareil demande à réduire les animations,
+    // Les animations restent actives partout. Si l'appareil demande à réduire les animations,
     // le site passe en « mode doux » : fondus uniquement, aucun mouvement brusque.
     document.documentElement.classList.add('anim');
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('soft');
     setTimeout(function () { if (!window.__astelsiaReady) document.documentElement.classList.remove('anim'); }, 3000);
     // fin de l'écran de chargement : main.js attend ce signal pour lancer l'arrivée
     window.__loaderDone = new Promise(function (r) { window.__finishLoader = r; });
@@ -43,7 +44,8 @@
   </div>
 
   <!-- ============ DÉCOR : des étoiles jusqu'au paysage ============ -->
-  <!-- Le paysage est peint à l'avance (2 cadrages : écran large / téléphone) puis animé plan par plan. -->
+  <!-- Le paysage est peint à l'avance (2 cadrages : écran large / téléphone) puis animé plan par plan.
+       Presque tout se touche : les étoiles, le ciel, la lune, la balançoire, l'herbe (assets/js/fx.js). -->
   <div class="scene" aria-hidden="true">
     <div class="sky sky--dusk"></div>
     <picture class="clouds">
@@ -54,7 +56,7 @@
     <div class="sky sky--night"></div>
     <div class="glow"></div>
     <canvas class="stars"></canvas>
-    <div class="moon"></div>
+    <div class="moon"><i></i></div>
     <div class="land">
       <picture class="layer layer--far">
         <source media="(max-aspect-ratio: 5/8)" data-srcset="assets/scene/tall-far.webp">
@@ -84,7 +86,7 @@
     </div>
   </div>
 
-  <!-- Les trois étoiles dorées en 3D (assets/js/stars3d.js) -->
+  <!-- Les trois étoiles dorées en 3D (assets/js/stars3d.js) : elles se touchent -->
   <canvas class="stars3d" aria-hidden="true"></canvas>
   <img class="stars-fallback" src="assets/stars-gold.png" alt="" width="640" height="640" aria-hidden="true" loading="lazy">
 
@@ -100,11 +102,12 @@
   <!-- ============ MENU : discret, il s'ouvre en plein écran ============ -->
   <div class="menu" id="menu" aria-hidden="true">
     <nav class="menu__nav" aria-label="Navigation principale">
-      <a href="#formules"><small>01</small>Formules</a>
-      <a href="#serenite"><small>02</small>Offre Sérénité</a>
-      <a href="#contact"><small>03</small>Contact</a>
+      <a href="#exemples"><small>01</small>Exemples</a>
+      <a href="#formules"><small>02</small>Formules</a>
+      <a href="#serenite"><small>03</small>Offre Sérénité</a>
+      <a href="#contact"><small>04</small>Contact</a>
     </nav>
-    <p class="menu__foot"><span data-contact-mail>contact@astelsia.fr</span></p>
+    <p class="menu__foot"><span data-contact-mail>contact@astelsia.fr</span><span class="menu__dot" aria-hidden="true">·</span><span data-contact-phone>06 23 67 26 92</span></p>
   </div>
 
   <main id="top">
@@ -154,7 +157,10 @@
         <div class="device__glow" aria-hidden="true"></div>
       </div>
 
-      <!-- Le panneau de création, en 3 étapes -->
+      <!-- petit secret : les étoiles se touchent -->
+      <p class="hero__hint" aria-hidden="true">✦ Psst… touchez les étoiles.</p>
+
+      <!-- Le créateur, en 4 temps (sans numéro d'étape) -->
       <div class="builder hero__in" data-step="1">
         <form class="builder__step" data-s="1" novalidate>
           <label class="builder__q" for="b-name">Comment s'appelle votre commerce&nbsp;?</label>
@@ -191,24 +197,51 @@
           </div>
           <div class="builder__row">
             <button type="button" class="builder__back" data-go="2">Retour</button>
-            <button type="button" class="btn builder__next" data-go="4">Mon site est prêt</button>
+            <button type="button" class="btn btn--gold builder__next" data-go="4">Mon site est prêt</button>
           </div>
         </div>
 
         <div class="builder__step builder__done" data-s="4" hidden>
           <p class="builder__q builder__q--done">Le site de <em data-b="name">votre commerce</em> est prêt.</p>
           <p class="builder__from">Ce n'est qu'un aperçu&nbsp;: votre vrai site sera entièrement sur mesure.</p>
-          <a href="#film" class="btn builder__next">Découvrir la suite</a>
+          <a href="#film" class="btn btn--gold builder__next">Découvrir la suite</a>
           <button type="button" class="builder__back builder__restart" data-go="3">Modifier mon site</button>
         </div>
       </div>
+
+      <span class="hero__cue" aria-hidden="true"></span>
     </section>
 
-    <!-- ============ LES PHRASES : elles apparaissent et s'effacent au fil du scroll ============ -->
+    <!-- ============ LES PHRASES : les mots s'allument au fil du scroll ============ -->
     <section class="trailer" id="film" aria-label="Pourquoi un site">
       <p class="tl-line" data-b="tl1">Vous avez mis des années à construire <em>votre commerce.</em></p>
       <p class="tl-line">Avant de pousser votre porte, vos clients vous cherchent <em>en ligne.</em></p>
       <p class="tl-line tl-line--big">Faites-leur <em>bonne impression.</em></p>
+    </section>
+
+    <!-- ============ EXEMPLES : un vrai site, qu'on peut toucher ============ -->
+    <section class="section examples" id="exemples">
+      <div class="examples__text">
+        <h2 class="title" data-split>Un vrai site, <em>à toucher.</em></h2>
+        <p class="lead" data-reveal>Talon &amp; Clé, une cordonnerie imaginaire réalisée en formule&nbsp;Solo. Faites défiler, touchez le porte-clés.</p>
+        <a class="link-arrow" href="demo/cordonnerie/" target="_blank" rel="noopener" data-reveal>Ouvrir l'exemple en grand<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 16 16 8m-6.5 0H16v6.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <p class="examples__note" data-reveal>Exemple&nbsp;: commerce, adresse et numéro fictifs.</p>
+      </div>
+      <div class="phone" data-reveal>
+        <div class="phone__frame">
+          <div class="phone__display">
+            <div class="phone__status" aria-hidden="true">
+              <span>9:41</span><i class="phone__island"></i>
+              <span class="phone__icons"><svg viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg><svg viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="currentColor" opacity=".5"/><rect x="2.4" y="2.4" width="16" height="7.2" rx="1.8"/><rect x="23.6" y="4" width="1.6" height="4" rx=".8" opacity=".5"/></svg></span>
+            </div>
+            <div class="phone__screen">
+              <iframe title="Exemple de site : Talon et Clé, cordonnerie fictive" data-src="demo/cordonnerie/" loading="lazy"></iframe>
+              <div class="phone__wait" aria-hidden="true"><i></i><i></i><i></i></div>
+            </div>
+          </div>
+        </div>
+        <div class="phone__glow" aria-hidden="true"></div>
+      </div>
     </section>
 
     <!-- ============ FORMULES ============ -->
@@ -228,91 +261,93 @@
             <div class="device__frame">
               <div class="device__notch"></div>
               <div class="mini" data-view="business" data-style="elegant">
-            <div class="mini__sky mini__sig"></div>
-            <div class="mini__scroll" data-lenis-prevent>
-              <div class="mini__nav"><b data-b="name" data-edit="name">Votre commerce</b><span data-b="nav">Accueil · Contact</span></div>
-              <div class="mini__hero">
-                <div class="mini__aurora" aria-hidden="true"></div>
-                <small data-b="label">Votre activité</small>
-                <strong data-b="name" data-edit="name">Votre commerce</strong>
-                <span data-b="tagline" data-edit="tagline">Bienvenue, entrez donc.</span>
-                <i data-b="cta" data-edit="cta">Nous trouver</i>
+                <div class="mini__sky mini__sig"></div>
+                <div class="mini__scroll" data-lenis-prevent>
+                  <div class="mini__nav"><b data-b="name" data-edit="name">Votre commerce</b><span data-b="nav">Accueil · Contact</span></div>
+                  <div class="mini__hero">
+                    <div class="mini__aurora" aria-hidden="true"></div>
+                    <small data-b="label">Votre activité</small>
+                    <strong data-b="name" data-edit="name">Votre commerce</strong>
+                    <span data-b="tagline" data-edit="tagline">Bienvenue, entrez donc.</span>
+                    <i data-b="cta" data-edit="cta">Nous trouver</i>
+                  </div>
+                  <p class="mini__open mini__solo"><span></span>Ouvert aujourd'hui · 9h – 19h</p>
+                  <div class="mini__resa mini__sig mini__reveal">
+                    <h5>Réserver en ligne</h5>
+                    <div class="mini__days"><span>Lun<b>16</b></span><span class="on">Mar<b>17</b></span><span>Mer<b>18</b></span><span>Jeu<b>19</b></span></div>
+                    <div class="mini__slots"><span>12:00</span><span class="on">12:30</span><span>19:30</span><span>20:00</span></div>
+                  </div>
+                  <div class="mini__sec mini__multi mini__reveal">
+                    <h5 data-b="section" data-edit="section">Nos horaires</h5>
+                    <div data-b="items"><p><span>Mardi – Samedi</span><span>9h – 19h</span></p><p><span>Dimanche</span><span>Fermé</span></p></div>
+                  </div>
+                  <div class="mini__gal mini__multi mini__reveal"><span></span><span></span><span></span></div>
+                  <div class="mini__sec mini__solo"><h5>Horaires</h5><p><span>Mardi – Samedi</span><span>9h – 19h</span></p></div>
+                  <div class="mini__call mini__solo"><span>Appeler</span><span>Itinéraire</span></div>
+                  <div class="mini__sec mini__reveal"><h5>Nous trouver</h5><div class="mini__map"><span></span></div></div>
+                  <div class="mini__foot">© <span data-b="name">Votre commerce</span></div>
+                </div>
+                <div class="mini__pages mini__multi"><span class="on">Accueil</span><span data-b="section">Nos horaires</span><span>Photos</span><span>Contact</span></div>
+                <div class="mini__book mini__sig"><span data-b="cta">Réserver</span></div>
+                <div class="mini__toast" role="status"></div>
               </div>
-              <p class="mini__open mini__solo"><span></span>Ouvert aujourd'hui · 9h – 19h</p>
-              <div class="mini__resa mini__sig mini__reveal">
-                <h5>Réserver en ligne</h5>
-                <div class="mini__days"><span>Lun<b>16</b></span><span class="on">Mar<b>17</b></span><span>Mer<b>18</b></span><span>Jeu<b>19</b></span></div>
-                <div class="mini__slots"><span>12:00</span><span class="on">12:30</span><span>19:30</span><span>20:00</span></div>
-              </div>
-              <div class="mini__sec mini__multi mini__reveal">
-                <h5 data-b="section" data-edit="section">Nos horaires</h5>
-                <div data-b="items"><p><span>Mardi – Samedi</span><span>9h – 19h</span></p><p><span>Dimanche</span><span>Fermé</span></p></div>
-              </div>
-              <div class="mini__gal mini__multi mini__reveal"><span></span><span></span><span></span></div>
-              <div class="mini__sec mini__solo"><h5>Horaires</h5><p><span>Mardi – Samedi</span><span>9h – 19h</span></p></div>
-              <div class="mini__call mini__solo"><span>Appeler</span><span>Itinéraire</span></div>
-              <div class="mini__sec mini__reveal"><h5>Nous trouver</h5><div class="mini__map"><span></span></div></div>
-              <div class="mini__foot">© <span data-b="name">Votre commerce</span></div>
             </div>
-            <div class="mini__pages mini__multi"><span class="on">Accueil</span><span data-b="section">Nos horaires</span><span>Photos</span><span>Contact</span></div>
-            <div class="mini__book mini__sig"><span data-b="cta">Réserver</span></div>
-            <div class="mini__toast" role="status"></div>
-          </div>
-            </div>
+            <div class="device__glow" aria-hidden="true"></div>
           </div>
           <div class="plan-preview__text">
             <p class="plan-preview__cap"></p>
             <span class="plan-preview__hint">Faites défiler et touchez l'aperçu</span>
           </div>
         </div>
+
         <div class="plans">
-        <article class="plan plan--solo" id="p-solo" role="tabpanel" aria-labelledby="t-solo" data-plan="solo">
-          <p class="plan__kicker">Pour être trouvé</p>
-          <h3 class="plan__name">Solo</h3>
-          <p class="plan__tag">L'essentiel pour être trouvé en ligne. Idéal pour un coiffeur ou un artisan.</p>
-          <p class="plan__price">249,90&nbsp;€</p>
-          <p class="plan__offer">Prix de lancement pour mes 3 premiers clients, puis 349,90&nbsp;€</p>
-          <ul>
-            <li>Une page vitrine soignée</li>
-            <li>Présentation, horaires et adresse</li>
-            <li>Carte Google Maps</li>
-            <li>Boutons «&nbsp;Appeler&nbsp;» et «&nbsp;Itinéraire&nbsp;»</li>
-          </ul>
-          <a href="#contact" class="btn btn--ghost" data-choose="Solo">Choisir Solo</a>
-        </article>
+          <article class="plan plan--solo" id="p-solo" role="tabpanel" aria-labelledby="t-solo" data-plan="solo">
+            <p class="plan__kicker">Pour être trouvé</p>
+            <h3 class="plan__name">Solo</h3>
+            <p class="plan__tag">L'essentiel pour être trouvé en ligne. Idéal pour un coiffeur ou un artisan.</p>
+            <p class="plan__price">249,90&nbsp;€</p>
+            <p class="plan__offer">Prix de lancement pour mes 3 premiers clients, puis 349,90&nbsp;€</p>
+            <ul>
+              <li>Une page vitrine soignée</li>
+              <li>Présentation, horaires et adresse</li>
+              <li>Carte Google Maps</li>
+              <li>Boutons «&nbsp;Appeler&nbsp;» et «&nbsp;Itinéraire&nbsp;»</li>
+            </ul>
+            <a href="#contact" class="btn btn--ghost" data-choose="Solo">Choisir Solo</a>
+          </article>
 
-        <article class="plan plan--featured is-on" id="p-business" role="tabpanel" aria-labelledby="t-business" data-plan="business">
-          <span class="badge">Recommandé</span>
-          <p class="plan__kicker">Pour attirer</p>
-          <h3 class="plan__name">Business</h3>
-          <p class="plan__tag">Le site qui fait venir les clients. Idéal pour un restaurant ou une boutique.</p>
-          <p class="plan__price">649,90&nbsp;€</p>
-          <p class="plan__perk">+ 1 mois d'offre Sérénité offert</p>
-          <ul>
-            <li>Jusqu'à 5 pages</li>
-            <li>Menu ou catalogue</li>
-            <li>Galerie photo</li>
-            <li>Animations élégantes</li>
-          </ul>
-          <a href="#contact" class="btn" data-choose="Business">Choisir Business</a>
-        </article>
+          <article class="plan plan--featured is-on" id="p-business" role="tabpanel" aria-labelledby="t-business" data-plan="business">
+            <span class="badge">Recommandé</span>
+            <p class="plan__kicker">Pour attirer</p>
+            <h3 class="plan__name">Business</h3>
+            <p class="plan__tag">Le site qui fait venir les clients. Idéal pour un restaurant ou une boutique.</p>
+            <p class="plan__price">649,90&nbsp;€</p>
+            <p class="plan__perk">+ 1 mois d'offre Sérénité offert</p>
+            <ul>
+              <li>Jusqu'à 5 pages</li>
+              <li>Menu ou catalogue</li>
+              <li>Galerie photo</li>
+              <li>Animations élégantes</li>
+            </ul>
+            <a href="#contact" class="btn" data-choose="Business">Choisir Business</a>
+          </article>
 
-        <article class="plan plan--signature" id="p-signature" role="tabpanel" aria-labelledby="t-signature" data-plan="signature">
-          <span class="badge badge--gold">Le plus complet</span>
-          <p class="plan__kicker">Pour marquer les esprits</p>
-          <h3 class="plan__name">Signature</h3>
-          <p class="plan__tag">Un site unique, à votre image. Celui dont on se souvient.</p>
-          <p class="plan__price">1&nbsp;349,90&nbsp;€</p>
-          <p class="plan__perk">+ 6 mois d'offre Sérénité offerts</p>
-          <ul>
-            <li>Tout ce qu'inclut Business</li>
-            <li>Réservation ou prise de rendez-vous en ligne</li>
-            <li>Design 100&nbsp;% sur mesure</li>
-            <li>Scroll fluide et animations, comme ce site</li>
-          </ul>
-          <a href="#contact" class="btn btn--ghost" data-choose="Signature">Choisir Signature</a>
-        </article>
-      </div>
+          <article class="plan plan--signature" id="p-signature" role="tabpanel" aria-labelledby="t-signature" data-plan="signature">
+            <span class="badge badge--gold">Le plus complet</span>
+            <p class="plan__kicker">Pour marquer les esprits</p>
+            <h3 class="plan__name">Signature</h3>
+            <p class="plan__tag">Un site unique, à votre image. Celui dont on se souvient.</p>
+            <p class="plan__price">1&nbsp;349,90&nbsp;€</p>
+            <p class="plan__perk">+ 6 mois d'offre Sérénité offerts</p>
+            <ul>
+              <li>Tout ce qu'inclut Business</li>
+              <li>Réservation ou prise de rendez-vous en ligne</li>
+              <li>Design 100&nbsp;% sur mesure</li>
+              <li>Scroll fluide, animations et petits secrets à toucher, comme ce site</li>
+            </ul>
+            <a href="#contact" class="btn btn--ghost" data-choose="Signature">Choisir Signature</a>
+          </article>
+        </div>
       </div>
       <p class="plans__hint" aria-hidden="true">Glissez la carte pour comparer</p>
       <ul class="trust" data-reveal>
@@ -320,14 +355,13 @@
         <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg>Prix fixe annoncé à l'avance, aucun frais caché</li>
         <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg>Votre site et votre nom de domaine sont à votre nom</li>
       </ul>
-      <p class="plans__note" data-reveal>Paiement unique pour la création du site. Prix nets&nbsp;: TVA non applicable, art.&nbsp;293&nbsp;B du CGI.<br>✦ Le ciel qui change, les textes qui apparaissent&nbsp;: <strong>c'est la formule Signature.</strong></p>
-      <!-- Si vous êtes en micro-entreprise sans TVA, ajoutez ici : « TVA non applicable, art. 293 B du CGI » -->
+      <p class="plans__note" data-reveal>Paiement unique pour la création du site. Prix nets&nbsp;: TVA non applicable, art.&nbsp;293&nbsp;B du CGI.<br>✦ Le ciel qui change, les mots qui s'allument, les étoiles qu'on touche&nbsp;: <strong>c'est la formule Signature.</strong></p>
     </section>
 
     <!-- ============ OFFRE SÉRÉNITÉ (offre à part) ============ -->
     <section class="section sere" id="serenite">
       <h2 class="title" data-split>L'offre <em>Sérénité.</em></h2>
-      <p class="sere__lead" data-reveal>L'abonnement mensuel, en complément de votre site.<br>Vous ne vous occupez plus de rien.</p>
+      <p class="lead sere__lead" data-reveal>L'abonnement mensuel, en complément de votre site. Vous ne vous occupez plus de rien.</p>
       <div class="sere__card" data-reveal>
         <div class="sere__top">
           <svg class="sere__moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg>
@@ -352,7 +386,7 @@
     <!-- ============ CONTACT (arrivée dans le paysage) ============ -->
     <section class="section contact" id="contact">
       <h2 class="title title--big" data-split>Parlons de <em>votre commerce.</em></h2>
-      <p class="contact__lead" data-reveal>Un appel ou un mail, comme vous préférez.<br>Je vous réponds personnellement.</p>
+      <p class="contact__lead" data-reveal>Un appel, un mail, ou je vous rappelle&nbsp;: comme vous préférez. Je vous réponds personnellement.</p>
       <!-- CONTACT : les valeurs se changent dans assets/js/config.js -->
       <div class="ways">
         <a class="way" data-reveal data-contact="phone" href="tel:+33623672692">
@@ -363,6 +397,23 @@
           <svg class="way__ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm1 2.2V17h16V7.2l-8 5.3-8-5.3zM5.3 7 12 11.4 18.7 7H5.3z"/></svg>
           <strong>Par mail</strong><span data-contact-text>contact@astelsia.fr</span>
         </a>
+        <button type="button" class="way way--call" data-reveal aria-expanded="false" aria-controls="rappel">
+          <svg class="way__ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 2a8 8 0 1 1 0 16 8 8 0 0 1 0-16zm-1 3v5.4l4.3 2.6 1-1.7-3.3-2V7h-2z"/></svg>
+          <strong>Être rappelé</strong><span>Au moment qui vous arrange</span>
+        </button>
+      </div>
+
+      <!-- Le rappel : on choisit un moment, le message est déjà rédigé -->
+      <div class="rappel" id="rappel" hidden>
+        <p class="rappel__q">Quand préférez-vous être rappelé&nbsp;?</p>
+        <div class="rappel__moments" role="radiogroup" aria-label="Moment du rappel">
+          <button type="button" role="radio" aria-checked="false" data-moment="le matin">Le matin</button>
+          <button type="button" role="radio" aria-checked="true" data-moment="le midi">Le midi</button>
+          <button type="button" role="radio" aria-checked="false" data-moment="l'après-midi">L'après-midi</button>
+          <button type="button" role="radio" aria-checked="false" data-moment="en soirée">En soirée</button>
+        </div>
+        <a class="btn btn--gold rappel__send" href="#contact" data-rappel>Envoyer ma demande</a>
+        <p class="rappel__note" data-rappel-note>Le message est déjà rédigé&nbsp;: il part de votre téléphone. Je vous rappelle dès que possible.</p>
       </div>
       <p class="contact__plan" hidden></p>
     </section>
@@ -372,19 +423,20 @@
     <p>© <span data-year>2026</span> <span translate="no">Astelsia</span> · <a href="mentions-legales.html">Mentions légales</a></p>
   </footer>
 
-  <script src="assets/js/config.js?v=202611170236"></script>
+  <script src="assets/js/config.js?v=20261117-10"></script>
   <script src="assets/vendor/gsap.min.js" defer></script>
   <script src="assets/vendor/ScrollTrigger.min.js" defer></script>
   <script src="assets/vendor/SplitText.min.js" defer></script>
   <script src="assets/vendor/lenis.min.js" defer></script>
-  <script src="assets/js/stars3d.js?v=202611170236" defer></script>
-  <script src="assets/js/builder.js?v=202611170236" defer></script>
-  <script src="assets/js/scene.js?v=202611170236" defer></script>
-  <script src="assets/js/main.js?v=202611170236" defer></script>
+  <script src="assets/js/stars3d.js?v=20261117-10" defer></script>
+  <script src="assets/js/builder.js?v=20261117-10" defer></script>
+  <script src="assets/js/scene.js?v=20261117-10" defer></script>
+  <script src="assets/js/fx.js?v=20261117-10" defer></script>
+  <script src="assets/js/main.js?v=20261117-10" defer></script>
   <script>
-    // L'écran de chargement reste le temps que tout soit prêt (3D, polices), au minimum 1,2 s, au maximum 5 s.
+    // L'écran de chargement reste le temps que tout soit prêt (3D, polices), au minimum 1 s, au maximum 5 s.
     (function () {
-      var t0 = performance.now(), minT = matchMedia('(prefers-reduced-motion: reduce)').matches ? 300 : 1200;
+      var t0 = performance.now(), minT = matchMedia('(prefers-reduced-motion: reduce)').matches ? 300 : 1000;
       function done() {
         var l = document.getElementById('loader');
         if (l.classList.contains('is-done')) return;

@@ -113,7 +113,64 @@
   if (tallMQ.addEventListener) tallMQ.addEventListener('change', placeSwing);
   document.addEventListener('visibilitychange', function () { if (!document.hidden) setStarsActive(active); });
 
+  /* ---------- Ce qu'on peut toucher dans le décor (assets/js/fx.js s'en sert) ---------- */
+  var contact = document.querySelector('#contact'), landVisible = false;
+  if (contact && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function (e) { landVisible = e[0].isIntersecting; if (landVisible) wakeSwing(); }, { rootMargin: '0px 0px -25% 0px' }).observe(contact);
+  }
+  function opaque(el) { return el && parseFloat(getComputedStyle(el).opacity) > 0.35; }
+  function inside(r, x, y, pad) { return x > r.left - pad && x < r.right + pad && y > r.top - pad && y < r.bottom + pad; }
+
+  // La balançoire : un vrai pendule, bercé par le vent, qu'on peut pousser
+  var swingEl = document.querySelector('.swing'), swingG = document.querySelector('.swing__g');
+  var swg = { th: 0, om: 0, on: false, last: 0, t: 0 };
+  function swingStep(now) {
+    var dt = Math.min(0.05, swg.last ? (now - swg.last) / 1000 : 0.016); swg.last = now;
+    for (var n = Math.ceil(dt / 0.008), h = dt / n; n > 0; n--) {
+      swg.t += h;
+      var wind = Math.sin(swg.t * 1.26) * 3; // la brise : ±3°, comme avant
+      swg.om += (-9 * (swg.th - wind) - 0.36 * swg.om) * h;
+      swg.th += swg.om * h;
+    }
+    swingG.style.transform = 'rotate(' + swg.th.toFixed(2) + 'deg)';
+    if (!landVisible && Math.abs(swg.om) < 2) { swg.on = false; return; } // hors de vue : on se repose
+    requestAnimationFrame(swingStep);
+  }
+  function wakeSwing() {
+    if (reduced || !swingEl || swg.on) return;
+    swg.on = true; swg.last = 0;
+    swingEl.classList.add('is-physics');
+    requestAnimationFrame(swingStep);
+  }
+  function pushSwing(dir) {
+    if (reduced || !swingEl) return;
+    swg.om = Math.max(-140, Math.min(140, swg.om + dir * 70));
+    wakeSwing();
+  }
+  function hitSwing(x, y) { // 0 : pas touchée ; sinon le sens de la poussée
+    if (!swingEl || !landVisible) return 0;
+    var r = swingEl.getBoundingClientRect();
+    if (!r.width || !inside(r, x, y, 26)) return 0;
+    return x < r.left + r.width / 2 ? 1 : -1;
+  }
+
+  // La lune : elle vacille et s'illumine
+  var moonEl = document.querySelector('.moon'), moonT = 0;
+  function hitMoon(x, y) { return !!moonEl && opaque(moonEl) && inside(moonEl.getBoundingClientRect(), x, y, 24); }
+  function pokeMoon() {
+    moonEl.classList.remove('is-poked'); void moonEl.offsetWidth; moonEl.classList.add('is-poked');
+    clearTimeout(moonT); moonT = setTimeout(function () { moonEl.classList.remove('is-poked'); }, 1500);
+  }
+
+  // L'herbe du premier plan : des lucioles s'en envolent
+  var front = document.querySelector('.layer--front');
+  function hitMeadow(x, y) {
+    if (!front || !landVisible) return false;
+    var r = front.getBoundingClientRect();
+    return r.height > 0 && y > r.top + r.height * 0.6 && y < innerHeight;
+  }
+
   onResize();
   setStarsActive(true);
-  window.AstelsiaScene = { setStarsActive: setStarsActive, placeSwing: placeSwing };
+  window.AstelsiaScene = { setStarsActive: setStarsActive, placeSwing: placeSwing, hitSwing: hitSwing, pushSwing: pushSwing, hitMoon: hitMoon, pokeMoon: pokeMoon, hitMeadow: hitMeadow };
 })();

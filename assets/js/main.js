@@ -1,10 +1,9 @@
 /* =========================================================
    Astelsia — animations
    GSAP + ScrollTrigger + SplitText + Lenis.
-   Plus on descend, plus ça s'anime. Rien ne bouge si
-   l'appareil demande à réduire les animations.
-   Scroll libre : rien n'est épinglé, les textes s'allument et
-   s'effacent au fil du scroll, le ciel change jusqu'au paysage.
+   Plus on descend, plus le ciel s'éclaire : nuit → heure bleue → paysage.
+   Scroll libre au doigt (aucun aimant). À la molette : un cran = une phrase.
+   Mode doux (moins d'animations) : fondus uniquement.
    ========================================================= */
 (function () {
   'use strict';
@@ -22,9 +21,11 @@
     a.href = 'tel:+33' + C.phone.replace(/\D/g, '').replace(/^0/, '');
   });
   document.querySelectorAll('[data-contact="email"]').forEach(function (a) { if (C.email) setText(a, C.email); });
+  document.querySelectorAll('[data-contact-mail]').forEach(function (el) { if (C.email) el.textContent = C.email; });
+  document.querySelectorAll('[data-contact-phone]').forEach(function (el) { if (C.phone) el.textContent = C.phone; });
   document.querySelectorAll('[data-year]').forEach(function (el) { el.textContent = new Date().getFullYear(); });
 
-  /* ---------- Halo sur les formules (SpotlightCard) ---------- */
+  /* ---------- Halo qui suit la souris sur les formules ---------- */
   if (finePointer) {
     document.querySelectorAll('.plan').forEach(function (card) {
       card.addEventListener('pointermove', function (e) {
@@ -74,35 +75,83 @@
     menuBtn.addEventListener('click', function () { setMenu(!root.classList.contains('menu-open')); });
     menu.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { setMenu(false); }); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setMenu(false); });
-    var mail = menu.querySelector('[data-contact-mail]'); if (mail && C.email) mail.textContent = C.email;
   }
 
-  /* ---------- Poussière d'étoile derrière la souris (ordinateur) ---------- */
-  if (finePointer && !reduced) (function () {
-    var cv = document.createElement('canvas'); cv.className = 'sparkles'; cv.setAttribute('aria-hidden', 'true');
-    document.body.appendChild(cv);
-    var ctx = cv.getContext('2d'), parts = [], runningS = false, dprS = Math.min(devicePixelRatio || 1, 2), lx = null, ly = null;
-    function size() { cv.width = innerWidth * dprS; cv.height = innerHeight * dprS; ctx.setTransform(dprS, 0, 0, dprS, 0, 0); }
-    size(); addEventListener('resize', size);
-    addEventListener('pointermove', function (e) {
-      var d = lx === null ? 0 : Math.hypot(e.clientX - lx, e.clientY - ly); lx = e.clientX; ly = e.clientY;
-      var n = Math.min(4, 1 + Math.floor(d / 14));
-      for (var i = 0; i < n; i++) parts.push({ x: e.clientX + (Math.random() - 0.5) * 6, y: e.clientY + (Math.random() - 0.5) * 6, vx: (Math.random() - 0.5) * 0.4, vy: 0.2 + Math.random() * 0.5, r: 0.6 + Math.random() * 1.8, life: 1, gold: Math.random() < 0.7 });
-      if (parts.length > 160) parts.splice(0, parts.length - 160);
-      if (!runningS) { runningS = true; requestAnimationFrame(tick); }
-    }, { passive: true });
-    function tick() {
-      ctx.clearRect(0, 0, innerWidth, innerHeight);
-      for (var i = parts.length - 1; i >= 0; i--) {
-        var p = parts[i]; p.x += p.vx; p.y += p.vy; p.life -= 0.022;
-        if (p.life <= 0) { parts.splice(i, 1); continue; }
-        ctx.globalAlpha = p.life * p.life;
-        ctx.fillStyle = p.gold ? '#ffd98a' : '#ffffff';
-        ctx.beginPath(); ctx.arc(p.x, p.y, p.r * p.life, 0, 7); ctx.fill();
-      }
-      ctx.globalAlpha = 1;
-      if (parts.length) requestAnimationFrame(tick); else runningS = false;
+  /* =========================================================
+     LES PHRASES : chaque mot s'allume quand la phrase monte dans l'écran
+     (sans bibliothèque ; builder.js appelle refresh() quand le nom change)
+     ========================================================= */
+  var Trailer = (function () {
+    var box = document.querySelector('.trailer');
+    var lines = box ? Array.prototype.slice.call(box.querySelectorAll('.tl-line')) : [];
+    var ticking = false;
+    function wrap(el) {
+      (function walk(node) {
+        Array.prototype.slice.call(node.childNodes).forEach(function (c) {
+          if (c.nodeType === 3) {
+            if (!c.textContent.trim()) return;
+            var frag = document.createDocumentFragment();
+            c.textContent.split(/(\s+)/).forEach(function (p) {
+              if (!p) return;
+              if (/^\s+$/.test(p)) frag.appendChild(document.createTextNode(p));
+              else { var s = document.createElement('span'); s.className = 'w'; s.textContent = p; frag.appendChild(s); }
+            });
+            node.replaceChild(frag, c);
+          } else if (c.nodeType === 1 && !c.classList.contains('w')) walk(c);
+        });
+      })(el);
+      el._w = Array.prototype.slice.call(el.querySelectorAll('.w'));
     }
+    function update() {
+      ticking = false;
+      var vh = innerHeight, start = vh * 0.94, end = vh * 0.56; // tout est allumé un peu avant le centre de l'écran
+      lines.forEach(function (el) {
+        if (!el._w) return;
+        var r = el.getBoundingClientRect(), mid = r.top + r.height / 2;
+        var p = Math.max(0, Math.min(1, (start - mid) / (start - end)));
+        var n = el._w.length;
+        el._w.forEach(function (w, i) { w.classList.toggle('is-lit', p >= 1 || p * (n + 0.6) > i + 0.6); });
+      });
+    }
+    function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+    function refresh() { lines.forEach(wrap); update(); }
+    if (lines.length) {
+      refresh();
+      box.classList.add('tl-ready');
+      addEventListener('scroll', onScroll, { passive: true });
+      addEventListener('resize', onScroll);
+    }
+    return { refresh: refresh, update: update, lines: lines };
+  })();
+  window.AstelsiaTrailer = Trailer;
+
+  /* =========================================================
+     EXEMPLES : le vrai site dans l'iPhone, chargé quand on approche
+     ========================================================= */
+  (function () {
+    var phone = document.querySelector('.phone');
+    if (!phone) return;
+    var screen = phone.querySelector('.phone__screen'), frame = screen.querySelector('iframe');
+    var BASE = 390; // largeur d'un iPhone : le site s'affiche exactement comme sur un vrai téléphone
+    function fit() {
+      var w = screen.clientWidth, h = screen.clientHeight;
+      if (!w || !h) return;
+      var s = w / BASE;
+      frame.style.width = BASE + 'px';
+      frame.style.height = Math.round(h / s) + 'px';
+      frame.style.transform = 'scale(' + s + ')';
+    }
+    fit();
+    if (window.ResizeObserver) new ResizeObserver(fit).observe(screen); else addEventListener('resize', fit);
+    function load() {
+      if (frame.getAttribute('src')) return;
+      frame.addEventListener('load', function () { phone.classList.add('is-loaded'); });
+      frame.setAttribute('src', frame.getAttribute('data-src'));
+    }
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (e) { if (e[0].isIntersecting) { load(); io.disconnect(); } }, { rootMargin: '900px 0px' });
+      io.observe(phone);
+    } else load();
   })();
 
   if (!window.gsap || !window.ScrollTrigger) { root.classList.remove('anim'); return; }
@@ -114,11 +163,14 @@
   var lenis = null;
   if (!reduced && window.Lenis && finePointer) {
     lenis = new Lenis({ lerp: 0.11, wheelMultiplier: 1, autoRaf: false });
+    window.__lenis = lenis; // pour les tests automatiques
     lenis.on('scroll', ScrollTrigger.update);
+    lenis.on('scroll', Trailer.update);
     gsap.ticker.add(function (t) { lenis.raf(t * 1000); });
     gsap.ticker.lagSmoothing(0);
   }
-  /* ---------- Clic sur un lien du menu : une longue descente, douce ---------- */
+
+  /* ---------- Clic sur un lien interne : une longue descente, douce ---------- */
   var easeIO = function (t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; };
   var glide = null;
   function stopGlide() { if (glide) { glide.kill(); glide = null; } }
@@ -136,13 +188,15 @@
   document.querySelectorAll('a[href^="#"]').forEach(function (a) {
     a.addEventListener('click', function (e) {
       var id = a.getAttribute('href');
+      if (id.length < 2) return;
       var target = id === '#top' ? 0 : document.querySelector(id);
       if (target === null) return;
       e.preventDefault();
       scrollToTarget(target);
     });
   });
-  /* ---------- En-tête qui se cache en descendant ---------- */
+
+  /* ---------- En-tête qui se cache en descendant, revient en remontant ---------- */
   var header = document.querySelector('.header');
   ScrollTrigger.create({
     start: 0, end: function () { return ScrollTrigger.maxScroll(window); },
@@ -153,55 +207,26 @@
     }
   });
 
-  /* ---------- Boutons aimantés (souris uniquement) ---------- */
-  if (finePointer && !reduced) {
-    document.querySelectorAll('.btn--magnet').forEach(function (b) {
-      var xTo = gsap.quickTo(b, 'x', { duration: 0.5, ease: 'power3' });
-      var yTo = gsap.quickTo(b, 'y', { duration: 0.5, ease: 'power3' });
-      b.addEventListener('pointermove', function (e) {
-        var r = b.getBoundingClientRect();
-        xTo((e.clientX - r.left - r.width / 2) * 0.3);
-        yTo((e.clientY - r.top - r.height / 2) * 0.4);
-      });
-      b.addEventListener('pointerleave', function () { xTo(0); yTo(0); });
-    });
-  }
-
   var scene = window.AstelsiaScene;
 
   /* =========================================================
-     Les scènes
+     Le ciel, au fil de la descente
      ========================================================= */
   var mm = gsap.matchMedia();
   mm.add({ mobile: '(max-width: 899px)', desktop: '(min-width: 900px)', reduce: '(prefers-reduced-motion: reduce)' }, function (ctx) {
     var c = ctx.conditions, g = c.reduce; // mode doux : fondus uniquement
-
-    /* 1. Les phrases : chacune s'allume en arrivant au centre, puis s'efface en remontant */
-    gsap.utils.toArray('.tl-line').forEach(function (l) {
-      gsap.timeline({ scrollTrigger: { trigger: l, start: 'top 95%', end: 'bottom 5%', scrub: true } })
-        .fromTo(l, { opacity: 0, y: g ? 0 : 60, scale: g ? 1 : 0.96 }, { opacity: 1, y: 0, scale: 1, ease: 'power2.out', duration: 0.4 })
-        .to(l, { opacity: 1, duration: 0.2 })
-        .to(l, { opacity: 0, y: g ? 0 : -60, scale: g ? 1 : 1.03, ease: 'power2.in', duration: 0.4 });
-    });
-
-    /* 2. Formules (ordinateur) : les cartes se lèvent une fois */
-    if (c.desktop) {
-      gsap.from(['.plan-preview', '.plan[data-plan="solo"]', '.plan[data-plan="business"]', '.plan[data-plan="signature"]'], {
-        y: g ? 0 : 80, opacity: 0, duration: 1, stagger: 0.12, ease: 'power3.out', clearProps: 'transform,opacity',
-        scrollTrigger: { trigger: '.plans', start: 'top 85%', once: true }
-      });
-    }
-
-    /* 3. Le ciel : nuit → heure bleue → paysage */
     var sc = g ? true : 0.6;
-    gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { trigger: '.trailer', start: 'top 70%', endTrigger: '#formules', end: 'top 30%', scrub: sc } })
-      .to('.sky--night', { opacity: 0 }, 0)
-      .to('.stars', g ? { opacity: 0.55 } : { opacity: 0.55, yPercent: -15 }, 0);
 
+    /* 1. Fin des phrases → exemples : la nuit s'éclaircit (heure bleue profonde) */
+    gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { trigger: '.tl-line--big', start: 'top 60%', endTrigger: '#exemples', end: 'top 15%', scrub: sc } })
+      .to('.sky--night', { opacity: 0 }, 0)
+      .to('.stars', g ? { opacity: 0.6 } : { opacity: 0.6, yPercent: -12 }, 0);
+
+    /* 2. Fin des formules → Sérénité : le soleil couchant, les nuages, la lune */
     gsap.timeline({
       defaults: { ease: 'none' },
       scrollTrigger: {
-        trigger: '#formules', start: 'top 30%', endTrigger: '#serenite', end: 'center center', scrub: sc,
+        trigger: '#formules', start: 'bottom 85%', endTrigger: '#serenite', end: 'center center', scrub: sc,
         onUpdate: function (self) { if (scene) scene.setStarsActive(self.progress < 0.95); }
       }
     })
@@ -211,6 +236,7 @@
       .fromTo('.moon', { opacity: 0, y: g ? 0 : '20vh' }, { opacity: 1, y: 0, duration: 0.7 }, 0.3)
       .to('.glow', { opacity: 1, duration: 0.6 }, 0.4);
 
+    /* 3. Contact : le paysage se lève, plan par plan */
     var land = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { trigger: '#contact', start: 'top 95%', endTrigger: '.footer', end: 'bottom bottom', scrub: sc } });
     if (g) {
       land.fromTo('.land', { opacity: 0 }, { opacity: 1, duration: 1 }, 0);
@@ -220,58 +246,46 @@
       });
     }
     land.to('.fireflies', { opacity: 1, duration: 0.3 }, 0.7);
+
+    /* 4. Ordinateur : les formules se lèvent une fois */
+    if (c.desktop) {
+      gsap.from(['.plan-preview', '.plan[data-plan="solo"]', '.plan[data-plan="business"]', '.plan[data-plan="signature"]'], {
+        y: g ? 0 : 80, opacity: 0, duration: 1, stagger: 0.12, ease: 'power3.out', clearProps: 'transform,opacity',
+        scrollTrigger: { trigger: '.plans', start: 'top 85%', once: true }
+      });
+    }
+
+    /* 5. L'iPhone d'exemple se redresse en arrivant */
+    if (!g) {
+      gsap.fromTo('.phone__frame', { rotateX: 14, rotateZ: -3, y: 40 }, {
+        rotateX: 0, rotateZ: 0, y: 0, ease: 'none', transformPerspective: 900,
+        scrollTrigger: { trigger: '.phone', start: 'top 95%', end: 'center 60%', scrub: 0.6 }
+      });
+    }
   });
 
-  /* ---------- Aimant léger sur les phrases ----------
-     Quand on s'arrête de scroller près d'une phrase, elle se recentre doucement.
-     Rien n'est bloqué : si on continue de scroller, on passe à la suite. */
+  /* ---------- Ordinateur : un cran de molette = une glissade douce jusqu'à la phrase suivante ---------- */
   (function () {
-    var lines = gsap.utils.toArray('.tl-line'), idle = null, touching = false, settling = false, gestureStart = window.scrollY;
-    // position réelle dans la page, sans tenir compte des animations en cours
+    var lines = Trailer.lines;
+    if (!lenis || !lines.length) return;
     function docTop(el) { var t = 0; while (el) { t += el.offsetTop; el = el.offsetParent; } return t; }
-    function settle() {
-      if (touching || settling || root.classList.contains('menu-open')) return;
-      // l'aimant suit le sens du geste : il ne ramène jamais en arrière
-      var mid = innerHeight / 2, best = null, bd = Infinity, dir = window.scrollY - gestureStart;
-      lines.forEach(function (l) {
-        var d = docTop(l) - window.scrollY + l.offsetHeight / 2 - mid;
-        if (dir > 8 && d < -8) return;   // on descend : on ignore les phrases déjà passées
-        if (dir < -8 && d > 8) return;   // on remonte : on ignore les phrases plus bas
-        if (Math.abs(d) < Math.abs(bd)) { bd = d; best = l; }
-      });
-      if (!best || Math.abs(bd) < 6 || Math.abs(bd) > innerHeight * 0.45) return;
-      var y = window.scrollY + bd;
-      settling = true;
-      { var o = { y: window.scrollY }; gsap.to(o, { y: y, duration: 0.7, ease: 'power2.out', onUpdate: function () { window.scrollTo(0, o.y); }, onComplete: function () { settling = false; gestureStart = window.scrollY; } }); }
-    }
-    var touchDevice = matchMedia('(hover: none), (pointer: coarse)').matches;
-    function arm() { return; clearTimeout(idle); if (!settling) idle = setTimeout(settle, 180); }
-
-    /* Ordinateur : un cran de molette = une glissade douce jusqu'à la phrase suivante (ou précédente) */
-    if (lenis) {
-      var busy = false;
-      var stations = function () {
-        return lines.map(function (l) { return Math.round(docTop(l) + l.offsetHeight / 2 - innerHeight / 2); });
-      };
-      lenis.options.virtualScroll = function (d) {
-        if (!d.event || d.event.type !== 'wheel') return true; // le doigt n'est jamais intercepté
-        if (Math.abs(d.deltaY) < Math.abs(d.deltaX) || root.classList.contains('menu-open')) return true;
-        var st = stations(), y = lenis.targetScroll, zone = innerHeight * 0.6;
-        if (y < st[0] - zone || y > st[st.length - 1] + zone) return true; // en dehors des phrases : scroll normal
-        if (busy) { if (d.event.cancelable) d.event.preventDefault(); return false; }
-        var to = null, i;
-        if (d.deltaY > 0) { for (i = 0; i < st.length; i++) if (st[i] > y + 4) { to = st[i]; break; } }
-        else { for (i = st.length - 1; i >= 0; i--) if (st[i] < y - 4) { to = st[i]; break; } }
-        if (to === null) return true; // après la dernière phrase (ou avant la première) : on continue normalement
-        if (d.event.cancelable) d.event.preventDefault();
-        busy = true;
-        lenis.scrollTo(to, { duration: 1.1, easing: easeIO, lock: true, force: true, onComplete: function () { setTimeout(function () { busy = false; }, 220); } });
-        return false;
-      };
-    }
-    addEventListener('touchstart', function () { touching = true; clearTimeout(idle); gestureStart = window.scrollY; }, { passive: true });
-    addEventListener('touchend', function () { touching = false; arm(); }, { passive: true });
-    addEventListener('scroll', arm, { passive: true });
+    var busy = false;
+    function stations() { return lines.map(function (l) { return Math.round(docTop(l) + l.offsetHeight / 2 - innerHeight / 2); }); }
+    lenis.options.virtualScroll = function (d) {
+      if (!d.event || d.event.type !== 'wheel') return true; // le doigt n'est jamais intercepté
+      if (Math.abs(d.deltaY) < Math.abs(d.deltaX) || root.classList.contains('menu-open')) return true;
+      var st = stations(), y = lenis.targetScroll, zone = innerHeight * 0.6;
+      if (y < st[0] - zone || y > st[st.length - 1] + zone) return true; // en dehors des phrases : scroll normal
+      if (busy) { if (d.event.cancelable) d.event.preventDefault(); return false; }
+      var to = null, i;
+      if (d.deltaY > 0) { for (i = 0; i < st.length; i++) if (st[i] > y + 4) { to = st[i]; break; } }
+      else { for (i = st.length - 1; i >= 0; i--) if (st[i] < y - 4) { to = st[i]; break; } }
+      if (to === null) return true; // après la dernière phrase (ou avant la première) : on continue normalement
+      if (d.event.cancelable) d.event.preventDefault();
+      busy = true;
+      lenis.scrollTo(to, { duration: 1.1, easing: easeIO, lock: true, force: true, onComplete: function () { setTimeout(function () { busy = false; }, 220); } });
+      return false;
+    };
   })();
 
   /* ---------- Apparitions au scroll ---------- */
@@ -281,7 +295,7 @@
     onEnter: function (els) { gsap.to(els, { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out', stagger: 0.08 }); }
   });
 
-  /* ---------- Textes qui se révèlent (SplitText) ; l'accueil attend la fin du chargement ---------- */
+  /* ---------- Titres qui se révèlent ligne par ligne ; l'accueil attend la fin du chargement ---------- */
   function splitReveal() {
     if (!window.SplitText) { root.classList.remove('anim'); return; }
     var hero = document.querySelector('[data-hero-title]');
@@ -289,8 +303,8 @@
       type: 'words,lines', mask: 'lines', autoSplit: true,
       onSplit: function (s) {
         gsap.set(hero, { visibility: 'visible' });
-        var intro = gsap.timeline({ delay: 0.35, paused: true });
-        intro.from(s.words, reduced ? { opacity: 0, duration: 0.8, stagger: 0.05 } : { yPercent: 115, rotate: 4, duration: 1, ease: 'power4.out', stagger: 0.06 })
+        var intro = gsap.timeline({ delay: 0.3, paused: true });
+        intro.from(s.words, reduced ? { opacity: 0, duration: 0.8, stagger: 0.05 } : { yPercent: 115, rotate: 4, duration: 1.05, ease: 'power4.out', stagger: 0.07 })
              .fromTo('.hero__in', { opacity: 0, y: reduced ? 0 : 24 }, { opacity: 1, y: 0, duration: 0.9, stagger: 0.12, ease: 'power3.out', clearProps: 'transform' }, '-=0.6');
         (window.__loaderDone || Promise.resolve()).then(function () { intro.play(); });
         return intro;
@@ -301,7 +315,7 @@
         type: 'lines', mask: 'lines', autoSplit: true,
         onSplit: function (s) {
           gsap.set(el, { visibility: 'visible' });
-          return gsap.from(s.lines, { yPercent: reduced ? 0 : 110, opacity: reduced ? 0 : 1, duration: 1, ease: 'power4.out', stagger: 0.1, scrollTrigger: { trigger: el, start: 'top 90%', once: true } });
+          return gsap.from(s.lines, { yPercent: reduced ? 0 : 110, opacity: reduced ? 0 : 1, duration: 1.05, ease: 'power4.out', stagger: 0.1, scrollTrigger: { trigger: el, start: 'top 90%', once: true } });
         }
       });
     });

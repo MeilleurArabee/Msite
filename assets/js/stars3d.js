@@ -264,7 +264,14 @@
     }
   };
   var PHASE = [0, 1.7, 3.4], SKY_ALPHA = [1, 0, 0];
-  var stars = [0, 1, 2].map(function (i) { return { x: 0, y: 0, s: 0.0001, a: 0, init: false, i: i }; });
+  var stars = [0, 1, 2].map(function (i) {
+    return {
+      x: 0, y: 0, s: 0.0001, a: 0, init: false, i: i,
+      // quand on la touche : elle tourne (spin), rebondit (hop), se gonfle (sq), brille (flash)
+      spin: 0, spinV: 0, hop: 0, hopV: 0, sq: 0, sqV: 0, flash: 0, hoverOn: false, hover: 0,
+      px: -1e4, py: -1e4, pr: 0 // position et rayon à l'écran, pour savoir si on l'a touchée
+    };
+  });
   var state = { building: false, introStart: null, pulse: 0 };
   var fovy = 30 * Math.PI / 180, camZ = 10, W = 1, H = 1, aspect = 1, layout = 'tall', dpr = 1;
 
@@ -327,14 +334,38 @@
       var ta = lerp(1, SKY_ALPHA[i], d);
       if (!st.init) { st.x = tx; st.y = ty; st.s = ts; st.init = true; }
       st.x = lerp(st.x, tx, k); st.y = lerp(st.y, ty, k); st.s = lerp(st.s, ts, k); st.a = lerp(st.a, ta * e, Math.min(1, k * 2));
+
+      // l'étoile qu'on a touchée : elle tourne sur elle-même, rebondit, puis revient de face
+      // (petits pas de calcul : le mouvement reste juste même si le téléphone rame)
+      var ns = Math.max(1, Math.ceil(dt / 0.008)), hh = dt / ns;
+      for (var q = 0; q < ns; q++) {
+        var fast = Math.min(1, Math.max(0, (Math.abs(st.spinV) - 1.2) / 3)); // 1 = encore lancée, 0 = presque arrêtée
+        var tgt = Math.round(st.spin / (Math.PI * 2)) * Math.PI * 2;
+        st.spinV += (-(1.1 + 3.2 * (1 - fast)) * st.spinV - 16 * (1 - fast) * (st.spin - tgt)) * hh;
+        st.spin += st.spinV * hh;
+        st.hopV += (-75 * st.hop - 6.5 * st.hopV) * hh; st.hop += st.hopV * hh;
+        st.sqV += (-240 * st.sq - 12 * st.sqV) * hh; st.sq += st.sqV * hh;
+      }
+      if (Math.abs(st.spinV) < 0.01) { var back = Math.round(st.spin / (Math.PI * 2)) * Math.PI * 2; if (Math.abs(st.spin - back) < 0.01) st.spin -= back; }
+      st.flash = Math.max(0, st.flash - dt * 1.5);
+      st.hover += ((st.hoverOn ? 1 : 0) - st.hover) * Math.min(1, dt * 8);
+
       var bob = reduced ? 0 : Math.sin(t * 1.2 + PHASE[i]) * 0.035 * st.s;
+      var yy = st.y + bob + st.hop * st.s;
       var z = -(1 - e) * (24 + i * 6);
-      var pulse = i === 0 ? 1 + Math.sin(state.pulse * Math.PI) * 0.08 : 1;
+      var pulse = (i === 0 ? 1 + Math.sin(state.pulse * Math.PI) * 0.08 : 1) * (1 + st.sq + st.hover * 0.07);
       // sur ordinateur, les étoiles se tournent vers la souris
-      var ry = (reduced ? 0 : Math.sin(t * 0.55 + PHASE[i]) * 0.5) + (1 - e) * (5 + i) + look.x * 1.1;
+      var ry = (reduced ? 0 : Math.sin(t * 0.55 + PHASE[i]) * 0.5) + (1 - e) * (5 + i) + look.x * 1.1 + st.spin;
       var rx = (reduced ? 0 : Math.sin(t * 0.4 + PHASE[i]) * 0.12) + look.y * 0.7;
       var rz = (reduced ? 0 : Math.sin(t * 0.33 + PHASE[i]) * 0.07) + (i === 1 ? 0.25 : i === 2 ? -0.2 : 0);
-      draw.push({ m: model(st.x, st.y + bob, z, rx, ry, rz, st.s * pulse), a: st.a, c: [st.x, st.y + bob, z - st.s * 0.5], s: st.s });
+      draw.push({ m: model(st.x, yy, z, rx, ry, rz, st.s * pulse), a: st.a, c: [st.x, yy, z - st.s * 0.5], s: st.s * (1 + st.flash * 0.45), f: st.flash });
+
+      // où est-elle sur l'écran ? (pour savoir si un doigt l'a touchée)
+      var cx = vp[0] * st.x + vp[4] * yy + vp[8] * z + vp[12], cy = vp[1] * st.x + vp[5] * yy + vp[9] * z + vp[13], cw = vp[3] * st.x + vp[7] * yy + vp[11] * z + vp[15];
+      if (cw > 0.01 && st.a > 0.35) {
+        st.px = (cx / cw * 0.5 + 0.5) * W; st.py = (0.5 - cy / cw * 0.5) * H;
+        st.pr = st.s * pulse * (H / 2) / (Math.tan(fovy / 2) * cw);
+      } else st.pr = 0;
     });
 
     // halos (derrière, additifs)
@@ -345,7 +376,7 @@
     draw.forEach(function (o) {
       if (o.a < 0.01) return;
       gl.uniform3fv(G.uC, o.c); gl.uniform1f(G.uS, o.s * 3.2);
-      gl.uniform1f(G.uA, o.a * (window.__starsGlow !== undefined ? window.__starsGlow : 0.55 + Math.sin(t * 2 + o.s) * 0.08));
+      gl.uniform1f(G.uA, o.a * (window.__starsGlow !== undefined ? window.__starsGlow : 0.55 + Math.sin(t * 2 + o.s) * 0.08 + o.f * 0.7));
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     });
     gl.disableVertexAttribArray(G.aQ);
@@ -379,4 +410,33 @@
   api.startIntro = function () { if (state.introStart === null) state.introStart = performance.now(); };
   api.setBuilding = function (b) { state.building = !!b; };
   api.pulse = function () { state.pulse = 1; };
+
+  /* ---------------------------------------------------------
+     6. On peut toucher les étoiles (assets/js/fx.js s'en sert)
+     --------------------------------------------------------- */
+  function near(st, x, y) { return st.pr > 0 && Math.hypot(x - st.px, y - st.py) < Math.max(28, st.pr * 0.92); }
+  api.hit = function (x, y) { // quelle étoile est sous le doigt ? (-1 : aucune)
+    var best = -1, bd = 1e9;
+    stars.forEach(function (st, i) {
+      if (!near(st, x, y)) return;
+      var d = Math.hypot(x - st.px, y - st.py);
+      if (d < bd) { bd = d; best = i; }
+    });
+    return best;
+  };
+  api.poke = function (i, x) { // la toucher : elle part en tournant du côté opposé au doigt
+    var st = stars[i]; if (!st) return null;
+    var dir = x < st.px ? -1 : 1;
+    if (!reduced) { st.spinV += dir * (13 + Math.random() * 5); st.hopV += 4; st.sqV += 2.4; }
+    st.flash = 1; // mode doux : elle brille, sans bouger
+    return { x: st.px, y: st.py, r: st.pr };
+  };
+  api.where = function () { // position des étoiles à l'écran (tests automatiques)
+    return stars.map(function (st) { return { x: Math.round(st.px), y: Math.round(st.py), r: Math.round(st.pr) }; });
+  };
+  api.hover = function (x, y) { // à la souris : elle grossit un peu quand on la survole
+    var any = false;
+    stars.forEach(function (st) { st.hoverOn = near(st, x, y); any = any || st.hoverOn; });
+    return any;
+  };
 })();
