@@ -112,7 +112,7 @@
 
   /* ---------- Scroll fluide Lenis (ordinateur) synchronisé avec GSAP ---------- */
   var lenis = null;
-  if (!reduced && window.Lenis) {
+  if (!reduced && window.Lenis && finePointer) {
     lenis = new Lenis({ lerp: 0.11, wheelMultiplier: 1, autoRaf: false });
     lenis.on('scroll', ScrollTrigger.update);
     gsap.ticker.add(function (t) { lenis.raf(t * 1000); });
@@ -245,7 +245,7 @@
       { var o = { y: window.scrollY }; gsap.to(o, { y: y, duration: 0.7, ease: 'power2.out', onUpdate: function () { window.scrollTo(0, o.y); }, onComplete: function () { settling = false; gestureStart = window.scrollY; } }); }
     }
     var touchDevice = matchMedia('(hover: none), (pointer: coarse)').matches;
-    function arm() { if (!touchDevice) return; clearTimeout(idle); if (!settling) idle = setTimeout(settle, 180); }
+    function arm() { return; clearTimeout(idle); if (!settling) idle = setTimeout(settle, 180); }
 
     /* Ordinateur : un cran de molette = une glissade douce jusqu'à la phrase suivante (ou précédente) */
     if (lenis) {

@@ -697,3 +697,9 @@ html, body { overflow-x: clip; }
 .plan-preview__text { flex: 1; min-width: 0; }
 .trust li { text-align: left; }
 @media (min-width: 900px) { .plan-preview__text { text-align: center; } }
+
+/* Téléphone : aimant léger confié au navigateur lui-même (fiable sur iPhone, suit toujours le geste) */
+@media (hover: none), (pointer: coarse) {
+  html { scroll-snap-type: y proximity; }
+  .tl-line { scroll-snap-align: center; }
+}
