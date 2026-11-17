@@ -226,23 +226,26 @@
      Quand on s'arrête de scroller près d'une phrase, elle se recentre doucement.
      Rien n'est bloqué : si on continue de scroller, on passe à la suite. */
   (function () {
-    var lines = gsap.utils.toArray('.tl-line'), idle = null, touching = false, settling = false;
+    var lines = gsap.utils.toArray('.tl-line'), idle = null, touching = false, settling = false, gestureStart = window.scrollY;
     // position réelle dans la page, sans tenir compte des animations en cours
     function docTop(el) { var t = 0; while (el) { t += el.offsetTop; el = el.offsetParent; } return t; }
     function settle() {
       if (touching || settling || root.classList.contains('menu-open')) return;
-      var mid = innerHeight / 2, best = null, bd = Infinity;
+      // l'aimant suit le sens du geste : il ne ramène jamais en arrière
+      var mid = innerHeight / 2, best = null, bd = Infinity, dir = window.scrollY - gestureStart;
       lines.forEach(function (l) {
         var d = docTop(l) - window.scrollY + l.offsetHeight / 2 - mid;
+        if (dir > 8 && d < -8) return;   // on descend : on ignore les phrases déjà passées
+        if (dir < -8 && d > 8) return;   // on remonte : on ignore les phrases plus bas
         if (Math.abs(d) < Math.abs(bd)) { bd = d; best = l; }
       });
-      if (!best || Math.abs(bd) < 6 || Math.abs(bd) > innerHeight * 0.28) return;
+      if (!best || Math.abs(bd) < 6 || Math.abs(bd) > innerHeight * 0.45) return;
       var y = window.scrollY + bd;
       settling = true;
-      if (lenis) lenis.scrollTo(y, { duration: 0.9, easing: easeIO, onComplete: function () { settling = false; } });
-      else { var o = { y: window.scrollY }; gsap.to(o, { y: y, duration: 0.7, ease: 'power2.out', onUpdate: function () { window.scrollTo(0, o.y); }, onComplete: function () { settling = false; } }); }
+      { var o = { y: window.scrollY }; gsap.to(o, { y: y, duration: 0.7, ease: 'power2.out', onUpdate: function () { window.scrollTo(0, o.y); }, onComplete: function () { settling = false; gestureStart = window.scrollY; } }); }
     }
-    function arm() { if (lenis) return; clearTimeout(idle); if (!settling) idle = setTimeout(settle, 180); }
+    var touchDevice = matchMedia('(hover: none), (pointer: coarse)').matches;
+    function arm() { if (!touchDevice) return; clearTimeout(idle); if (!settling) idle = setTimeout(settle, 180); }
 
     /* Ordinateur : un cran de molette = une glissade douce jusqu'à la phrase suivante (ou précédente) */
     if (lenis) {
@@ -251,6 +254,7 @@
         return lines.map(function (l) { return Math.round(docTop(l) + l.offsetHeight / 2 - innerHeight / 2); });
       };
       lenis.options.virtualScroll = function (d) {
+        if (!d.event || d.event.type !== 'wheel') return true; // le doigt n'est jamais intercepté
         if (Math.abs(d.deltaY) < Math.abs(d.deltaX) || root.classList.contains('menu-open')) return true;
         var st = stations(), y = lenis.targetScroll, zone = innerHeight * 0.6;
         if (y < st[0] - zone || y > st[st.length - 1] + zone) return true; // en dehors des phrases : scroll normal
@@ -265,7 +269,7 @@
         return false;
       };
     }
-    addEventListener('touchstart', function () { touching = true; clearTimeout(idle); }, { passive: true });
+    addEventListener('touchstart', function () { touching = true; clearTimeout(idle); gestureStart = window.scrollY; }, { passive: true });
     addEventListener('touchend', function () { touching = false; arm(); }, { passive: true });
     addEventListener('scroll', arm, { passive: true });
   })();
