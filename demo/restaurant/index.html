@@ -12,8 +12,8 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preload" href="fonts/bricolage.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/caveat.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="style.css?v=1">
-  <script src="boot.js?v=1"></script>
+  <link rel="stylesheet" href="style.css?v=2">
+  <script src="boot.js?v=2"></script>
 </head>
 <body class="page-home">
   <aside class="demo-bar" aria-label="Site d'exemple">
@@ -30,11 +30,10 @@
 
   <main>
     <section class="hero" aria-labelledby="titre">
-      <div class="hero__img"><img src="img/salle-convives.webp" alt="Des amis attablés dans la salle du bistrot" width="1600" height="1073" fetchpriority="high"></div>
+      <div class="hero__img"><picture><source media="(min-width: 900px)" srcset="img/salle-convives.webp"><img src="img/midi.webp" alt="La salle du bistrot à l’heure du déjeuner" width="890" height="1300" fetchpriority="high"></picture></div>
       <div class="hero__text">
-        <p class="hero__kicker">Bistrot de quartier · Lorient</p>
+        <p class="hero__kicker">Bistrot de quartier</p>
         <h1 id="titre">La cuisine du marché, sans chichis.</h1>
-        <p class="hero__lead">Des plats faits maison, une ardoise qui change chaque jour, et une salle où l'on se sent bien.</p>
         <div class="hero__btns">
           <a class="btn" href="carte.html">Voir la carte</a>
           <a class="btn btn--ghost" href="tel:+33261912358" data-demo="call"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>Réserver</a>
@@ -45,61 +44,42 @@
     <aside class="today" data-today aria-label="Le plat du jour">
       <p class="today__label" data-today-label>Aujourd'hui à l'ardoise</p>
       <p class="today__dish writes" data-today-dish>Bœuf bourguignon</p>
-      <p class="hand writes" style="font-size:24px;color:var(--chalk-soft)" data-today-side>purée maison</p>
       <p class="today__price writes" data-today-price>14,50 €</p>
-      <span class="today__line" aria-hidden="true"></span>
-      <p class="today__midi">Le midi en semaine&nbsp;: <b>entrée + plat ou plat + dessert, 16,50&nbsp;€</b></p>
+      <span hidden data-today-side></span>
     </aside>
 
-    <section class="section after-hero">
+    <section class="section">
       <div class="wrap">
-        <p class="eyebrow" data-reveal>Ici, c'est simple</p>
-        <h2 class="title" data-reveal>On cuisine ce qu'on aime manger.</h2>
-        <p class="lead" data-reveal>Une petite équipe, des produits de saison, et du fait maison du pain aux desserts. On vient pour le plat du jour, on revient pour l'ambiance.</p>
-        <ul class="points" data-stagger>
-          <li class="point" data-reveal><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M8 20h32v12a8 8 0 0 1-8 8H16a8 8 0 0 1-8-8z"/><path d="M4 20h40M18 14c0-3 2-3 2-6m6 6c0-3 2-3 2-6"/></svg><h3>Tout est fait maison</h3><p>Les sauces, les frites, les desserts&nbsp;: rien ne sort d'un sachet.</p></li>
-          <li class="point" data-reveal><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M6 20h36l-4 20H10z"/><path d="M14 20l8-12m12 12-8-12M18 28v6m6-6v6m6-6v6"/></svg><h3>Le marché du coin</h3><p>Des légumes de saison et le poisson qui arrive du port.</p></li>
-          <li class="point" data-reveal><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="8"/><path d="M24 6v5m0 26v5M6 24h5m26 0h5M11.3 11.3l3.5 3.5m18.4 18.4 3.5 3.5m0-25.4-3.5 3.5M14.8 33.2l-3.5 3.5"/></svg><h3>La terrasse aux beaux jours</h3><p>Une vingtaine de places au soleil, sous les guirlandes.</p></li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="section section--slate">
-      <div class="wrap">
-        <p class="eyebrow" data-reveal>Les incontournables</p>
-        <h2 class="title" data-reveal>Ce qu'on vous conseille.</h2>
+        <p class="eyebrow" data-reveal>Ce qu'on vous conseille</p>
+        <h2 class="title" data-reveal>Fait maison, du pain aux desserts.</h2>
         <div class="dishes" data-stagger>
-          <a class="dish" href="carte.html#plats" data-reveal><figure><img src="img/burger.webp" alt="Le burger de L’Ardoise et ses frites maison" width="1000" height="666" loading="lazy" decoding="async"></figure><div><h3>Le burger de L'Ardoise</h3><p>Bœuf, cheddar affiné, frites maison</p><b>17 €</b></div></a>
-          <a class="dish" href="carte.html#plats" data-reveal><figure><img src="img/croque.webp" alt="Croque-monsieur maison, frites et salade" width="1000" height="652" loading="lazy" decoding="async"></figure><div><h3>Croque-monsieur maison</h3><p>Pain de campagne, salade, frites</p><b>14 €</b></div></a>
-          <a class="dish" href="carte.html#plats" data-reveal><figure><img src="img/magret.webp" alt="Magret de canard, sauce aux fruits rouges" width="867" height="1300" loading="lazy" decoding="async"></figure><div><h3>Magret, fruits rouges</h3><p>Sauce maison, légumes rôtis</p><b>21 €</b></div></a>
-          <a class="dish" href="carte.html#desserts" data-reveal><figure><img src="img/fondant.webp" alt="Fondant au chocolat et sa fraise" width="1000" height="667" loading="lazy" decoding="async"></figure><div><h3>Fondant au chocolat</h3><p>Le cœur coulant qu'on attend</p><b>8 €</b></div></a>
+          <a class="dish" href="carte.html#plats" data-reveal><figure><img src="img/croque.webp" alt="Croque-monsieur maison, frites et salade" width="1000" height="652" loading="lazy" decoding="async"></figure><div><h3>Croque-monsieur maison</h3><b>14 €</b></div></a>
+          <a class="dish" href="carte.html#plats" data-reveal><figure><img src="img/magret.webp" alt="Magret de canard, sauce aux fruits rouges" width="867" height="1300" loading="lazy" decoding="async"></figure><div><h3>Magret, fruits rouges</h3><b>21 €</b></div></a>
+          <a class="dish" href="carte.html#desserts" data-reveal><figure><img src="img/fondant.webp" alt="Fondant au chocolat et sa fraise" width="1000" height="667" loading="lazy" decoding="async"></figure><div><h3>Fondant au chocolat</h3><b>8 €</b></div></a>
         </div>
         <p class="more" data-reveal><a class="link" href="carte.html">Toute la carte</a></p>
       </div>
     </section>
 
-    <section class="section">
-      <div class="wrap">
-        <p class="eyebrow" data-reveal>L'ambiance</p>
-        <h2 class="title" data-reveal>Une salle où l'on se sent bien.</h2>
-        <div class="mosaic" data-stagger>
-          <figure data-reveal><img src="img/salle.webp" alt="La salle du bistrot, ses lampes et ses tables en bois" width="1000" height="1250" loading="lazy" decoding="async"><figcaption>La salle</figcaption></figure>
-          <figure data-reveal><img src="img/bar.webp" alt="Le comptoir et ses ardoises" width="1000" height="666" loading="lazy" decoding="async"><figcaption>Le comptoir</figcaption></figure>
-          <figure data-reveal><img src="img/terrasse.webp" alt="La terrasse sous les guirlandes" width="1000" height="666" loading="lazy" decoding="async"><figcaption>La terrasse</figcaption></figure>
-        </div>
-        <p class="more" data-reveal><a class="link" href="photos.html">Toutes les photos</a></p>
+    <section class="wide" data-reveal>
+      <img src="img/salle.webp" alt="La salle du bistrot, ses lampes et ses tables en bois" width="1000" height="1250" loading="lazy" decoding="async">
+      <div class="wide__text">
+        <h2>Une salle où l'on se sent bien.</h2>
+        <a class="link" href="photos.html">Voir les photos</a>
       </div>
     </section>
 
-    <section class="section section--slate">
-      <div class="wrap">
-        <p class="eyebrow" data-reveal>Venir nous voir</p>
-        <h2 class="title" data-reveal>On vous garde une table&nbsp;?</h2>
-        <p class="status" data-reveal data-status style="margin-top:20px"><i aria-hidden="true"></i><span data-status-text>Horaires ci-dessous</span></p>
-        <div class="visit" data-stagger>
-          <div class="visit__card" data-reveal><h3>Réserver</h3><p>Par téléphone, du mardi au samedi. Pour un groupe, appelez-nous un peu avant.</p><a class="btn" href="tel:+33261912358" data-demo="call"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>02 61 91 23 58</a></div>
-          <div class="visit__card" data-reveal><h3>Les horaires</h3><p>Du mardi au samedi, 12h – 14h et 19h – 22h (23h le vendredi et le samedi).</p><a class="btn btn--ghost" href="infos.html">Tous les horaires</a></div>
-          <div class="visit__card" data-reveal><h3>L'adresse</h3><p>5 rue de la Craie, 56100 Lorient</p><a class="btn btn--ghost" href="infos.html#acces"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>Itinéraire</a></div>
+    <section class="section">
+      <div class="wrap practical">
+        <div data-reveal>
+          <p class="eyebrow">Venir nous voir</p>
+          <h2 class="title">Du mardi au samedi.</h2>
+          <p class="status" data-status style="margin-top:18px"><i aria-hidden="true"></i><span data-status-text>Horaires ci-dessous</span></p>
+          <p class="lead">5 rue de la Craie, 56100 Lorient<br>12h – 14h · 19h – 22h (23h le week-end)</p>
+        </div>
+        <div class="practical__btns" data-reveal>
+          <a class="btn" href="tel:+33261912358" data-demo="call"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>02 61 91 23 58</a>
+          <a class="btn btn--ghost" href="infos.html">Horaires et accès</a>
         </div>
       </div>
     </section>
@@ -130,6 +110,6 @@
     <a class="btn btn--ghost" href="carte.html" tabindex="-1">La carte</a>
   </div>
   <div class="toast" role="status" aria-live="polite"></div>
-  <script src="app.js?v=1" defer></script>
+  <script src="app.js?v=2" defer></script>
 </body>
 </html>

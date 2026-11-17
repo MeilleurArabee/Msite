@@ -140,8 +140,8 @@
       night.style.opacity = 1 - smooth(0.3, 0.62, p);
       dawn.style.opacity = smooth(0.22, 0.52, p) * (1 - smooth(0.7, 0.92, p));
       day.style.opacity = smooth(0.7, 0.92, p);
-      stars.style.opacity = 1 - smooth(0.12, 0.5, p);
-      sun.style.transform = 'translateY(' + (-smooth(0.35, 1, p) * innerHeight * 0.72).toFixed(1) + 'px)';
+      if (stars) stars.style.opacity = 1 - smooth(0.12, 0.5, p);
+      if (sun) sun.style.transform = 'translateY(' + (-smooth(0.35, 1, p) * innerHeight * 0.72).toFixed(1) + 'px)';
       var m = Math.round(240 + p * 180), h = Math.floor(m / 60), mm = m % 60; // de 4h00 à 7h00
       if (clockT) clockT.textContent = (h < 10 ? '0' : '') + h + ':' + (mm < 10 ? '0' : '') + mm;
       if (clock) {
@@ -153,7 +153,7 @@
     addEventListener('scroll', onScroll, { passive: true }); addEventListener('resize', onScroll);
     if ('IntersectionObserver' in window) new IntersectionObserver(function (e) { inView = e[0].isIntersecting; onScroll(); }).observe(story); else inView = true;
     update();
-    sun.addEventListener('click', function (e) {
+    if (sun) sun.addEventListener('click', function (e) {
       sun.classList.remove('is-poked'); void sun.offsetWidth; sun.classList.add('is-poked');
       whisper('Le soleil se lève, le pain aussi ✦', 'sun', e.clientY);
     });
