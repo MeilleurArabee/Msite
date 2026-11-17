@@ -12,8 +12,8 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preload" href="fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/dm-sans.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="style.css?v=2">
-  <script src="boot.js?v=2"></script>
+  <link rel="stylesheet" href="style.css?v=4">
+  <script src="boot.js?v=4"></script>
 </head>
 <body class="page-home">
   <aside class="demo-bar" aria-label="Site d'exemple">
@@ -31,24 +31,31 @@
   <nav class="sheet" id="sheet" aria-label="Menu"><a href="index.html" aria-current="page">Accueil</a><a href="nos-produits.html">Nos produits</a><a href="commander.html">Commander</a><a href="infos.html">Infos</a><p>02 61 91 47 30 · 2 rue du Levain, 56100 Lorient</p></nav>
 
   <main>
-    <section class="hero" aria-labelledby="titre">
-      <div class="hero__img"><img src="img/farine.webp" alt="Les mains du boulanger dans un nuage de farine" width="1600" height="1068" fetchpriority="high"></div>
+    <section class="hero2" aria-labelledby="titre" data-hero2>
       <canvas class="flour" aria-hidden="true"></canvas>
-      <div class="hero__text">
-        <p class="hero__time"><i aria-hidden="true"></i>4h00 · l'atelier s'éveille</p>
-        <h1 id="titre">Le pain se lève <em>avant vous.</em></h1>
-        <p class="hero__lead">Boulangerie artisanale à Lorient. Pétri la nuit, doré à l'aube, chaud dès 7h.</p>
-        <div class="hero__btns">
-          <a class="btn btn--gold" href="commander.html">Commander</a>
-          <a class="btn btn--ghost" href="nos-produits.html">Nos produits</a>
-        </div>
-        <p class="hero__hint">✦ Touchez la farine.</p>
+      <div class="hero2__word" aria-hidden="true"><span data-word>Viennoiserie</span></div>
+      <div class="hero2__grains" aria-hidden="true"></div>
+      <div class="hero2__center">
+        <div class="hero2__glow" aria-hidden="true"></div>
+        <img class="hero2__prod" data-prod src="img/v-croissant.webp" alt="Croissant pur beurre" width="900" height="900" fetchpriority="high">
       </div>
-      <a class="hero__order" href="commander.html">
-        <span class="hero__order-t">Commandez pour demain</span>
-        <span class="hero__order-s">Retrait dès 7h, sans attente</span>
-        <span class="hero__order-go" aria-hidden="true">→</span>
-      </a>
+      <div class="hero2__left">
+        <p class="hero2__kicker">Boulangerie artisanale · Lorient</p>
+        <h1 id="titre" data-prod-title>Croissant <em>pur beurre</em></h1>
+        <p class="hero2__lead" data-prod-text>Feuilleté à la main, doré au four dès 5h. Il croustille, il s'effrite, il fond.</p>
+        <a class="btn btn--gold hero2__cta" href="commander.html">Commander<span aria-hidden="true">→</span></a>
+      </div>
+      <div class="hero2__right">
+        <p class="hero2__tag">Pétri la nuit, doré à l'aube.</p>
+        <p class="hero2__text">Farine de meule, levain maison, cuisson au four à sole. Chaud chaque matin dès 7h.</p>
+        <div class="hero2__thumbs" role="tablist" aria-label="Choisir un produit">
+          <button type="button" role="tab" aria-selected="true" aria-label="Viennoiseries" class="on" data-pick="0"><img src="img/v-croissant.webp" alt=""></button>
+          <button type="button" role="tab" aria-selected="false" aria-label="Pain de tradition" data-pick="1"><img src="img/v-baguettes.webp" alt=""></button>
+          <button type="button" role="tab" aria-selected="false" aria-label="Pain au levain" data-pick="2"><img src="img/v-levain.webp" alt=""></button>
+          <button type="button" role="tab" aria-selected="false" aria-label="Pâtisseries" data-pick="3"><img src="img/v-tarte.webp" alt=""></button>
+        </div>
+      </div>
+      <p class="hero2__hint">✦ Touchez la farine.</p>
     </section>
 
     <section class="story" aria-label="La nuit du boulanger">
@@ -169,8 +176,8 @@
   </div>
 
   <div class="toast" role="status" aria-live="polite"></div>
-  <script src="data.js?v=2"></script>
+  <script src="data.js?v=4"></script>
   <script src="lenis.min.js" defer></script>
-  <script src="app.js?v=2" defer></script>
+  <script src="app.js?v=4" defer></script>
 </body>
 </html>

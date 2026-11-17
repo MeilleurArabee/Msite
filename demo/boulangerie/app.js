@@ -116,9 +116,9 @@
     function go() { if (!run) { run = true; last = 0; requestAnimationFrame(tick); } }
     if ('IntersectionObserver' in window) new IntersectionObserver(function (e) { vis = e[0].isIntersecting; if (vis) go(); }).observe(cv);
     go();
-    var hero = $('.hero');
+    var hero = cv.parentNode;
     hero.addEventListener('pointerdown', function (e) {
-      if (e.target.closest('a, button')) return;
+      if (e.target.closest('a, button, img')) return;
       var r = cv.getBoundingClientRect(); puff(e.clientX - r.left, e.clientY - r.top);
       whisper('Pfff… un nuage de farine ✦', 'flour', e.clientY);
     });
@@ -300,5 +300,97 @@
   function toast(html) { tEl.innerHTML = html; tEl.classList.add('is-on'); clearTimeout(tt); tt = setTimeout(function () { tEl.classList.remove('is-on'); }, 3000); }
   var MSG = { call: '<b>Site d’exemple</b> : sur un vrai site, ce bouton appelle la boulangerie.', route: '<b>Site d’exemple</b> : sur un vrai site, ce bouton ouvre l’itinéraire dans votre GPS.' };
   d.addEventListener('click', function (e) { var a = e.target.closest && e.target.closest('[data-demo]'); if (!a) return; e.preventDefault(); toast(MSG[a.getAttribute('data-demo')] || ''); });
+  /* ---------- 12. L'accueil « vitrine » : un produit au centre, le décor change avec lui ---------- */
+  var h2 = $('[data-hero2]');
+  if (h2) (function () {
+    var LIST = [
+      { title: 'Croissant <em>pur beurre</em>', text: 'Feuilleté à la main, doré au four dès 5h. Il croustille, il s’effrite, il fond.', img: 'v-croissant', alt: 'Croissant pur beurre', bg: '#2b1810', glow: '#c98a3e', word: 'Viennoiserie' },
+      { title: 'Baguette <em>de tradition</em>', text: 'Pétrie la nuit, longue fermentation, une croûte qui chante en refroidissant.', img: 'v-baguettes', alt: 'Baguettes de tradition sorties du four', bg: '#33200f', glow: '#d8a04f', word: 'Tradition' },
+      { title: 'Pain <em>au levain</em>', text: 'Un levain nourri chaque jour, une mie dense et parfumée qui se garde.', img: 'v-levain', alt: 'Pâton de pain au levain façonné à la main', bg: '#1c2217', glow: '#a9a65c', word: 'Levain' },
+      { title: 'Tartelette <em>aux fruits</em>', text: 'Pâte sablée, crème légère, fruits frais posés à la main chaque matin.', img: 'v-tarte', alt: 'Tartelette fraise et banane', bg: '#2a1118', glow: '#d0707a', word: 'Pâtisserie' }
+    ];
+    LIST.forEach(function (x) { var i = new Image(); i.src = 'img/' + x.img + '.webp'; }); // préchargées : le changement est instantané
+    var prod = $('[data-prod]', h2), left = $('.hero2__left', h2), title = $('[data-prod-title]', h2), text = $('[data-prod-text]', h2);
+    var word = $('.hero2__word', h2), wordT = $('[data-word]', h2), thumbs = $$('[data-pick]', h2), cur = 0, busy = false, timer = 0, touched = false;
+    function pick(i) {
+      if (i === cur || busy) return;
+      busy = true; cur = i;
+      var x = LIST[i];
+      thumbs.forEach(function (b, j) { b.classList.toggle('on', j === i); b.setAttribute('aria-selected', String(j === i)); });
+      h2.style.setProperty('--bg', x.bg); h2.style.setProperty('--glow', x.glow);
+      prod.classList.add('is-out'); left.classList.add('is-out'); word.classList.add('is-out');
+      setTimeout(function () {
+        prod.src = 'img/' + x.img + '.webp'; prod.alt = x.alt;
+        title.innerHTML = x.title; text.textContent = x.text; wordT.textContent = x.word;
+        requestAnimationFrame(function () { prod.classList.remove('is-out'); left.classList.remove('is-out'); word.classList.remove('is-out'); });
+        setTimeout(function () { busy = false; }, 500);
+      }, soft ? 150 : 380);
+    }
+    thumbs.forEach(function (b) { b.addEventListener('click', function () { touched = true; clearInterval(timer); pick(+b.getAttribute('data-pick')); }); });
+    // tant qu'on n'a rien touché, les produits défilent seuls
+    var inView = true;
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (e) { inView = e[0].isIntersecting; }).observe(h2);
+    timer = setInterval(function () { if (!touched && inView && !d.hidden) pick((cur + 1) % LIST.length); }, 5200);
+
+    // les grains de blé qui flottent autour du produit
+    var box = $('.hero2__grains', h2), n = innerWidth < 700 ? 10 : 16;
+    var GRAIN = '<svg viewBox="0 0 40 24"><defs><linearGradient id="gr" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f3d18e"/><stop offset="1" stop-color="#9b6526"/></linearGradient></defs><ellipse cx="20" cy="12" rx="18" ry="10" fill="url(#gr)"/><path d="M5 12c8-2 22-2 30 0" stroke="#7a4a1a" stroke-width="1.6" fill="none" opacity=".7"/></svg>';
+    // jamais devant un texte, un bouton, une vignette ou le cœur du produit : on mesure la vraie place de chacun
+    function rect(el, m) {
+      var rg = d.createRange(); rg.selectNodeContents(el);
+      var r = rg.getBoundingClientRect(), H = h2.getBoundingClientRect();
+      return { l: r.left - H.left - m - 38, t: r.top - H.top - m - 24, r: r.right - H.left + m, b: r.bottom - H.top + m + 50 }; // + la taille du grain et sa montée
+    }
+    function spread() {
+      box.textContent = '';
+      var W = h2.offsetWidth, Ht = h2.offsetHeight, P = prod.getBoundingClientRect(), H = h2.getBoundingClientRect();
+      var pc = { x: P.left - H.left + P.width / 2, y: P.top - H.top + P.height / 2, r: P.width * 0.42 };
+      var no = $$('.hero2__kicker, [data-prod-title], [data-prod-text], .hero2__cta, .hero2__tag, .hero2__text, .hero2__thumbs, .hero2__hint', h2)
+        .filter(function (el) { return el.offsetWidth; }).map(function (el) { return rect(el, 26); });
+      function free(x, y) {
+        if (y < 130 || y > Ht - 30) return false; // ni sous l'en-tête, ni collé en bas
+        if (Math.hypot(x - pc.x, y - pc.y) < pc.r) return false;
+        for (var j = 0; j < no.length; j++) { var q = no[j]; if (x > q.l && x < q.r && y > q.t && y < q.b) return false; }
+        return true;
+      }
+      for (var k = 0; k < n; k++) {
+        var gx, gy, tries = 0;
+        do { gx = Math.random() * W; gy = Math.random() * Ht; } while (!free(gx, gy) && ++tries < 60);
+        if (tries >= 60) continue;
+        grain(gx / W * 100, gy / Ht * 100);
+      }
+    }
+    function grain(gx, gy) {
+      var g = d.createElement('i'), far = Math.random() < 0.35;
+      g.className = 'grain'; g.innerHTML = GRAIN;
+      g.style.left = gx + '%'; g.style.top = gy + '%';
+      g.style.setProperty('--s', (far ? 12 + Math.random() * 10 : 20 + Math.random() * 18) + 'px');
+      g.style.setProperty('--r', Math.round(Math.random() * 360) + 'deg');
+      g.style.setProperty('--b', far ? '2px' : '0px');
+      g.style.setProperty('--t', (7 + Math.random() * 6).toFixed(1) + 's');
+      g.style.setProperty('--d', (-Math.random() * 8).toFixed(1) + 's');
+      g.style.setProperty('--dx', ((Math.random() - 0.5) * 40).toFixed(0) + 'px');
+      g.style.setProperty('--dy', (-10 - Math.random() * 40).toFixed(0) + 'px');
+      box.appendChild(g);
+    }
+    spread();
+    if (d.fonts && d.fonts.ready) d.fonts.ready.then(spread); // une fois les polices là, les textes ont leur vraie taille
+    var lastW = innerWidth;
+    addEventListener('resize', function () { if (Math.abs(innerWidth - lastW) > 80) { lastW = innerWidth; spread(); } });
+    if (soft) return;
+    // profondeur : à la souris, le décor bouge un peu ; au scroll, le produit monte et tourne doucement
+    var center = $('.hero2__center', h2), mx = 0, my = 0, sy = 0, ticking = false;
+    function paint() {
+      ticking = false;
+      box.style.transform = 'translate(' + (mx * 18).toFixed(1) + 'px,' + (my * 14 - sy * 0.15).toFixed(1) + 'px)';
+      center.style.translate = (mx * -10).toFixed(1) + 'px ' + (my * -8 - sy * 0.22).toFixed(1) + 'px';
+      center.style.rotate = (sy * 0.012 + mx * 2).toFixed(2) + 'deg';
+      word.style.translate = (sy * -0.35 + mx * 24).toFixed(1) + 'px 0';
+    }
+    function ask() { if (!ticking) { ticking = true; requestAnimationFrame(paint); } }
+    if (fine) h2.addEventListener('pointermove', function (e) { var r = h2.getBoundingClientRect(); mx = (e.clientX - r.left) / r.width - 0.5; my = (e.clientY - r.top) / r.height - 0.5; ask(); });
+    addEventListener('scroll', function () { sy = Math.min(window.scrollY, innerHeight); ask(); }, { passive: true });
+  })();
+
   $$('[data-year]').forEach(function (n) { n.textContent = new Date().getFullYear(); });
 })();
