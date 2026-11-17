@@ -26,6 +26,13 @@ Le commerçant ouvre le site et voit son propre site déjà créé, avec son nom
 
 Les métiers reconnus et leurs textes sont dans `assets/js/builder.js` (liste `JOBS`).
 
+## Sites d'exemple (`demo/`)
+Des sites de commerces **fictifs**, clairement marqués « site d'exemple », pour montrer chaque formule :
+- **Solo** — cordonnerie « Talon & Clé » : `https://astelsia.fr/demo/cordonnerie/`
+
+Les numéros affichés sont réservés à la fiction (02 61 91 xx xx) ; les boutons « Appeler » et « Itinéraire »
+affichent un petit message au lieu d'appeler. Les pages d'exemple ne sont pas indexées par Google (`noindex`).
+
 ## Modifier les coordonnées
 Un seul fichier : `assets/js/config.js` (téléphone et mail).
 Les mentions légales sont à compléter dans `mentions-legales.html` (champs surlignés).
