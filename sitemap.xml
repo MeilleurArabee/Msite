@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Plan du site pour Google. Les pages d'exemple (demo/) et les mentions légales
+     ne sont volontairement pas indexées : elles n'apparaissent pas ici. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://astelsia.fr/</loc>
+    <lastmod>2026-11-17</lastmod>
+  </url>
+</urlset>
