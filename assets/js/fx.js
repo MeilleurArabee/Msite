@@ -81,7 +81,7 @@
       ctx.globalAlpha = Math.max(0, Math.min(1, a));
       if (p.k === 'spark') {
         ctx.drawImage(p.glow, p.x - p.r * 2.6, p.y - p.r * 2.6, p.r * 5.2, p.r * 5.2);
-        ctx.fillStyle = p.c; star4(p.x, p.y, p.r * (0.6 + 0.4 * p.life), p.rot);
+        ctx.fillStyle = p.c; ctx.beginPath(); ctx.arc(p.x, p.y, p.r * 0.32 * (0.6 + 0.4 * p.life), 0, 7); ctx.fill(); // un point rond, doux
       } else if (p.k === 'fly') {
         ctx.drawImage(GLOW.fly, p.x - p.r * 4, p.y - p.r * 4, p.r * 8, p.r * 8);
       } else {

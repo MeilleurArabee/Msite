@@ -42,7 +42,7 @@
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   <link rel="preload" href="assets/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/manrope.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/style.css?v=20261117-15">
+  <link rel="stylesheet" href="assets/css/style.css?v=20261118-2">
   <script>
     // Les animations restent actives partout. Si l'appareil demande à réduire les animations,
     // le site passe en « mode doux » : fondus uniquement, aucun mouvement brusque.
@@ -105,9 +105,6 @@
     </div>
   </div>
 
-  <!-- Les trois étoiles dorées en 3D (assets/js/stars3d.js) : elles se touchent -->
-  <canvas class="stars3d" aria-hidden="true"></canvas>
-  <img class="stars-fallback" src="assets/stars-gold.png" alt="" width="640" height="640" aria-hidden="true" loading="lazy">
 
   <!-- ============ EN-TÊTE ============ -->
   <header class="header">
@@ -175,8 +172,8 @@
         <div class="device__glow" aria-hidden="true"></div>
       </div>
 
-      <!-- petit secret : les étoiles se touchent -->
-      <p class="hero__hint" aria-hidden="true">✦ Psst… touchez les étoiles.</p>
+      <!-- petit secret : le ciel se touche -->
+      <p class="hero__hint" aria-hidden="true">✦ Psst… touchez le ciel.</p>
 
       <!-- Le créateur, en 4 temps (sans numéro d'étape) -->
       <div class="builder hero__in" data-step="1">
@@ -308,11 +305,11 @@
             <h3 class="plan__name">Solo</h3>
             <p class="plan__price">249,90&nbsp;€</p>
             <p class="plan__offer">Prix de lancement pour mes 3 premiers clients, puis 349,90&nbsp;€</p>
+            <p class="plan__line">Une page claire pour qu'on vous trouve et qu'on vous appelle.</p>
             <ul>
-              <li>Qui vous êtes, vos services et vos tarifs</li>
-              <li>«&nbsp;Ouvert maintenant&nbsp;» en direct, avec vos horaires</li>
-              <li>Boutons «&nbsp;Appeler&nbsp;» et «&nbsp;Itinéraire&nbsp;» en un geste</li>
-              <li>Votre adresse sur une carte</li>
+              <li>Vos services, vos tarifs et vos horaires</li>
+              <li>«&nbsp;Ouvert maintenant&nbsp;» en direct</li>
+              <li>Appeler et itinéraire en un geste</li>
             </ul>
             <a href="#contact" class="btn btn--ghost" data-choose="Solo">Choisir Solo</a>
           </article>
@@ -323,11 +320,11 @@
             <h3 class="plan__name">Business</h3>
             <p class="plan__price">649,90&nbsp;€</p>
             <p class="plan__perk">+ 1 mois d'offre Sérénité offert</p>
+            <p class="plan__line">Plusieurs pages qui donnent envie de venir chez vous.</p>
             <ul>
-              <li>Jusqu'à 5 pages&nbsp;: accueil, carte ou catalogue, photos, infos…</li>
-              <li>Votre carte ou vos produits, clairs et appétissants</li>
-              <li>Une galerie photo qu'on parcourt du bout du doigt</li>
-              <li>Des pages qui s'enchaînent en douceur, des animations soignées</li>
+              <li>Jusqu'à 5 pages&nbsp;: carte, photos, infos…</li>
+              <li>Galerie photo et vos vrais avis Google</li>
+              <li>Animations soignées entre les pages</li>
             </ul>
             <a href="#contact" class="btn" data-choose="Business">Choisir Business</a>
           </article>
@@ -338,23 +335,28 @@
             <h3 class="plan__name">Signature</h3>
             <p class="plan__price">1&nbsp;349,90&nbsp;€</p>
             <p class="plan__perk">+ 6 mois d'offre Sérénité offerts</p>
+            <p class="plan__line">Tout Business, plus un univers unique où l'on commande en ligne.</p>
             <ul>
-              <li>Tout ce qu'inclut Business</li>
-              <li>Commande, réservation ou rendez-vous en ligne, sans commission</li>
-              <li>Une histoire qui se déroule quand on fait défiler, des animations poussées plus loin</li>
-              <li>Des petits secrets à toucher, comme sur ce site</li>
+              <li>Commande ou réservation en ligne, sans commission</li>
+              <li>Un univers dessiné rien que pour vous</li>
+              <li>Des petits secrets à toucher</li>
             </ul>
             <a href="#contact" class="btn btn--ghost" data-choose="Signature">Choisir Signature</a>
           </article>
         </div>
       </div>
       <p class="plans__hint" aria-hidden="true">Glissez la carte pour comparer</p>
-      <div class="compare" data-reveal>
-        <table>
-          <caption>Ce que contient chaque formule</caption>
-          <thead><tr><td></td><th scope="col">Solo</th><th scope="col" class="is-rec">Business</th><th scope="col">Signature</th></tr></thead>
-          <tbody><tr><th scope="row">Une belle page, horaires, carte, bouton appeler</th><td class="y" aria-label="oui">✦</td><td class="y" aria-label="oui">✦</td><td class="y" aria-label="oui">✦</td></tr><tr><th scope="row">Plusieurs pages : carte, photos, infos</th><td class="n" aria-label="non">–</td><td class="y" aria-label="oui">✦</td><td class="y" aria-label="oui">✦</td></tr><tr><th scope="row">Galerie photo</th><td class="n" aria-label="non">–</td><td class="y" aria-label="oui">✦</td><td class="y" aria-label="oui">✦</td></tr><tr><th scope="row">Animations soignées</th><td class="n" aria-label="non">–</td><td class="y" aria-label="oui">✦</td><td class="y" aria-label="oui">✦</td></tr><tr><th scope="row">Commande ou réservation en ligne</th><td class="n" aria-label="non">–</td><td class="n" aria-label="non">–</td><td class="y" aria-label="oui">✦</td></tr><tr><th scope="row">Un univers animé rien qu'à vous</th><td class="n" aria-label="non">–</td><td class="n" aria-label="non">–</td><td class="y" aria-label="oui">✦</td></tr><tr><th scope="row">Des petits secrets à toucher</th><td class="n" aria-label="non">–</td><td class="n" aria-label="non">–</td><td class="y" aria-label="oui">✦</td></tr><tr class="gift"><th scope="row">Offre Sérénité offerte</th><td class="n">–</td><td>1&nbsp;mois</td><td>6&nbsp;mois</td></tr></tbody>
-        </table>
+      <div class="compare-wrap" data-reveal>
+        <button type="button" class="compare-btn" aria-expanded="false" aria-controls="comparatif" data-compare>Comparer en détail<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="compare" id="comparatif">
+          <div class="compare__in">
+            <table>
+              <caption>Tout ce que contient chaque formule</caption>
+              <thead><tr><td></td><th scope="col">Solo</th><th scope="col" class="is-rec">Business</th><th scope="col">Signature</th></tr></thead>
+              <tbody><tr class="grp"><th scope="rowgroup" colspan="4">Les bases</th></tr><tr><th scope="row">Design sur mesure, parfait sur téléphone, rapide</th><td class="y" aria-label="oui">✓</td><td class="y" aria-label="oui">✓</td><td class="y" aria-label="oui">✓</td></tr><tr><th scope="row">Qui vous êtes, vos services, vos tarifs</th><td class="y" aria-label="oui">✓</td><td class="y" aria-label="oui">✓</td><td class="y" aria-label="oui">✓</td></tr><tr><th scope="row">Horaires et «&nbsp;ouvert maintenant&nbsp;» en direct</th><td class="y" aria-label="oui">✓</td><td class="y" aria-label="oui">✓</td><td class="y" aria-label="oui">✓</td></tr><tr><th scope="row">Boutons «&nbsp;Appeler&nbsp;» et «&nbsp;Itinéraire&nbsp;»</th><td class="y" aria-label="oui">✓</td><td class="y" aria-label="oui">✓</td><td class="y" aria-label="oui">✓</td></tr><tr><th scope="row">Plan d'accès</th><td class="y" aria-label="oui">✓</td><td class="y" aria-label="oui">✓</td><td class="y" aria-label="oui">✓</td></tr><tr><th scope="row">Liens vers vos réseaux</th><td class="y" aria-label="oui">✓</td><td class="y" aria-label="oui">✓</td><td class="y" aria-label="oui">✓</td></tr><tr><th scope="row">Bien présenté sur Google (titre et description)</th><td class="y" aria-label="oui">✓</td><td class="y" aria-label="oui">✓</td><td class="y" aria-label="oui">✓</td></tr><tr><th scope="row">Mode doux pour ceux que les animations gênent</th><td class="y" aria-label="oui">✓</td><td class="y" aria-label="oui">✓</td><td class="y" aria-label="oui">✓</td></tr><tr class="grp"><th scope="rowgroup" colspan="4">Le contenu</th></tr><tr><th scope="row">Nombre de pages</th><td class="t">1</td><td class="t">jusqu'à 5</td><td class="t">jusqu'à 5</td></tr><tr><th scope="row">Carte ou catalogue détaillé</th><td class="n" aria-label="non">–</td><td class="y" aria-label="oui">✓</td><td class="y" aria-label="oui">✓</td></tr><tr><th scope="row">Galerie photo à feuilleter</th><td class="n" aria-label="non">–</td><td class="y" aria-label="oui">✓</td><td class="y" aria-label="oui">✓</td></tr><tr><th scope="row">Formulaire de contact ou de devis</th><td class="n" aria-label="non">–</td><td class="y" aria-label="oui">✓</td><td class="y" aria-label="oui">✓</td></tr><tr><th scope="row">Vos vrais avis Google mis en avant</th><td class="n" aria-label="non">–</td><td class="y" aria-label="oui">✓</td><td class="y" aria-label="oui">✓</td></tr><tr><th scope="row">Actus, promos ou plats du moment</th><td class="n" aria-label="non">–</td><td class="y" aria-label="oui">✓</td><td class="y" aria-label="oui">✓</td></tr><tr class="grp"><th scope="rowgroup" colspan="4">L'expérience</th></tr><tr><th scope="row">Animations</th><td class="t">discrètes</td><td class="t">soignées</td><td class="t">poussées</td></tr><tr><th scope="row">Transitions fluides entre les pages</th><td class="n" aria-label="non">–</td><td class="y" aria-label="oui">✓</td><td class="y" aria-label="oui">✓</td></tr><tr><th scope="row">Un univers dessiné rien que pour vous</th><td class="n" aria-label="non">–</td><td class="n" aria-label="non">–</td><td class="y" aria-label="oui">✓</td></tr><tr><th scope="row">Des petits secrets à toucher</th><td class="n" aria-label="non">–</td><td class="n" aria-label="non">–</td><td class="y" aria-label="oui">✓</td></tr><tr class="grp"><th scope="rowgroup" colspan="4">La vente</th></tr><tr><th scope="row">Commande ou réservation en ligne, sans commission</th><td class="n" aria-label="non">–</td><td class="n" aria-label="non">–</td><td class="y" aria-label="oui">✓</td></tr><tr><th scope="row">Choix du jour et de l'heure</th><td class="n" aria-label="non">–</td><td class="n" aria-label="non">–</td><td class="y" aria-label="oui">✓</td></tr><tr><th scope="row">Chaque commande reçue par mail ou SMS</th><td class="n" aria-label="non">–</td><td class="n" aria-label="non">–</td><td class="y" aria-label="oui">✓</td></tr><tr class="grp"><th scope="rowgroup" colspan="4">L'accompagnement</th></tr><tr><th scope="row">Maquette validée avant la création</th><td class="y" aria-label="oui">✓</td><td class="y" aria-label="oui">✓</td><td class="y" aria-label="oui">✓</td></tr><tr><th scope="row">Votre site et votre nom de domaine à votre nom</th><td class="y" aria-label="oui">✓</td><td class="y" aria-label="oui">✓</td><td class="y" aria-label="oui">✓</td></tr><tr class="gift"><th scope="row">Offre Sérénité offerte</th><td class="n">–</td><td>1&nbsp;mois</td><td>6&nbsp;mois</td></tr></tbody>
+            </table>
+          </div>
+        </div>
       </div>
       <ul class="trust" data-reveal>
         <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg>Chaque site est créé sur mesure, rapide et parfait sur téléphone</li>
@@ -362,7 +364,7 @@
         <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg>Prix fixe annoncé à l'avance, aucun frais caché</li>
         <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg>Votre site et votre nom de domaine sont à votre nom</li>
       </ul>
-      <p class="plans__note" data-reveal>Paiement unique pour la création du site. Prix nets&nbsp;: TVA non applicable, art.&nbsp;293&nbsp;B du CGI.<br>✦ Le ciel qui change, les mots qui s'allument, les étoiles qu'on touche&nbsp;: <strong>c'est la formule Signature.</strong></p>
+      <p class="plans__note" data-reveal>Paiement unique pour la création du site. Prix nets&nbsp;: TVA non applicable, art.&nbsp;293&nbsp;B du CGI.<br>✦ Le ciel qui change, les mots qui s'allument, la balançoire qu'on pousse&nbsp;: <strong>c'est la formule Signature.</strong></p>
     </section>
 
     <!-- ============ OFFRE SÉRÉNITÉ (offre à part) ============ -->
@@ -430,16 +432,15 @@
     <p>© <span data-year>2026</span> <span translate="no">Astelsia</span> · <a href="mentions-legales.html">Mentions légales</a></p>
   </footer>
 
-  <script src="assets/js/config.js?v=20261117-15"></script>
+  <script src="assets/js/config.js?v=20261118-2"></script>
   <script src="assets/vendor/gsap.min.js" defer></script>
   <script src="assets/vendor/ScrollTrigger.min.js" defer></script>
   <script src="assets/vendor/SplitText.min.js" defer></script>
   <script src="assets/vendor/lenis.min.js" defer></script>
-  <script src="assets/js/stars3d.js?v=20261117-15" defer></script>
-  <script src="assets/js/builder.js?v=20261117-15" defer></script>
-  <script src="assets/js/scene.js?v=20261117-15" defer></script>
-  <script src="assets/js/fx.js?v=20261117-15" defer></script>
-  <script src="assets/js/main.js?v=20261117-15" defer></script>
+  <script src="assets/js/builder.js?v=20261118-2" defer></script>
+  <script src="assets/js/scene.js?v=20261118-2" defer></script>
+  <script src="assets/js/fx.js?v=20261118-2" defer></script>
+  <script src="assets/js/main.js?v=20261118-2" defer></script>
   <script>
     // L'écran de chargement reste le temps que tout soit prêt (3D, polices), au minimum 1 s, au maximum 5 s.
     (function () {
