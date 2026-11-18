@@ -81,8 +81,10 @@
   var said = {};
   function whisper(text, key, y) {
     if (said[key]) return; said[key] = true;
+    document.querySelectorAll('.whisper--pill').forEach(function (o) { o.remove(); });
     var w = document.createElement('p'); w.className = 'whisper'; w.setAttribute('aria-hidden', 'true'); w.textContent = text;
-    w.style.top = Math.round(Math.max(90, Math.min(innerHeight - 160, (y || innerHeight * 0.4) - 90))) + 'px';
+    w.classList.add('whisper--pill'); // en bas de l'écran, dans une pastille : jamais sur un texte
+    var h = document.querySelector('.hero__hint'); if (h) h.classList.remove('is-on');
     document.body.appendChild(w);
     requestAnimationFrame(function () { requestAnimationFrame(function () { w.classList.add('is-on'); }); });
     setTimeout(function () { w.classList.remove('is-on'); }, 2600); setTimeout(function () { w.remove(); }, 3800);
