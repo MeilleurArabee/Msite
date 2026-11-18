@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Pivoine — Fleuriste (site d'exemple)</title>
+  <meta name="description" content="Site d'exemple réalisé par Astelsia (formule Solo) pour une fleuriste fictive : horaires, tarifs, accès.">
+  <!-- Commerce fictif : on demande aux moteurs de recherche de ne pas l'indexer -->
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#fdf3f1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="style.css?v=1">
+  <script src="boot.js?v=1"></script>
+</head>
+<body>
+  <aside class="demo-bar" aria-label="Site d'exemple">
+    <p>Site d'exemple · commerce fictif</p>
+    <a href="../../" target="_top">par <span translate="no">Astelsia</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.7 5.6 2.9 7.8 8.5 8.5-5.6.7-7.8 2.9-8.5 8.5-.7-5.6-2.9-7.8-8.5-8.5 5.6-.7 7.8-2.9 8.5-8.5z"/></svg></a>
+  </aside>
+  <div class="wrap">
+    <header class="top"><span class="logo" translate="no">Pivoine</span><p class="open" data-status><i></i><span data-status-text>Horaires ci-dessous</span></p></header>
+    <div class="photo"><img src="img/pivoines.webp" alt="Pivoines et hortensias dans la vitrine de la boutique" width="930" height="1400" fetchpriority="high"><p>Fleuriste · Lorient</p></div>
+    <main class="intro">
+      <h1>Des fleurs <em>pour dire les choses.</em></h1>
+      <p class="lead">Bouquets du jour, compositions sur commande et plantes, choisis chaque matin au marché.</p>
+      <div class="acts"><a class="call" href="#trouver" data-demo="call">Appeler</a><a class="route" href="#trouver" data-demo="route">Itinéraire</a></div>
+      <div class="cards">
+        <section class="card" aria-labelledby="t-h"><h2 id="t-h">Nos horaires</h2>
+          <ul data-hours>
+            <li data-day="2"><span>Mardi</span><b>9h – 19h</b></li>
+            <li data-day="3"><span>Mercredi</span><b>9h – 19h</b></li>
+            <li data-day="4"><span>Jeudi</span><b>9h – 19h</b></li>
+            <li data-day="5"><span>Vendredi</span><b>9h – 19h</b></li>
+            <li data-day="6"><span>Samedi</span><b>9h – 19h</b></li>
+            <li data-day="0"><span>Dimanche</span><b>9h – 13h</b></li>
+            <li data-day="1"><span>Lundi</span><b>Fermé</b></li>
+          </ul>
+        </section>
+        <section class="card" aria-labelledby="t-t"><h2 id="t-t">Nos tarifs</h2>
+          <ul>
+            <li><span>Bouquet du jour</span><b>dès 25&nbsp;€</b></li>
+            <li><span>Composition sur mesure</span><b>dès 40&nbsp;€</b></li>
+            <li><span>Plante en pot</span><b>dès 15&nbsp;€</b></li>
+            <li><span>Livraison en ville</span><b>8&nbsp;€</b></li>
+          </ul>
+        </section>
+        <section class="card" id="trouver" aria-labelledby="t-a"><h2 id="t-a">Nous trouver</h2>
+          <ul><li><span>12 rue des Fleurs, 56100 Lorient</span><b>02 00 00 00 00</b></li></ul>
+          <a class="map" href="#trouver" data-demo="route" aria-label="Ouvrir l'itinéraire"><i></i></a>
+        </section>
+      </div>
+    </main>
+    <footer class="foot">Pivoine, commerce fictif · photo&nbsp;: Pexels<br>Site d'exemple de la formule <strong>Solo</strong> d'<span translate="no">Astelsia</span> · <a href="../../" target="_top">Créer le mien</a></footer>
+  </div>
+  <div class="toast" role="status" aria-live="polite"></div>
+  <script src="app.js?v=1" defer></script>
+</body>
+</html>

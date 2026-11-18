@@ -40,9 +40,10 @@ le message est déjà rédigé (SMS sur téléphone, mail sur ordinateur). Aucun
 
 ## Sites d'exemple (`demo/`)
 Des sites de commerces **fictifs**, clairement marqués « site d'exemple », pour montrer chaque formule :
-- **Solo** — cordonnerie « Talon & Clé » : `https://astelsia.fr/demo/cordonnerie/`
-- **Business** — bistrot « L'Ardoise » (4 pages : accueil, carte, photos, infos) : `https://astelsia.fr/demo/restaurant/`
-- **Signature** — boulangerie « Aube » (style parchemin : mots qui dansent au scroll, cartes qui s’envolent, autocollants à bousculer ; commande en ligne avec retrait) : `https://astelsia.fr/demo/boulangerie/`
+- **Solo** — fleuriste « Pivoine » (une page claire : ouvert en direct, horaires, tarifs) : `https://astelsia.fr/demo/fleuriste/`
+- **Business** — cordonnerie « Talon & Clé » : `https://astelsia.fr/demo/cordonnerie/`
+- **Signature** — restaurant « La Tonnelle » (terrasse au crépuscule, lumières à toucher, réservation en ligne) : `https://astelsia.fr/demo/bistrot/`
+- Anciens exemples gardés hors des formules : `demo/restaurant/` (L'Ardoise), `demo/boulangerie/` (Aube)
 
 Ils s'affichent en direct dans l'iPhone des formules (onglets Solo / Business / Signature, liste `DEMOS` dans `assets/js/builder.js`).
 Photos des exemples : Pexels (libres de droits, usage commercial autorisé).
