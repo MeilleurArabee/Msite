@@ -71,8 +71,8 @@
       ctx.globalAlpha = reduced ? 0.8 : 0.4 + 0.6 * Math.abs(Math.sin(st.p + t * 0.001 * st.v));
       ctx.fillStyle = st.warm ? '#ffe9d0' : '#ffffff';
       ctx.beginPath(); ctx.arc(st.x, st.y, st.s, 0, 7); ctx.fill();
-      if (st.s > 1.6) { // petite croix de lumière sur les plus brillantes
-        ctx.globalAlpha *= 0.35; ctx.fillRect(st.x - st.s * 3, st.y - 0.4, st.s * 6, 0.8); ctx.fillRect(st.x - 0.4, st.y - st.s * 3, 0.8, st.s * 6);
+      if (st.s > 1.4) { // un halo très doux autour des plus brillantes, sans forme d'étoile
+        ctx.globalAlpha *= 0.18; ctx.beginPath(); ctx.arc(st.x, st.y, st.s * 3.2, 0, 7); ctx.fill();
       }
     }
     if (!reduced) {

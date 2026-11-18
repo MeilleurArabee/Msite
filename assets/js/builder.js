@@ -616,3 +616,16 @@
 
   window.AstelsiaBuilder = { state: state, selectPlan: selectPlan, findJob: findJob };
 })();
+
+/* ---------- « Comparer en détail » : le grand tableau s'ouvre et se referme ---------- */
+(function () {
+  var btn = document.querySelector('[data-compare]'), box = document.getElementById('comparatif');
+  if (!btn || !box) return;
+  btn.addEventListener('click', function () {
+    var open = !box.classList.contains('is-open');
+    box.classList.toggle('is-open', open); btn.setAttribute('aria-expanded', String(open));
+    btn.firstChild.nodeValue = open ? 'Refermer le détail' : 'Comparer en détail';
+    // le reste de la page a bougé : on prévient les animations au défilement
+    setTimeout(function () { if (window.ScrollTrigger) window.ScrollTrigger.refresh(); }, 650);
+  });
+})();
