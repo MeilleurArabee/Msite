@@ -125,9 +125,9 @@
   var PLANS = { solo: 'Solo', business: 'Business', signature: 'Signature' };
   var ORDER = ['solo', 'business', 'signature'];
   var CAPS = {
-    solo: '<strong>Solo</strong> · Un vrai exemple&nbsp;: Talon &amp; Clé, une cordonnerie imaginaire. Une belle page claire, avec horaires, tarifs, carte et bouton pour appeler.',
-    business: '<strong>Business</strong> · Un vrai exemple&nbsp;: L\'Ardoise, un bistrot de quartier. Quatre pages, la carte, une galerie photo et des animations élégantes.',
-    signature: '<strong>Signature</strong> · Un vrai exemple&nbsp;: Aube, une boulangerie. Les produits défilent comme en vitrine, on commande en ligne, et la farine s\'envole sous le doigt.'
+    solo: '<strong>Solo</strong> · Un vrai exemple&nbsp;: Pivoine, une fleuriste. Une seule page, claire et soignée&nbsp;: ouvert ou fermé en direct, horaires, tarifs, appeler en un geste.',
+    business: '<strong>Business</strong> · Un vrai exemple&nbsp;: Talon &amp; Clé, une cordonnerie. Un univers dessiné, un porte-clés qu\'on fait tinter, des animations soignées.',
+    signature: '<strong>Signature</strong> · Un vrai exemple&nbsp;: La Tonnelle, un restaurant. Une terrasse au crépuscule, des lumières qu\'on touche, et la réservation en ligne.'
   };
 
   function norm(s) { return String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[’'\-_.]/g, ' ').replace(/\s+/g, ' ').trim(); }
@@ -425,18 +425,42 @@
 
   /* ---------- Les vrais sites d'exemple, dans le téléphone des formules ----------
      Ajouter ici les exemples Business et Signature quand ils seront prêts. */
-  var DEMOS = { solo: 'demo/cordonnerie/', business: 'demo/restaurant/', signature: 'demo/boulangerie/' };
+  var DEMOS = { solo: 'demo/fleuriste/', business: 'demo/cordonnerie/', signature: 'demo/bistrot/' };
   var site = document.querySelector('.plan-site'), siteScreen = site && site.querySelector('.plan-site__screen');
   var siteFrame = site && site.querySelector('iframe'), siteLink = document.querySelector('.plan-preview__link');
-  function fitSite() {
+  var fitSite = function () {};
+  if (siteScreen && window.ResizeObserver) new ResizeObserver(function () { fitSite(); }).observe(siteScreen);
+  // un cadre par exemple : chacun se charge une seule fois, puis on passe de l'un à l'autre sans attendre
+  var frames = {}, wanted = null, near = !('IntersectionObserver' in window), preloaded = false;
+  if (siteFrame) { siteFrame.remove(); siteFrame = null; }
+  function frameFor(url) {
+    if (frames[url]) return frames[url];
+    var f = document.createElement('iframe');
+    f.title = 'Exemple de site réalisé par Astelsia'; f.setAttribute('loading', 'eager');
+    f.addEventListener('load', function () { f.dataset.ready = '1'; if (url === wanted) site.classList.add('is-loaded'); });
+    siteScreen.insertBefore(f, siteScreen.firstChild);
+    frames[url] = f; return f;
+  }
+  fitSite = function () {
     if (!site || site.hidden) return;
     var w = siteScreen.clientWidth, h = siteScreen.clientHeight;
     if (!w || !h) return;
     var k = w / 390; // le site s'affiche exactement comme sur un vrai iPhone
-    siteFrame.style.height = Math.round(h / k) + 'px';
-    siteFrame.style.transform = 'scale(' + k + ')';
+    Object.keys(frames).forEach(function (u) { frames[u].style.height = Math.round(h / k) + 'px'; frames[u].style.transform = 'scale(' + k + ')'; });
+  };
+  function loadSite() {
+    if (!wanted) return;
+    var f = frameFor(wanted);
+    if (!f.getAttribute('src')) f.setAttribute('src', wanted);
+    Object.keys(frames).forEach(function (u) { frames[u].classList.toggle('is-on', u === wanted); });
+    site.classList.toggle('is-loaded', !!f.dataset.ready);
+    fitSite();
+    if (!preloaded) { // dès que le premier est prêt, on prépare les deux autres en silence
+      preloaded = true;
+      var later = function () { Object.keys(DEMOS).forEach(function (k) { var u = DEMOS[k]; if (u) { var g = frameFor(u); if (!g.getAttribute('src')) g.setAttribute('src', u); } }); fitSite(); };
+      if (f.dataset.ready) setTimeout(later, 300); else f.addEventListener('load', function () { setTimeout(later, 300); }, { once: true });
+    }
   }
-  if (siteScreen && window.ResizeObserver) new ResizeObserver(fitSite).observe(siteScreen);
   function showSite(key) {
     if (!site) return;
     var url = DEMOS[key];
@@ -449,19 +473,11 @@
     if (near) loadSite();
     requestAnimationFrame(fitSite);
   }
-  // le vrai site ne se charge que quand on approche des formules : l'accueil reste rapide
-  var wanted = null, near = !('IntersectionObserver' in window);
-  function loadSite() {
-    if (!wanted || siteFrame.getAttribute('src') === wanted) return;
-    site.classList.remove('is-loaded');
-    siteFrame.onload = function () { site.classList.add('is-loaded'); };
-    siteFrame.setAttribute('src', wanted);
-  }
   if (site && !near) {
     var siteIO = new IntersectionObserver(function (e) {
       if (!e[0].isIntersecting) return;
       near = true; siteIO.disconnect(); loadSite();
-    }, { rootMargin: '700px 0px' });
+    }, { rootMargin: '1400px 0px' });
     siteIO.observe(site.closest('.plan-preview'));
   }
   var timers = [], currentRec = 'business';
