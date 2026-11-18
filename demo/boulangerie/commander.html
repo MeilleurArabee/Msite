@@ -7,13 +7,13 @@
   <meta name="description" content="Commandez en ligne et retirez en boutique : exemple de commande pour la boulangerie fictive Aube.">
   <!-- Commerce fictif : on demande aux moteurs de recherche de ne pas l'indexer -->
   <meta name="robots" content="noindex, nofollow">
-  <meta name="theme-color" content="#16122f">
+  <meta name="theme-color" content="#292622">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="preload" href="fonts/playfair-400.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="fonts/jost-400.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="style.css?v=6">
-  <script src="boot.js?v=6"></script>
+  <link rel="preload" href="fonts/cormorant-300.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/manrope-500.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="style.css?v=7">
+  <script src="boot.js?v=7"></script>
 </head>
 <body class="page-commande">
   <aside class="demo-bar" aria-label="Site d'exemple">
@@ -21,10 +21,10 @@
     <a href="../../" target="_top">par <span translate="no">Astelsia</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.7 5.6 2.9 7.8 8.5 8.5-5.6.7-7.8 2.9-8.5 8.5-.7-5.6-2.9-7.8-8.5-8.5 5.6-.7 7.8-2.9 8.5-8.5z"/></svg></a>
   </aside>
   <header class="top">
-    <a class="brand" href="index.html" translate="no"><svg viewBox="0 0 32 32" aria-hidden="true"><defs><linearGradient id="lg-sun" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe7a8"/><stop offset="1" stop-color="#f19a45"/></linearGradient></defs><path d="M6 21a10 10 0 0 1 20 0z" fill="url(#lg-sun)"/><path d="M3 24.5h26" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M16 5v3M7.5 9.5l2 2M24.5 9.5l-2 2" stroke="#f3c66f" stroke-width="2" stroke-linecap="round"/></svg><span><b>Aube</b><br><small>boulangerie</small></span></a>
+    <a class="brand" href="index.html" translate="no" data-logo aria-label="Aube, accueil"><svg viewBox="0 0 32 32" aria-hidden="true"><defs><linearGradient id="lg-sun" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe7a8"/><stop offset="1" stop-color="#f19a45"/></linearGradient></defs><path d="M6 21a10 10 0 0 1 20 0z" fill="url(#lg-sun)"/><path d="M3 24.5h26" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M16 5v3M7.5 9.5l2 2M24.5 9.5l-2 2" stroke="#f3c66f" stroke-width="2" stroke-linecap="round"/></svg><b>Aube</b></a>
     <nav class="nav" aria-label="Pages"><a href="index.html">Accueil</a><a href="nos-produits.html">Nos produits</a><a href="commander.html" aria-current="page">Commander</a><a href="infos.html">Infos</a></nav>
     <div class="top__right">
-      <a class="cart-btn" href="commander.html" aria-label="Ma commande"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1.2 12H6.2z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span>Commande</span><span data-count="0">0</span></a>
+      <a class="cart-btn" href="commander.html" aria-label="Ma commande" data-cursor="Panier"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1.2 12H6.2z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span>Commander</span><span data-count="0">0</span></a>
       <button type="button" class="menu-btn" aria-expanded="false" aria-controls="sheet" aria-label="Menu"><i aria-hidden="true"></i></button>
     </div>
   </header>
@@ -67,28 +67,30 @@
   </div>
 
   <footer class="foot">
-    <div class="foot__in">
-      <div>
-        <a class="brand" href="index.html" translate="no"><svg viewBox="0 0 32 32" aria-hidden="true"><defs><linearGradient id="lg-sun" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe7a8"/><stop offset="1" stop-color="#f19a45"/></linearGradient></defs><path d="M6 21a10 10 0 0 1 20 0z" fill="url(#lg-sun)"/><path d="M3 24.5h26" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M16 5v3M7.5 9.5l2 2M24.5 9.5l-2 2" stroke="#f3c66f" stroke-width="2" stroke-linecap="round"/></svg><span><b>Aube</b><br><small>boulangerie</small></span></a>
-        <p>2 rue du Levain, 56100 Lorient<br>02 61 91 47 30</p>
-      </div>
-      <div>
-        <p class="label">Les horaires</p>
-        <p>Du mardi au samedi, 7h – 19h30<br>Le dimanche, 7h – 13h</p>
-      </div>
-      <nav aria-label="Pages"><a href="index.html">Accueil</a><a href="nos-produits.html">Nos produits</a><a href="commander.html">Commander</a><a href="infos.html">Infos</a></nav>
+    <div class="foot__cta"><span class="sticker st1" data-sticker aria-hidden="true"><svg viewBox="0 0 120 120"><polygon points="116.0,60.0 109.6,66.5 114.1,74.5 106.2,79.1 108.5,88.0 99.7,90.4 99.6,99.6 90.4,99.7 88.0,108.5 79.1,106.2 74.5,114.1 66.5,109.6 60.0,116.0 53.5,109.6 45.5,114.1 40.9,106.2 32.0,108.5 29.6,99.7 20.4,99.6 20.3,90.4 11.5,88.0 13.8,79.1 5.9,74.5 10.4,66.5 4.0,60.0 10.4,53.5 5.9,45.5 13.8,40.9 11.5,32.0 20.3,29.6 20.4,20.4 29.6,20.3 32.0,11.5 40.9,13.8 45.5,5.9 53.5,10.4 60.0,4.0 66.5,10.4 74.5,5.9 79.1,13.8 88.0,11.5 90.4,20.3 99.6,20.4 99.7,29.6 108.5,32.0 106.2,40.9 114.1,45.5 109.6,53.5" fill="#d8cbb8" stroke="#d8cbb8" stroke-width="10" stroke-linejoin="round"/><polygon points="116.0,60.0 109.6,66.5 114.1,74.5 106.2,79.1 108.5,88.0 99.7,90.4 99.6,99.6 90.4,99.7 88.0,108.5 79.1,106.2 74.5,114.1 66.5,109.6 60.0,116.0 53.5,109.6 45.5,114.1 40.9,106.2 32.0,108.5 29.6,99.7 20.4,99.6 20.3,90.4 11.5,88.0 13.8,79.1 5.9,74.5 10.4,66.5 4.0,60.0 10.4,53.5 5.9,45.5 13.8,40.9 11.5,32.0 20.3,29.6 20.4,20.4 29.6,20.3 32.0,11.5 40.9,13.8 45.5,5.9 53.5,10.4 60.0,4.0 66.5,10.4 74.5,5.9 79.1,13.8 88.0,11.5 90.4,20.3 99.6,20.4 99.7,29.6 108.5,32.0 106.2,40.9 114.1,45.5 109.6,53.5" fill="#2c2c2c" stroke="#2c2c2c" stroke-width="2" stroke-linejoin="round"/><circle cx="60" cy="60" r="40" fill="none" stroke="#d8cbb8" stroke-width="1.2" stroke-dasharray="3 4"/><text x="60" y="62" text-anchor="middle" font-family="Manrope, sans-serif" font-weight="700" font-size="27" fill="#d8cbb8" letter-spacing="-1.5">100%</text><text x="60" y="82" text-anchor="middle" font-family="Manrope, sans-serif" font-weight="700" font-size="12" fill="#d49653" letter-spacing=".5">BEURRE</text></svg></span><span class="sticker st2" data-sticker aria-hidden="true"><svg viewBox="0 0 120 110"><ellipse cx="20" cy="74" rx="9" ry="12" transform="rotate(-58 20 74)" fill="#d8cbb8" stroke="#d8cbb8" stroke-width="12"/><ellipse cx="100" cy="74" rx="9" ry="12" transform="rotate(58 100 74)" fill="#d8cbb8" stroke="#d8cbb8" stroke-width="12"/><ellipse cx="37" cy="63" rx="14" ry="18" transform="rotate(-34 37 63)" fill="#d8cbb8" stroke="#d8cbb8" stroke-width="12"/><ellipse cx="83" cy="63" rx="14" ry="18" transform="rotate(34 83 63)" fill="#d8cbb8" stroke="#d8cbb8" stroke-width="12"/><ellipse cx="60" cy="57" rx="18" ry="23" transform="rotate(0 60 57)" fill="#d8cbb8" stroke="#d8cbb8" stroke-width="12"/><ellipse cx="20" cy="74" rx="9" ry="12" transform="rotate(-58 20 74)" fill="#d49653" stroke="#2c2c2c" stroke-width="2.5"/><ellipse cx="100" cy="74" rx="9" ry="12" transform="rotate(58 100 74)" fill="#d49653" stroke="#2c2c2c" stroke-width="2.5"/><ellipse cx="37" cy="63" rx="14" ry="18" transform="rotate(-34 37 63)" fill="#d49653" stroke="#2c2c2c" stroke-width="2.5"/><ellipse cx="83" cy="63" rx="14" ry="18" transform="rotate(34 83 63)" fill="#d49653" stroke="#2c2c2c" stroke-width="2.5"/><ellipse cx="60" cy="57" rx="18" ry="23" transform="rotate(0 60 57)" fill="#d49653" stroke="#2c2c2c" stroke-width="2.5"/><path d="M54 46c4 4 8 4 12 0M31 56c3 4 7 5 11 3M78 59c4 2 8 1 11-3" fill="none" stroke="#2c2c2c" stroke-width="2" stroke-linecap="round"/></svg></span>
+      <p class="cap">Boulangerie artisanale · Lorient</p>
+      <h2>Le four est chaud. <em>On vous attend.</em></h2>
+      <a class="ghost ghost--light" href="commander.html" data-cursor="Go">Commander en ligne</a>
     </div>
+    <div class="foot__cols">
+      <div><p class="cap">Adresse</p><p>2 rue du Levain, 56100 Lorient</p></div>
+      <div><p class="cap">Téléphone</p><p><a href="tel:+33261914730" data-demo="call">02 61 91 47 30</a></p></div>
+      <div><p class="cap">Horaires</p><p>Mardi – samedi, 7 h – 19 h 30<br>Dimanche, 7 h – 13 h</p></div>
+      <nav aria-label="Pages"><p class="cap">Pages</p><a href="index.html">Accueil</a><a href="nos-produits.html">Nos produits</a><a href="commander.html">Commander</a><a href="infos.html">Infos</a></nav>
+    </div>
+    <div class="foot__mark"><p class="foot__word" aria-hidden="true" translate="no">Aube</p><span class="sticker st3" data-sticker aria-hidden="true"><svg viewBox="0 0 120 110"><path d="M60 100C20 72 6 54 6 34 6 18 18 6 34 6c11 0 20 6 26 16 6-10 15-16 26-16 16 0 28 12 28 28 0 20-14 38-54 66z" fill="#d8cbb8" stroke="#d8cbb8" stroke-width="12" stroke-linejoin="round"/><path d="M60 100C20 72 6 54 6 34 6 18 18 6 34 6c11 0 20 6 26 16 6-10 15-16 26-16 16 0 28 12 28 28 0 20-14 38-54 66z" fill="#d49653" stroke="#2c2c2c" stroke-width="2.5" stroke-linejoin="round"/><path d="M24 30c2-8 8-12 15-12" fill="none" stroke="#d8cbb8" stroke-width="5" stroke-linecap="round"/></svg></span><span class="sticker st4" data-sticker aria-hidden="true"><svg viewBox="0 0 130 100"><g stroke-linecap="round"><path d="M65 14v12M28 30l9 8M102 30l-9 8M12 64h13M118 64h-13" stroke="#d8cbb8" stroke-width="12"/><path d="M65 14v12M28 30l9 8M102 30l-9 8M12 64h13M118 64h-13" stroke="#2c2c2c" stroke-width="3"/></g><path d="M27 72a38 38 0 0 1 76 0z" fill="#d8cbb8" stroke="#d8cbb8" stroke-width="12" stroke-linejoin="round"/><path d="M27 72a38 38 0 0 1 76 0z" fill="#d49653" stroke="#2c2c2c" stroke-width="2.5" stroke-linejoin="round"/><rect x="8" y="72" width="114" height="20" fill="#2c2c2c" stroke="#d8cbb8" stroke-width="5"/><text x="65" y="87" text-anchor="middle" font-family="Manrope, sans-serif" font-weight="700" font-size="12.5" fill="#d8cbb8" letter-spacing=".5">BONJOUR</text></svg></span><span class="sticker st5" data-sticker aria-hidden="true"><svg viewBox="0 0 120 130"><g fill="#d8cbb8" stroke="#d8cbb8" stroke-width="12"><path d="M60 126V30"/><ellipse cx="50" cy="22" rx="7" ry="12" transform="rotate(-30 50 22)"/><ellipse cx="70" cy="28" rx="7" ry="12" transform="rotate(30 70 28)"/><ellipse cx="50" cy="36" rx="7" ry="12" transform="rotate(-30 50 36)"/><ellipse cx="70" cy="42" rx="7" ry="12" transform="rotate(30 70 42)"/><ellipse cx="50" cy="50" rx="7" ry="12" transform="rotate(-30 50 50)"/><ellipse cx="70" cy="56" rx="7" ry="12" transform="rotate(30 70 56)"/><ellipse cx="50" cy="64" rx="7" ry="12" transform="rotate(-30 50 64)"/><ellipse cx="70" cy="70" rx="7" ry="12" transform="rotate(30 70 70)"/><ellipse cx="60" cy="12" rx="6.5" ry="11"/></g><path d="M60 126V30" stroke="#2c2c2c" stroke-width="3" stroke-linecap="round"/><g fill="#bfb4a3" stroke="#2c2c2c" stroke-width="2.5"><ellipse cx="50" cy="22" rx="7" ry="12" transform="rotate(-30 50 22)"/><ellipse cx="70" cy="28" rx="7" ry="12" transform="rotate(30 70 28)"/><ellipse cx="50" cy="36" rx="7" ry="12" transform="rotate(-30 50 36)"/><ellipse cx="70" cy="42" rx="7" ry="12" transform="rotate(30 70 42)"/><ellipse cx="50" cy="50" rx="7" ry="12" transform="rotate(-30 50 50)"/><ellipse cx="70" cy="56" rx="7" ry="12" transform="rotate(30 70 56)"/><ellipse cx="50" cy="64" rx="7" ry="12" transform="rotate(-30 50 64)"/><ellipse cx="70" cy="70" rx="7" ry="12" transform="rotate(30 70 70)"/><ellipse cx="60" cy="12" rx="6.5" ry="11"/></g></svg></span><span class="sticker st6" data-sticker aria-hidden="true"><svg viewBox="0 0 150 70"><g transform="rotate(-14 75 35)"><rect x="8" y="22" width="134" height="30" rx="15" fill="#d8cbb8" stroke="#d8cbb8" stroke-width="12"/><rect x="8" y="22" width="134" height="30" rx="15" fill="#d49653" stroke="#2c2c2c" stroke-width="2.5"/><path d="M34 30l12 12M58 29l12 13M82 29l12 13M106 30l12 12" stroke="#2c2c2c" stroke-width="2.5" stroke-linecap="round"/><path d="M36 28l10 10M60 27l10 11M84 27l10 11M108 28l10 10" stroke="#f3dcb4" stroke-width="2" stroke-linecap="round" opacity=".8"/></g></svg></span></div>
+    <div class="foot__bar">
+      <span>© <span data-year>2026</span> Aube · commerce fictif</span>
+      <span>Site d'exemple <span translate="no">Astelsia</span> · formule Signature · <a href="../../" target="_top">Créer le mien</a></span>
+      <button type="button" class="credits-btn" aria-expanded="false" aria-controls="credits" data-credits>Crédits</button>
+    </div>
+    <div class="credits" id="credits"><div><p>Ce site est un exemple de la formule Signature d'<span translate="no">Astelsia</span>&nbsp;: un univers à part, la commande en ligne, et des petits secrets à toucher (la farine, les autocollants, le logo…). Commerce, adresse, prix et numéro fictifs. Photos&nbsp;: Pexels. Polices&nbsp;: Cormorant Garamond et Manrope (licence libre).</p></div></div>
   </footer>
-  <div class="credit">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.7 5.6 2.9 7.8 8.5 8.5-5.6.7-7.8 2.9-8.5 8.5-.7-5.6-2.9-7.8-8.5-8.5 5.6-.7 7.8-2.9 8.5-8.5z"/></svg>
-    <p>Ce site est un exemple de la formule <strong>Signature</strong> d'<span translate="no">Astelsia</span>&nbsp;: un univers à part, la commande en ligne, et des petits secrets à toucher.</p>
-    <small>Commerce, adresse, prix et numéro fictifs. Photos&nbsp;: Pexels.</small>
-    <a class="btn btn--gold" href="../../" target="_top">Créer le mien</a>
-  </div>
 
   <div class="toast" role="status" aria-live="polite"></div>
-  <script src="data.js?v=6"></script>
+  <div class="cbub" aria-hidden="true"><span></span></div>
+  <script src="data.js?v=7"></script>
   <script src="lenis.min.js" defer></script>
-  <script src="app.js?v=6" defer></script>
+  <script src="app.js?v=7" defer></script>
 </body>
 </html>

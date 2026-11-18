@@ -127,7 +127,7 @@
   var CAPS = {
     solo: '<strong>Solo</strong> · Un vrai exemple&nbsp;: Talon &amp; Clé, une cordonnerie imaginaire. Une belle page claire, avec horaires, tarifs, carte et bouton pour appeler.',
     business: '<strong>Business</strong> · Un vrai exemple&nbsp;: L\'Ardoise, un bistrot de quartier. Quatre pages, la carte, une galerie photo et des animations élégantes.',
-    signature: '<strong>Signature</strong> · Un vrai exemple&nbsp;: Aube, une boulangerie. Les produits défilent comme en vitrine, on commande en ligne, et la farine s\'envole sous le doigt.'
+    signature: '<strong>Signature</strong> · Un vrai exemple&nbsp;: Aube, une boulangerie. Les mots dansent quand on fait défiler, les cartes s\'envolent, on commande en ligne, et les autocollants se laissent bousculer.'
   };
 
   function norm(s) { return String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[’'\-_.]/g, ' ').replace(/\s+/g, ' ').trim(); }

@@ -7,13 +7,13 @@
   <meta name="description" content="Site d'exemple réalisé par Astelsia (formule Signature) pour une boulangerie fictive : l'univers, les produits, la commande en ligne.">
   <!-- Commerce fictif : on demande aux moteurs de recherche de ne pas l'indexer -->
   <meta name="robots" content="noindex, nofollow">
-  <meta name="theme-color" content="#16122f">
+  <meta name="theme-color" content="#292622">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="preload" href="fonts/playfair-400.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="fonts/jost-400.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="style.css?v=6">
-  <script src="boot.js?v=6"></script>
+  <link rel="preload" href="fonts/cormorant-300.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/manrope-500.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="style.css?v=7">
+  <script src="boot.js?v=7"></script>
 </head>
 <body class="page-home">
   <aside class="demo-bar" aria-label="Site d'exemple">
@@ -21,155 +21,114 @@
     <a href="../../" target="_top">par <span translate="no">Astelsia</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.7 5.6 2.9 7.8 8.5 8.5-5.6.7-7.8 2.9-8.5 8.5-.7-5.6-2.9-7.8-8.5-8.5 5.6-.7 7.8-2.9 8.5-8.5z"/></svg></a>
   </aside>
   <header class="top">
-    <a class="brand" href="index.html" translate="no"><svg viewBox="0 0 32 32" aria-hidden="true"><defs><linearGradient id="lg-sun" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe7a8"/><stop offset="1" stop-color="#f19a45"/></linearGradient></defs><path d="M6 21a10 10 0 0 1 20 0z" fill="url(#lg-sun)"/><path d="M3 24.5h26" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M16 5v3M7.5 9.5l2 2M24.5 9.5l-2 2" stroke="#f3c66f" stroke-width="2" stroke-linecap="round"/></svg><span><b>Aube</b><br><small>boulangerie</small></span></a>
+    <a class="brand" href="index.html" translate="no" data-logo aria-label="Aube, accueil"><svg viewBox="0 0 32 32" aria-hidden="true"><defs><linearGradient id="lg-sun" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe7a8"/><stop offset="1" stop-color="#f19a45"/></linearGradient></defs><path d="M6 21a10 10 0 0 1 20 0z" fill="url(#lg-sun)"/><path d="M3 24.5h26" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M16 5v3M7.5 9.5l2 2M24.5 9.5l-2 2" stroke="#f3c66f" stroke-width="2" stroke-linecap="round"/></svg><b>Aube</b></a>
     <nav class="nav" aria-label="Pages"><a href="index.html" aria-current="page">Accueil</a><a href="nos-produits.html">Nos produits</a><a href="commander.html">Commander</a><a href="infos.html">Infos</a></nav>
     <div class="top__right">
-      <a class="cart-btn" href="commander.html" aria-label="Ma commande"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1.2 12H6.2z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span>Commande</span><span data-count="0">0</span></a>
+      <a class="cart-btn" href="commander.html" aria-label="Ma commande" data-cursor="Panier"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1.2 12H6.2z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span>Commander</span><span data-count="0">0</span></a>
       <button type="button" class="menu-btn" aria-expanded="false" aria-controls="sheet" aria-label="Menu"><i aria-hidden="true"></i></button>
     </div>
   </header>
   <nav class="sheet" id="sheet" aria-label="Menu"><a href="index.html" aria-current="page">Accueil</a><a href="nos-produits.html">Nos produits</a><a href="commander.html">Commander</a><a href="infos.html">Infos</a><p>02 61 91 47 30 · 2 rue du Levain, 56100 Lorient</p></nav>
 
   <main>
-    <section class="vit" aria-labelledby="titre" data-vit style="--bg:#2b1810;--glow:#c98a3e">
+    <section class="hero" aria-labelledby="titre" data-hero>
+      <div class="hero__media"><img src="img/farine.webp" alt="" width="1600" height="1068" fetchpriority="high"></div>
       <canvas class="flour" aria-hidden="true"></canvas>
-      <div class="vit__glow" aria-hidden="true"></div>
-      <div class="vit__ribbon" aria-hidden="true"><div class="vit__track" data-track><span>Croissant pur beurre</span><span>Baguette de tradition</span><span>Pain au levain</span><span>Tartelette aux fruits</span><span>Croissant pur beurre</span><span>Baguette de tradition</span><span>Pain au levain</span><span>Tartelette aux fruits</span><span>Croissant pur beurre</span><span>Baguette de tradition</span><span>Pain au levain</span><span>Tartelette aux fruits</span></div></div>
-      <div class="vit__deco" aria-hidden="true" data-deco></div>
-      <div class="vit__stage"><div class="vit__float"><img class="vit__prod vit__prod--croissant is-on" data-prod="0" src="img/p-croissant.webp?v=6" alt="Croissant pur beurre" width="1200" height="486" fetchpriority="high"><img class="vit__prod vit__prod--baguette" data-prod="1" src="img/p-baguette.webp?v=6" alt="Baguette de tradition" width="1200" height="305" decoding="async" aria-hidden="true"><img class="vit__prod vit__prod--levain" data-prod="2" src="img/p-levain.webp?v=6" alt="Pain au levain" width="1000" height="948" decoding="async" aria-hidden="true"><img class="vit__prod vit__prod--tarte" data-prod="3" src="img/p-tarte.webp?v=6" alt="Tartelette fraise et banane" width="907" height="663" decoding="async" aria-hidden="true"></div></div>
-      <div class="vit__left">
-        <h1 id="titre" class="vit__title" data-title><span class="ln">Croissant</span> <span class="ln"><em>pur beurre</em></span></h1>
-        <p class="vit__lead" data-lead>Feuilleté à la main, doré au four dès 5 h. Il croustille, il s'effrite, il fond.</p>
-        <a class="vit__cta" href="commander.html" data-cta>Commander</a>
-      </div>
-      <div class="vit__right">
-        <p class="vit__tag">Pétri la nuit, doré à l'aube.</p>
-        <p class="vit__text">Farine de meule, levain maison, four à sole. Chaud chaque matin dès 7&nbsp;h, à Lorient.</p>
-        <div class="vit__thumbs" role="tablist" aria-label="Choisir un produit"><button type="button" role="tab" aria-selected="true" aria-label="Croissant" class="on" data-pick="0" data-t1="Croissant" data-t2="pur beurre" data-lead="Feuilleté à la main, doré au four dès 5 h. Il croustille, il s&#x27;effrite, il fond." data-bg="#2b1810" data-glow="#c98a3e" data-deco="flake"><img src="img/t-croissant.webp?v=6" alt="" width="120" height="120"></button><button type="button" role="tab" aria-selected="false" aria-label="Baguette" data-pick="1" data-t1="Baguette" data-t2="de tradition" data-lead="Pétrie la nuit, longue fermentation, une croûte qui chante en refroidissant." data-bg="#33200f" data-glow="#d8a04f" data-deco="grain"><img src="img/t-baguette.webp?v=6" alt="" width="120" height="120"></button><button type="button" role="tab" aria-selected="false" aria-label="Pain au levain" data-pick="2" data-t1="Pain" data-t2="au levain" data-lead="Un levain nourri chaque jour, une mie dense et parfumée qui se garde." data-bg="#1b2216" data-glow="#a3a457" data-deco="flour"><img src="img/t-levain.webp?v=6" alt="" width="120" height="120"></button><button type="button" role="tab" aria-selected="false" aria-label="Tartelette" data-pick="3" data-t1="Tartelette" data-t2="aux fruits" data-lead="Pâte sablée, crème légère, fruits frais posés à la main chaque matin." data-bg="#2a1118" data-glow="#d0707a" data-deco="berry"><img src="img/t-tarte.webp?v=6" alt="" width="120" height="120"></button></div>
-      </div>
-      <p class="vit__hint">✦ Touchez la farine.</p>
-    </section>
-
-    <section class="story" aria-label="La nuit du boulanger">
-      <div class="story__sky" aria-hidden="true">
-        <div class="sky-night"></div><div class="sky-dawn"></div><div class="sky-day"></div>
-      </div>
-      <div class="steps">
-        <article class="step">
-          <p class="step__hour">4h<small>00</small></p>
-          <h2>Le levain <em>se réveille.</em></h2>
-          <p>Pendant que la ville dort, on pétrit. Farine de meule, eau, sel, et un levain qu'on nourrit chaque jour.</p>
-          <figure><img src="img/faconnage.webp" alt="Le boulanger façonne la pâte sur le plan fariné" width="867" height="1300" loading="lazy" decoding="async"></figure>
-        </article>
-        <article class="step">
-          <p class="step__hour">5h<small>30</small></p>
-          <h2>Chaque pâton, <em>façonné à la main.</em></h2>
-          <p>Les croissants sont roulés un par un, les baguettes allongées au geste près.</p>
-          <figure><img src="img/croissants-crus.webp" alt="Des croissants crus alignés sur la plaque" width="867" height="1300" loading="lazy" decoding="async"></figure>
-        </article>
-        <article class="step">
-          <p class="step__hour">6h<small>15</small></p>
-          <h2>Le four <em>chante.</em></h2>
-          <p>La croûte craque en refroidissant&nbsp;: c'est le bruit qu'on préfère.</p>
-          <figure><img src="img/baguettes-four.webp" alt="Des baguettes dorées tout juste sorties du four" width="1600" height="1067" loading="lazy" decoding="async"></figure>
-        </article>
-        <article class="step step--last">
-          <p class="step__hour">7h<small>00</small></p>
-          <h2>On ouvre. <em>Bonjour&nbsp;!</em></h2>
-          <p>Le soleil se lève, la vitrine est pleine. Et votre commande vous attend déjà.</p>
-          <figure><img src="img/vitrine.webp" alt="La vitrine pleine de baguettes et de pains" width="821" height="1300" loading="lazy" decoding="async"></figure>
-        </article>
-      </div>
-    </section>
-    <p class="clock" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span data-clock>04:00</span></p>
-
-    <section class="section">
-      <div class="wrap">
-        <p class="eyebrow" data-reveal>Ce matin, dans la vitrine</p>
-        <h2 class="title" data-reveal>Nos <em>incontournables.</em></h2>
-        <p class="lead" data-reveal>Touchez une photo… c'est encore chaud.</p>
-        <div class="products" data-stagger>
-          <article class="product" data-id="baguette" data-reveal><figure><img src="img/baguette.webp" alt="Baguette de tradition" width="1000" height="663" loading="lazy" decoding="async"></figure><div class="product__body"><h3>Baguette de tradition</h3><p>Pétrie la nuit, croustillante au matin.</p><div class="product__foot"><span class="price">1,30&nbsp;€</span><button type="button" class="add" aria-label="Ajouter Baguette de tradition à ma commande">+</button></div></div></article><article class="product" data-id="campagne" data-reveal><figure><img src="img/pains.webp" alt="Pain de campagne au levain" width="1000" height="666" loading="lazy" decoding="async"></figure><div class="product__body"><h3>Pain de campagne au levain</h3><p>Levain naturel, croûte épaisse.</p><div class="product__foot"><span class="price">3,90&nbsp;€ <small style="font:500 13px var(--sans);color:var(--muted)">500 g</small></span><button type="button" class="add" aria-label="Ajouter Pain de campagne au levain à ma commande">+</button></div></div></article><article class="product" data-id="croissant" data-reveal><figure><img src="img/croissant.webp" alt="Croissant pur beurre" width="1000" height="1000" loading="lazy" decoding="async"></figure><div class="product__body"><h3>Croissant pur beurre</h3><p>Feuilleté, doré, qui laisse des miettes.</p><div class="product__foot"><span class="price">1,20&nbsp;€</span><button type="button" class="add" aria-label="Ajouter Croissant pur beurre à ma commande">+</button></div></div></article><article class="product" data-id="tarte" data-reveal><figure><img src="img/tarte-fraises.webp" alt="Tarte aux fraises" width="1000" height="667" loading="lazy" decoding="async"></figure><div class="product__body"><h3>Tarte aux fraises</h3><p>Pâte sablée, crème vanille, fraises.</p><div class="product__foot"><span class="price">18&nbsp;€ <small style="font:500 13px var(--sans);color:var(--muted)">4 parts</small></span><button type="button" class="add" aria-label="Ajouter Tarte aux fraises à ma commande">+</button></div></div></article>
+      <div class="hero__meta"><p class="cap">Boulangerie artisanale</p><p class="cap">Lorient · ouvert dès 7&nbsp;h</p></div>
+      <span class="sticker sticker--star" data-sticker aria-hidden="true"><svg viewBox="0 0 120 120"><g stroke-linejoin="round"><path d="M60 4l11 26 27-11-11 27 26 11-26 11 11 27-27-11-11 26-11-26-27 11 11-27L7 57l26-11-11-27 27 11z" fill="#d8cbb8" stroke="#d8cbb8" stroke-width="10"/><path d="M60 4l11 26 27-11-11 27 26 11-26 11 11 27-27-11-11 26-11-26-27 11 11-27L7 57l26-11-11-27 27 11z" fill="#d49653" stroke="#2c2c2c" stroke-width="2.5"/></g><text x="60" y="66" text-anchor="middle" font-family="Manrope, sans-serif" font-weight="700" font-size="17" fill="#2c2c2c" letter-spacing="-.5">CHAUD</text></svg></span>
+      <p class="hero__hint" aria-hidden="true">✦ Touchez la farine</p>
+      <div class="hero__in">
+        <div class="hero__top">
+          <p class="hero__sub">Pétri la nuit, <span class="ring">doré à l'aube<svg viewBox="0 0 220 80" aria-hidden="true" preserveAspectRatio="none"><path d="M196 18C160 4 70 2 30 14 4 22 2 46 22 58c34 20 128 20 168 6 26-9 30-30 12-42-18-11-60-14-96-12" pathLength="1"/></svg></span></p>
+          <div class="hero__cta"><a class="ghost ghost--light" href="commander.html" data-cursor="Go">Commander</a><a class="tlink" href="nos-produits.html" data-cursor="Voir">Nos produits</a></div>
         </div>
-        <p style="margin-top:26px" data-reveal><a class="link" href="nos-produits.html">Tous nos produits</a></p>
+        <h1 id="titre" class="hero__word" translate="no"><span class="sr-only">Aube, boulangerie artisanale à Lorient</span><span aria-hidden="true" data-word>Aube</span></h1>
       </div>
     </section>
 
-    <section class="section section--night">
-      <div class="wrap order-teaser">
-        <div>
-          <p class="eyebrow" data-reveal>Commande en ligne</p>
-          <h2 class="title" data-reveal>On vous le met <em>de côté.</em></h2>
-          <p class="lead" data-reveal>Choisissez vos pains et l'heure de passage&nbsp;: on prépare tout, vous ne faites pas la queue.</p>
-          <ul class="perks" data-reveal style="margin-top:20px"><li>Retrait en boutique, sans attente</li><li>Paiement sur place</li><li>Gâteaux à commander 48&nbsp;h à l'avance</li></ul>
-          <p style="margin-top:26px" data-reveal><a class="btn btn--gold" href="commander.html">Commander</a></p>
-        </div>
-        <div class="order-card" data-reveal aria-hidden="true">
-          <h3>Quand passez-vous&nbsp;?</h3>
-          <div class="mini-days"><span>Mar<b>18</b></span><span class="on">Mer<b>19</b></span><span>Jeu<b>20</b></span><span>Ven<b>21</b></span></div>
-          <div class="mini-slots"><span>7:30</span><span class="on">8:00</span><span>8:30</span><span>12:00</span><span>17:30</span></div>
-        </div>
-      </div>
+    <section class="words" aria-label="Notre façon de faire" data-words>
+      <p class="words__track" data-track>
+        <span class="w">Du</span> <span class="w">levain,</span>
+        <img class="words__pic" src="img/p-levain.webp?v=7" alt="" width="1000" height="948" loading="lazy" data-pop>
+        <span class="w">de la</span> <span class="w">farine</span>
+        <img class="words__pic words__pic--wide" src="img/p-croissant.webp?v=7" alt="" width="1200" height="486" loading="lazy" data-pop>
+        <span class="w">et</span> <span class="w"><em>du temps.</em></span>
+        <svg class="words__arrow" viewBox="0 0 220 120" aria-hidden="true"><path d="M4 96C30 30 92 10 130 30c40 22 10 70-16 52-28-20 6-70 60-64 22 3 36 16 40 34" pathLength="1"/><path d="M200 34l14 20 10-26" pathLength="1"/></svg>
+        <img class="words__pic words__pic--wide" src="img/p-baguette.webp?v=7" alt="" width="1200" height="305" loading="lazy" data-pop>
+      </p>
+      <p class="words__note">Une nuit entière pour un bon pain&nbsp;: c'est notre seul secret.</p>
+      <p class="words__count cap" aria-hidden="true">Faites défiler ↓</p>
     </section>
 
-    <section class="section">
-      <div class="wrap">
-        <p class="eyebrow" data-reveal>L'atelier</p>
-        <h2 class="title" data-reveal>Entre farine <em>et lumière.</em></h2>
-        <div class="strip">
-          <button type="button"><img src="img/faconnage2.webp" alt="Le pâton prend forme" width="867" height="1300" loading="lazy" decoding="async"></button>
-          <button type="button"><img src="img/decoupe.webp" alt="On divise la pâte au couteau" width="1000" height="666" loading="lazy" decoding="async"></button>
-          <button type="button"><img src="img/croissants.webp" alt="Les croissants du matin" width="867" height="1300" loading="lazy" decoding="async"></button>
-          <button type="button"><img src="img/patisseries.webp" alt="La vitrine des gâteaux" width="1000" height="1249" loading="lazy" decoding="async"></button>
-          <button type="button"><img src="img/etageres.webp" alt="Les étagères de pains" width="975" height="1300" loading="lazy" decoding="async"></button>
-          <button type="button"><img src="img/pains.webp" alt="Les pains au levain" width="1000" height="666" loading="lazy" decoding="async"></button>
-        </div>
+    <section class="sec" aria-labelledby="t-cards">
+      <div class="sec__head">
+        <p class="cap">La fournée du jour</p>
+        <h2 id="t-cards" class="h2">Nos incon&shy;tournables</h2>
+        <a class="tlink" href="nos-produits.html" data-cursor="Voir">Tout voir →</a>
       </div>
+      <div class="cards"><article class="mcard product" data-id="croissant" data-mcard><span class="mcard__tag">Le préféré</span><figure data-cursor="Miam"><img src="img/p-croissant.webp?v=7" alt="Croissant pur beurre" width="1200" height="486" loading="lazy" decoding="async"></figure><h3>Croissant</h3><p>Pur beurre, feuilleté à la main.</p><div class="mcard__foot"><span class="price">1,20&nbsp;€</span><button type="button" class="add" aria-label="Ajouter Croissant pur beurre à ma commande" data-cursor="Ajouter">+</button></div></article><article class="mcard product" data-id="baguette" data-mcard><figure data-cursor="Miam"><img src="img/p-baguette.webp?v=7" alt="Baguette de tradition" width="1200" height="305" loading="lazy" decoding="async"></figure><h3>Tradition</h3><p>Pétrie la nuit, croûte qui chante.</p><div class="mcard__foot"><span class="price">1,30&nbsp;€</span><button type="button" class="add" aria-label="Ajouter Baguette de tradition à ma commande" data-cursor="Ajouter">+</button></div></article><article class="mcard product" data-id="campagne" data-mcard><figure data-cursor="Miam"><img src="img/p-levain.webp?v=7" alt="Pain de campagne au levain" width="1000" height="948" loading="lazy" decoding="async"></figure><h3>Levain</h3><p>Mie dense, il se garde des jours.</p><div class="mcard__foot"><span class="price">3,90&nbsp;€</span><button type="button" class="add" aria-label="Ajouter Pain de campagne au levain à ma commande" data-cursor="Ajouter">+</button></div></article><article class="mcard product" data-id="tartelette" data-mcard><figure data-cursor="Miam"><img src="img/p-tarte.webp?v=7" alt="Tartelette fraise & banane" width="907" height="663" loading="lazy" decoding="async"></figure><h3>Tartelette</h3><p>Fruits frais posés chaque matin.</p><div class="mcard__foot"><span class="price">4,20&nbsp;€</span><button type="button" class="add" aria-label="Ajouter Tartelette fraise & banane à ma commande" data-cursor="Ajouter">+</button></div></article></div>
     </section>
 
-    <section class="section" style="padding-top:0">
-      <div class="wrap">
-        <p class="eyebrow" data-reveal>Nous trouver</p>
-        <h2 class="title" data-reveal>Ouvert <em>dès 7h.</em></h2>
-        <p class="status" data-reveal data-status style="margin-top:20px"><i aria-hidden="true"></i><span data-status-text>Horaires ci-dessous</span></p>
-        <div class="visit" data-stagger>
-          <div class="visit__card" data-reveal><h3>Les horaires</h3><p>Du mardi au samedi, 7h – 19h30. Le dimanche, 7h – 13h.</p><a class="btn btn--ghost" href="infos.html">Tous les horaires</a></div>
-          <div class="visit__card" data-reveal><h3>L'adresse</h3><p>2 rue du Levain, 56100 Lorient</p><a class="btn btn--ghost" href="infos.html#acces"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>Itinéraire</a></div>
-          <div class="visit__card" data-reveal><h3>Une question&nbsp;?</h3><p>Un gâteau d'anniversaire, une grosse commande&nbsp;: appelez-nous.</p><a class="btn" href="tel:+33261914730" data-demo="call"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>02 61 91 47 30</a></div>
-        </div>
-      </div>
+    <section class="night" aria-labelledby="t-night">
+      <div class="night__img" data-parallax><img src="img/baguettes-four.webp" alt="" width="1600" height="1067" loading="lazy" decoding="async"></div>
+      <p class="cap">La nuit du boulanger</p>
+      <h2 id="t-night" class="display">Quand la ville dort, <em>le fournil s'éveille.</em></h2>
+      <ol class="steps">
+        <li data-reveal><b>4 h</b><span>Le levain se réveille</span></li>
+        <li data-reveal><b>5 h</b><span>On façonne à la main</span></li>
+        <li data-reveal><b>6 h</b><span>Le four chante</span></li>
+        <li data-reveal><b>7 h</b><span>On vous ouvre</span></li>
+      </ol>
     </section>
-    <div class="lightbox" role="dialog" aria-modal="true" aria-label="Photo agrandie" aria-hidden="true">
-      <button type="button" class="lb-close" aria-label="Fermer">✕</button>
-      <button type="button" class="lb-prev" aria-label="Photo précédente">‹</button>
-      <figure><img src="data:," alt=""><figcaption></figcaption></figure>
-      <button type="button" class="lb-next" aria-label="Photo suivante">›</button>
-    </div>
+
+    <section class="sec" aria-labelledby="t-fan">
+      <div class="sec__head">
+        <p class="cap">Tous les jours</p>
+        <h2 id="t-fan" class="h2">Ce qu'on vous <em>prépare</em></h2>
+        <a class="tlink" href="commander.html" data-cursor="Go">Commander →</a>
+      </div>
+      <div class="fan" data-fan><article class="fan__card fan__card--onyx" data-fan-card><span class="fan__num">01</span><span class="fan__sticker" aria-hidden="true"><svg viewBox="0 0 120 130"><g fill="#d8cbb8" stroke="#d8cbb8" stroke-width="12"><path d="M60 126V30"/><ellipse cx="50" cy="22" rx="7" ry="12" transform="rotate(-30 50 22)"/><ellipse cx="70" cy="28" rx="7" ry="12" transform="rotate(30 70 28)"/><ellipse cx="50" cy="36" rx="7" ry="12" transform="rotate(-30 50 36)"/><ellipse cx="70" cy="42" rx="7" ry="12" transform="rotate(30 70 42)"/><ellipse cx="50" cy="50" rx="7" ry="12" transform="rotate(-30 50 50)"/><ellipse cx="70" cy="56" rx="7" ry="12" transform="rotate(30 70 56)"/><ellipse cx="50" cy="64" rx="7" ry="12" transform="rotate(-30 50 64)"/><ellipse cx="70" cy="70" rx="7" ry="12" transform="rotate(30 70 70)"/><ellipse cx="60" cy="12" rx="6.5" ry="11"/></g><path d="M60 126V30" stroke="#2c2c2c" stroke-width="3" stroke-linecap="round"/><g fill="#bfb4a3" stroke="#2c2c2c" stroke-width="2.5"><ellipse cx="50" cy="22" rx="7" ry="12" transform="rotate(-30 50 22)"/><ellipse cx="70" cy="28" rx="7" ry="12" transform="rotate(30 70 28)"/><ellipse cx="50" cy="36" rx="7" ry="12" transform="rotate(-30 50 36)"/><ellipse cx="70" cy="42" rx="7" ry="12" transform="rotate(30 70 42)"/><ellipse cx="50" cy="50" rx="7" ry="12" transform="rotate(-30 50 50)"/><ellipse cx="70" cy="56" rx="7" ry="12" transform="rotate(30 70 56)"/><ellipse cx="50" cy="64" rx="7" ry="12" transform="rotate(-30 50 64)"/><ellipse cx="70" cy="70" rx="7" ry="12" transform="rotate(30 70 70)"/><ellipse cx="60" cy="12" rx="6.5" ry="11"/></g></svg></span><h3>Pains</h3><ul><li>Tradition</li><li>Campagne au levain</li><li>Le pain du jour</li></ul><a class="tlink" href="nos-produits.html#pains" data-cursor="Voir">Voir →</a></article><article class="fan__card fan__card--saffron" data-fan-card><span class="fan__num">02</span><span class="fan__sticker" aria-hidden="true"><svg viewBox="0 0 120 110"><ellipse cx="20" cy="74" rx="9" ry="12" transform="rotate(-58 20 74)" fill="#d8cbb8" stroke="#d8cbb8" stroke-width="12"/><ellipse cx="100" cy="74" rx="9" ry="12" transform="rotate(58 100 74)" fill="#d8cbb8" stroke="#d8cbb8" stroke-width="12"/><ellipse cx="37" cy="63" rx="14" ry="18" transform="rotate(-34 37 63)" fill="#d8cbb8" stroke="#d8cbb8" stroke-width="12"/><ellipse cx="83" cy="63" rx="14" ry="18" transform="rotate(34 83 63)" fill="#d8cbb8" stroke="#d8cbb8" stroke-width="12"/><ellipse cx="60" cy="57" rx="18" ry="23" transform="rotate(0 60 57)" fill="#d8cbb8" stroke="#d8cbb8" stroke-width="12"/><ellipse cx="20" cy="74" rx="9" ry="12" transform="rotate(-58 20 74)" fill="#d49653" stroke="#2c2c2c" stroke-width="2.5"/><ellipse cx="100" cy="74" rx="9" ry="12" transform="rotate(58 100 74)" fill="#d49653" stroke="#2c2c2c" stroke-width="2.5"/><ellipse cx="37" cy="63" rx="14" ry="18" transform="rotate(-34 37 63)" fill="#d49653" stroke="#2c2c2c" stroke-width="2.5"/><ellipse cx="83" cy="63" rx="14" ry="18" transform="rotate(34 83 63)" fill="#d49653" stroke="#2c2c2c" stroke-width="2.5"/><ellipse cx="60" cy="57" rx="18" ry="23" transform="rotate(0 60 57)" fill="#d49653" stroke="#2c2c2c" stroke-width="2.5"/><path d="M54 46c4 4 8 4 12 0M31 56c3 4 7 5 11 3M78 59c4 2 8 1 11-3" fill="none" stroke="#2c2c2c" stroke-width="2" stroke-linecap="round"/></svg></span><h3>Viennoi&shy;series</h3><ul><li>Croissant pur beurre</li><li>Pain au chocolat</li><li>Kouign-amann</li></ul><a class="tlink" href="nos-produits.html#viennoiseries" data-cursor="Voir">Voir →</a></article><article class="fan__card fan__card--linen" data-fan-card><span class="fan__num">03</span><span class="fan__sticker" aria-hidden="true"><svg viewBox="0 0 120 110"><path d="M60 100C20 72 6 54 6 34 6 18 18 6 34 6c11 0 20 6 26 16 6-10 15-16 26-16 16 0 28 12 28 28 0 20-14 38-54 66z" fill="#d8cbb8" stroke="#d8cbb8" stroke-width="12" stroke-linejoin="round"/><path d="M60 100C20 72 6 54 6 34 6 18 18 6 34 6c11 0 20 6 26 16 6-10 15-16 26-16 16 0 28 12 28 28 0 20-14 38-54 66z" fill="#d49653" stroke="#2c2c2c" stroke-width="2.5" stroke-linejoin="round"/><path d="M24 30c2-8 8-12 15-12" fill="none" stroke="#d8cbb8" stroke-width="5" stroke-linecap="round"/></svg></span><h3>Pâtisse&shy;ries</h3><ul><li>Tarte aux fraises</li><li>Flan pâtissier</li><li>Far breton</li></ul><a class="tlink" href="nos-produits.html#patisseries" data-cursor="Voir">Voir →</a></article><article class="fan__card fan__card--roast" data-fan-card><span class="fan__num">04</span><span class="fan__sticker" aria-hidden="true"><svg viewBox="0 0 130 100"><g stroke-linecap="round"><path d="M65 14v12M28 30l9 8M102 30l-9 8M12 64h13M118 64h-13" stroke="#d8cbb8" stroke-width="12"/><path d="M65 14v12M28 30l9 8M102 30l-9 8M12 64h13M118 64h-13" stroke="#2c2c2c" stroke-width="3"/></g><path d="M27 72a38 38 0 0 1 76 0z" fill="#d8cbb8" stroke="#d8cbb8" stroke-width="12" stroke-linejoin="round"/><path d="M27 72a38 38 0 0 1 76 0z" fill="#d49653" stroke="#2c2c2c" stroke-width="2.5" stroke-linejoin="round"/><rect x="8" y="72" width="114" height="20" fill="#2c2c2c" stroke="#d8cbb8" stroke-width="5"/><text x="65" y="87" text-anchor="middle" font-family="Manrope, sans-serif" font-weight="700" font-size="12.5" fill="#d8cbb8" letter-spacing=".5">BONJOUR</text></svg></span><h3>Sur commande</h3><ul><li>Gâteaux d’anniversaire</li><li>Plateaux pour vos réunions</li><li>Retrait à l’heure choisie</li></ul><a class="tlink" href="commander.html" data-cursor="Commander">Commander →</a></article></div>
+    </section>
+
+    <section class="mq-wrap" aria-label="Au comptoir aujourd'hui">
+      <div class="mq mq--a"><div class="mq__track"><span>Croissant</span><i aria-hidden="true">✦</i><span>Tradition</span><i aria-hidden="true">✦</i><span>Pain au levain</span><i aria-hidden="true">✦</i><span>Kouign-amann</span><i aria-hidden="true">✦</i><span>Far breton</span><i aria-hidden="true">✦</i><span>Tartelette</span><i aria-hidden="true">✦</i><span>Flan pâtissier</span><i aria-hidden="true">✦</i></div><div class="mq__track" aria-hidden="true"><span>Croissant</span><i aria-hidden="true">✦</i><span>Tradition</span><i aria-hidden="true">✦</i><span>Pain au levain</span><i aria-hidden="true">✦</i><span>Kouign-amann</span><i aria-hidden="true">✦</i><span>Far breton</span><i aria-hidden="true">✦</i><span>Tartelette</span><i aria-hidden="true">✦</i><span>Flan pâtissier</span><i aria-hidden="true">✦</i></div></div>
+      <div class="mq mq--b"><div class="mq__track"><span>Sorti du four</span><img src="img/t-croissant.webp?v=7" alt="" width="120" height="120" loading="lazy"><span>Chaque matin</span><img src="img/t-baguette.webp?v=7" alt="" width="120" height="120" loading="lazy"><span>Fait ici</span><img src="img/t-levain.webp?v=7" alt="" width="120" height="120" loading="lazy"><span>À Lorient</span><img src="img/t-tarte.webp?v=7" alt="" width="120" height="120" loading="lazy"></div><div class="mq__track" aria-hidden="true"><span>Sorti du four</span><img src="img/t-croissant.webp?v=7" alt="" width="120" height="120" loading="lazy"><span>Chaque matin</span><img src="img/t-baguette.webp?v=7" alt="" width="120" height="120" loading="lazy"><span>Fait ici</span><img src="img/t-levain.webp?v=7" alt="" width="120" height="120" loading="lazy"><span>À Lorient</span><img src="img/t-tarte.webp?v=7" alt="" width="120" height="120" loading="lazy"></div></div>
+    </section>
   </main>
+  <svg class="scribble" viewBox="0 0 1000 1000" preserveAspectRatio="none" aria-hidden="true"><path d="M-120 90C200 40 700 160 1120 120M1120 120C700 260 260 230 -120 330M-120 330C300 330 760 420 1120 470M1120 470C700 560 240 560 -120 650M-120 650C300 660 760 740 1120 800M1120 800C700 880 300 900 -120 1000" pathLength="1"/></svg>
 
   <footer class="foot">
-    <div class="foot__in">
-      <div>
-        <a class="brand" href="index.html" translate="no"><svg viewBox="0 0 32 32" aria-hidden="true"><defs><linearGradient id="lg-sun" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe7a8"/><stop offset="1" stop-color="#f19a45"/></linearGradient></defs><path d="M6 21a10 10 0 0 1 20 0z" fill="url(#lg-sun)"/><path d="M3 24.5h26" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M16 5v3M7.5 9.5l2 2M24.5 9.5l-2 2" stroke="#f3c66f" stroke-width="2" stroke-linecap="round"/></svg><span><b>Aube</b><br><small>boulangerie</small></span></a>
-        <p>2 rue du Levain, 56100 Lorient<br>02 61 91 47 30</p>
-      </div>
-      <div>
-        <p class="label">Les horaires</p>
-        <p>Du mardi au samedi, 7h – 19h30<br>Le dimanche, 7h – 13h</p>
-      </div>
-      <nav aria-label="Pages"><a href="index.html">Accueil</a><a href="nos-produits.html">Nos produits</a><a href="commander.html">Commander</a><a href="infos.html">Infos</a></nav>
+    <div class="foot__cta"><span class="sticker st1" data-sticker aria-hidden="true"><svg viewBox="0 0 120 120"><polygon points="116.0,60.0 109.6,66.5 114.1,74.5 106.2,79.1 108.5,88.0 99.7,90.4 99.6,99.6 90.4,99.7 88.0,108.5 79.1,106.2 74.5,114.1 66.5,109.6 60.0,116.0 53.5,109.6 45.5,114.1 40.9,106.2 32.0,108.5 29.6,99.7 20.4,99.6 20.3,90.4 11.5,88.0 13.8,79.1 5.9,74.5 10.4,66.5 4.0,60.0 10.4,53.5 5.9,45.5 13.8,40.9 11.5,32.0 20.3,29.6 20.4,20.4 29.6,20.3 32.0,11.5 40.9,13.8 45.5,5.9 53.5,10.4 60.0,4.0 66.5,10.4 74.5,5.9 79.1,13.8 88.0,11.5 90.4,20.3 99.6,20.4 99.7,29.6 108.5,32.0 106.2,40.9 114.1,45.5 109.6,53.5" fill="#d8cbb8" stroke="#d8cbb8" stroke-width="10" stroke-linejoin="round"/><polygon points="116.0,60.0 109.6,66.5 114.1,74.5 106.2,79.1 108.5,88.0 99.7,90.4 99.6,99.6 90.4,99.7 88.0,108.5 79.1,106.2 74.5,114.1 66.5,109.6 60.0,116.0 53.5,109.6 45.5,114.1 40.9,106.2 32.0,108.5 29.6,99.7 20.4,99.6 20.3,90.4 11.5,88.0 13.8,79.1 5.9,74.5 10.4,66.5 4.0,60.0 10.4,53.5 5.9,45.5 13.8,40.9 11.5,32.0 20.3,29.6 20.4,20.4 29.6,20.3 32.0,11.5 40.9,13.8 45.5,5.9 53.5,10.4 60.0,4.0 66.5,10.4 74.5,5.9 79.1,13.8 88.0,11.5 90.4,20.3 99.6,20.4 99.7,29.6 108.5,32.0 106.2,40.9 114.1,45.5 109.6,53.5" fill="#2c2c2c" stroke="#2c2c2c" stroke-width="2" stroke-linejoin="round"/><circle cx="60" cy="60" r="40" fill="none" stroke="#d8cbb8" stroke-width="1.2" stroke-dasharray="3 4"/><text x="60" y="62" text-anchor="middle" font-family="Manrope, sans-serif" font-weight="700" font-size="27" fill="#d8cbb8" letter-spacing="-1.5">100%</text><text x="60" y="82" text-anchor="middle" font-family="Manrope, sans-serif" font-weight="700" font-size="12" fill="#d49653" letter-spacing=".5">BEURRE</text></svg></span><span class="sticker st2" data-sticker aria-hidden="true"><svg viewBox="0 0 120 110"><ellipse cx="20" cy="74" rx="9" ry="12" transform="rotate(-58 20 74)" fill="#d8cbb8" stroke="#d8cbb8" stroke-width="12"/><ellipse cx="100" cy="74" rx="9" ry="12" transform="rotate(58 100 74)" fill="#d8cbb8" stroke="#d8cbb8" stroke-width="12"/><ellipse cx="37" cy="63" rx="14" ry="18" transform="rotate(-34 37 63)" fill="#d8cbb8" stroke="#d8cbb8" stroke-width="12"/><ellipse cx="83" cy="63" rx="14" ry="18" transform="rotate(34 83 63)" fill="#d8cbb8" stroke="#d8cbb8" stroke-width="12"/><ellipse cx="60" cy="57" rx="18" ry="23" transform="rotate(0 60 57)" fill="#d8cbb8" stroke="#d8cbb8" stroke-width="12"/><ellipse cx="20" cy="74" rx="9" ry="12" transform="rotate(-58 20 74)" fill="#d49653" stroke="#2c2c2c" stroke-width="2.5"/><ellipse cx="100" cy="74" rx="9" ry="12" transform="rotate(58 100 74)" fill="#d49653" stroke="#2c2c2c" stroke-width="2.5"/><ellipse cx="37" cy="63" rx="14" ry="18" transform="rotate(-34 37 63)" fill="#d49653" stroke="#2c2c2c" stroke-width="2.5"/><ellipse cx="83" cy="63" rx="14" ry="18" transform="rotate(34 83 63)" fill="#d49653" stroke="#2c2c2c" stroke-width="2.5"/><ellipse cx="60" cy="57" rx="18" ry="23" transform="rotate(0 60 57)" fill="#d49653" stroke="#2c2c2c" stroke-width="2.5"/><path d="M54 46c4 4 8 4 12 0M31 56c3 4 7 5 11 3M78 59c4 2 8 1 11-3" fill="none" stroke="#2c2c2c" stroke-width="2" stroke-linecap="round"/></svg></span>
+      <p class="cap">Boulangerie artisanale · Lorient</p>
+      <h2>Le four est chaud. <em>On vous attend.</em></h2>
+      <a class="ghost ghost--light" href="commander.html" data-cursor="Go">Commander en ligne</a>
     </div>
+    <div class="foot__cols">
+      <div><p class="cap">Adresse</p><p>2 rue du Levain, 56100 Lorient</p></div>
+      <div><p class="cap">Téléphone</p><p><a href="tel:+33261914730" data-demo="call">02 61 91 47 30</a></p></div>
+      <div><p class="cap">Horaires</p><p>Mardi – samedi, 7 h – 19 h 30<br>Dimanche, 7 h – 13 h</p></div>
+      <nav aria-label="Pages"><p class="cap">Pages</p><a href="index.html">Accueil</a><a href="nos-produits.html">Nos produits</a><a href="commander.html">Commander</a><a href="infos.html">Infos</a></nav>
+    </div>
+    <div class="foot__mark"><p class="foot__word" aria-hidden="true" translate="no">Aube</p><span class="sticker st3" data-sticker aria-hidden="true"><svg viewBox="0 0 120 110"><path d="M60 100C20 72 6 54 6 34 6 18 18 6 34 6c11 0 20 6 26 16 6-10 15-16 26-16 16 0 28 12 28 28 0 20-14 38-54 66z" fill="#d8cbb8" stroke="#d8cbb8" stroke-width="12" stroke-linejoin="round"/><path d="M60 100C20 72 6 54 6 34 6 18 18 6 34 6c11 0 20 6 26 16 6-10 15-16 26-16 16 0 28 12 28 28 0 20-14 38-54 66z" fill="#d49653" stroke="#2c2c2c" stroke-width="2.5" stroke-linejoin="round"/><path d="M24 30c2-8 8-12 15-12" fill="none" stroke="#d8cbb8" stroke-width="5" stroke-linecap="round"/></svg></span><span class="sticker st4" data-sticker aria-hidden="true"><svg viewBox="0 0 130 100"><g stroke-linecap="round"><path d="M65 14v12M28 30l9 8M102 30l-9 8M12 64h13M118 64h-13" stroke="#d8cbb8" stroke-width="12"/><path d="M65 14v12M28 30l9 8M102 30l-9 8M12 64h13M118 64h-13" stroke="#2c2c2c" stroke-width="3"/></g><path d="M27 72a38 38 0 0 1 76 0z" fill="#d8cbb8" stroke="#d8cbb8" stroke-width="12" stroke-linejoin="round"/><path d="M27 72a38 38 0 0 1 76 0z" fill="#d49653" stroke="#2c2c2c" stroke-width="2.5" stroke-linejoin="round"/><rect x="8" y="72" width="114" height="20" fill="#2c2c2c" stroke="#d8cbb8" stroke-width="5"/><text x="65" y="87" text-anchor="middle" font-family="Manrope, sans-serif" font-weight="700" font-size="12.5" fill="#d8cbb8" letter-spacing=".5">BONJOUR</text></svg></span><span class="sticker st5" data-sticker aria-hidden="true"><svg viewBox="0 0 120 130"><g fill="#d8cbb8" stroke="#d8cbb8" stroke-width="12"><path d="M60 126V30"/><ellipse cx="50" cy="22" rx="7" ry="12" transform="rotate(-30 50 22)"/><ellipse cx="70" cy="28" rx="7" ry="12" transform="rotate(30 70 28)"/><ellipse cx="50" cy="36" rx="7" ry="12" transform="rotate(-30 50 36)"/><ellipse cx="70" cy="42" rx="7" ry="12" transform="rotate(30 70 42)"/><ellipse cx="50" cy="50" rx="7" ry="12" transform="rotate(-30 50 50)"/><ellipse cx="70" cy="56" rx="7" ry="12" transform="rotate(30 70 56)"/><ellipse cx="50" cy="64" rx="7" ry="12" transform="rotate(-30 50 64)"/><ellipse cx="70" cy="70" rx="7" ry="12" transform="rotate(30 70 70)"/><ellipse cx="60" cy="12" rx="6.5" ry="11"/></g><path d="M60 126V30" stroke="#2c2c2c" stroke-width="3" stroke-linecap="round"/><g fill="#bfb4a3" stroke="#2c2c2c" stroke-width="2.5"><ellipse cx="50" cy="22" rx="7" ry="12" transform="rotate(-30 50 22)"/><ellipse cx="70" cy="28" rx="7" ry="12" transform="rotate(30 70 28)"/><ellipse cx="50" cy="36" rx="7" ry="12" transform="rotate(-30 50 36)"/><ellipse cx="70" cy="42" rx="7" ry="12" transform="rotate(30 70 42)"/><ellipse cx="50" cy="50" rx="7" ry="12" transform="rotate(-30 50 50)"/><ellipse cx="70" cy="56" rx="7" ry="12" transform="rotate(30 70 56)"/><ellipse cx="50" cy="64" rx="7" ry="12" transform="rotate(-30 50 64)"/><ellipse cx="70" cy="70" rx="7" ry="12" transform="rotate(30 70 70)"/><ellipse cx="60" cy="12" rx="6.5" ry="11"/></g></svg></span><span class="sticker st6" data-sticker aria-hidden="true"><svg viewBox="0 0 150 70"><g transform="rotate(-14 75 35)"><rect x="8" y="22" width="134" height="30" rx="15" fill="#d8cbb8" stroke="#d8cbb8" stroke-width="12"/><rect x="8" y="22" width="134" height="30" rx="15" fill="#d49653" stroke="#2c2c2c" stroke-width="2.5"/><path d="M34 30l12 12M58 29l12 13M82 29l12 13M106 30l12 12" stroke="#2c2c2c" stroke-width="2.5" stroke-linecap="round"/><path d="M36 28l10 10M60 27l10 11M84 27l10 11M108 28l10 10" stroke="#f3dcb4" stroke-width="2" stroke-linecap="round" opacity=".8"/></g></svg></span></div>
+    <div class="foot__bar">
+      <span>© <span data-year>2026</span> Aube · commerce fictif</span>
+      <span>Site d'exemple <span translate="no">Astelsia</span> · formule Signature · <a href="../../" target="_top">Créer le mien</a></span>
+      <button type="button" class="credits-btn" aria-expanded="false" aria-controls="credits" data-credits>Crédits</button>
+    </div>
+    <div class="credits" id="credits"><div><p>Ce site est un exemple de la formule Signature d'<span translate="no">Astelsia</span>&nbsp;: un univers à part, la commande en ligne, et des petits secrets à toucher (la farine, les autocollants, le logo…). Commerce, adresse, prix et numéro fictifs. Photos&nbsp;: Pexels. Polices&nbsp;: Cormorant Garamond et Manrope (licence libre).</p></div></div>
   </footer>
-  <div class="credit">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.7 5.6 2.9 7.8 8.5 8.5-5.6.7-7.8 2.9-8.5 8.5-.7-5.6-2.9-7.8-8.5-8.5 5.6-.7 7.8-2.9 8.5-8.5z"/></svg>
-    <p>Ce site est un exemple de la formule <strong>Signature</strong> d'<span translate="no">Astelsia</span>&nbsp;: un univers à part, la commande en ligne, et des petits secrets à toucher.</p>
-    <small>Commerce, adresse, prix et numéro fictifs. Photos&nbsp;: Pexels.</small>
-    <a class="btn btn--gold" href="../../" target="_top">Créer le mien</a>
-  </div>
 
+  <div class="basket" aria-live="polite">
+    <p><span data-items>Votre panier est vide</span><b data-total>0&nbsp;€</b></p>
+    <a class="btn btn--gold" href="commander.html" data-go-order>Ma commande</a>
+  </div>
   <div class="toast" role="status" aria-live="polite"></div>
-  <script src="data.js?v=6"></script>
+  <div class="cbub" aria-hidden="true"><span></span></div>
+  <script src="data.js?v=7"></script>
   <script src="lenis.min.js" defer></script>
-  <script src="app.js?v=6" defer></script>
+  <script src="app.js?v=7" defer></script>
+  <script src="vendor/gsap.min.js" defer></script>
+  <script src="vendor/ScrollTrigger.min.js" defer></script>
+  <script src="home.js?v=7" defer></script>
 </body>
 </html>
