@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Astelsia — Sites web pour les commerces de proximité</title>
   <meta name="description" content="Astelsia crée des sites web élégants et rapides pour les restaurants, coiffeurs, artisans et boutiques. Trois formules claires, à partir de 249,90 €.">
-  <meta name="theme-color" content="#110b24">
+  <meta name="theme-color" content="#5b3d8f">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; frame-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
   <link rel="canonical" href="https://astelsia.fr/">
 
@@ -42,7 +42,7 @@
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   <link rel="preload" href="assets/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/manrope.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/style.css?v=20261118-2">
+  <link rel="stylesheet" href="assets/css/style.css?v=20261118-3">
   <script>
     // Les animations restent actives partout. Si l'appareil demande à réduire les animations,
     // le site passe en « mode doux » : fondus uniquement, aucun mouvement brusque.
@@ -56,53 +56,21 @@
 <body>
   <a class="skip" href="#formules">Aller aux formules</a>
 
-  <!-- ============ ÉCRAN DE CHARGEMENT : de petites étoiles qui rebondissent ============ -->
+  <!-- ============ ÉCRAN DE CHARGEMENT : de petites bulles de lumière qui rebondissent ============ -->
   <div class="loader" id="loader" role="status" aria-label="Chargement du site">
     <div class="loader__stars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
     <p class="loader__name" translate="no">Astelsia</p>
   </div>
 
-  <!-- ============ DÉCOR : des étoiles jusqu'au paysage ============ -->
-  <!-- Le paysage est peint à l'avance (2 cadrages : écran large / téléphone) puis animé plan par plan.
-       Presque tout se touche : les étoiles, le ciel, la lune, la balançoire, l'herbe (assets/js/fx.js). -->
+  <!-- ============ DÉCOR : un champ de lavande au coucher du soleil, et des bulles ============ -->
+  <!-- Photo libre (Pexels). Les bulles portent des noms de commerces ; on les éclate du doigt (assets/js/bubbles.js). -->
   <div class="scene" aria-hidden="true">
-    <div class="sky sky--dusk"></div>
-    <picture class="clouds">
-      <source media="(max-aspect-ratio: 5/8)" data-srcset="assets/scene/tall-clouds.webp">
-      <img data-src="assets/scene/wide-clouds.webp" alt="" width="2400" height="1350" decoding="async">
+    <picture class="lav">
+      <source media="(max-aspect-ratio: 5/8)" srcset="assets/scene/lavande-tel.webp">
+      <img src="assets/scene/lavande.webp" alt="" width="2000" height="1307" fetchpriority="high">
     </picture>
-    <div class="sky sky--twilight"></div>
-    <div class="sky sky--night"></div>
-    <div class="glow"></div>
-    <canvas class="stars"></canvas>
-    <div class="moon"><i></i></div>
-    <div class="land">
-      <picture class="layer layer--far">
-        <source media="(max-aspect-ratio: 5/8)" data-srcset="assets/scene/tall-far.webp">
-        <img data-src="assets/scene/wide-far.webp" alt="" width="2400" height="1000" decoding="async">
-      </picture>
-      <picture class="layer layer--mid">
-        <source media="(max-aspect-ratio: 5/8)" data-srcset="assets/scene/tall-mid.webp">
-        <img data-src="assets/scene/wide-mid.webp" alt="" width="2400" height="1000" decoding="async">
-      </picture>
-      <div class="layer layer--tree">
-        <picture>
-          <source media="(max-aspect-ratio: 5/8)" data-srcset="assets/scene/tall-tree.webp">
-          <img data-src="assets/scene/wide-tree.webp" alt="" width="2400" height="1000" decoding="async">
-        </picture>
-        <svg class="swing" viewBox="0 0 100 100" preserveAspectRatio="none">
-          <g class="swing__g">
-            <line x1="0" y1="0" x2="0" y2="97" /><line x1="100" y1="0" x2="100" y2="97" />
-            <rect x="-16" y="94" width="132" height="6" rx="1.5" fill="#b89668" />
-          </g>
-        </svg>
-      </div>
-      <picture class="layer layer--front">
-        <source media="(max-aspect-ratio: 5/8)" data-srcset="assets/scene/tall-front.webp">
-        <img data-src="assets/scene/wide-front.webp" alt="" width="2400" height="1000" decoding="async">
-      </picture>
-      <div class="fireflies"></div>
-    </div>
+    <div class="lav__veil"></div>
+    <canvas class="bubbles"></canvas>
   </div>
 
 
@@ -112,7 +80,9 @@
       <svg class="logo__mark" viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="lg-gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff0b8"/><stop offset="1" stop-color="#f0ad2c"/></linearGradient></defs><path d="M12 1.5c.7 5.6 2.9 7.8 8.5 8.5-5.6.7-7.8 2.9-8.5 8.5-.7-5.6-2.9-7.8-8.5-8.5 5.6-.7 7.8-2.9 8.5-8.5z" fill="url(#lg-gold)"/><circle cx="19.5" cy="19" r="1.6" fill="url(#lg-gold)"/></svg>
       <span translate="no">Astelsia</span>
     </a>
-    <button type="button" class="menu-btn" aria-expanded="false" aria-controls="menu"><span class="menu-btn__label">Menu</span><span class="menu-btn__icon" aria-hidden="true"><i></i><i></i></span></button>
+    <nav class="header__nav" aria-label="Raccourcis"><a href="#formules">Formules</a><a href="#serenite">Sérénité</a><a href="#contact">Contact</a></nav>
+    <a class="header__cta" href="#contact" data-rappel>Être rappelé</a>
+    <button type="button" class="menu-btn" aria-expanded="false" aria-controls="menu" aria-label="Menu"><span class="menu-btn__icon" aria-hidden="true"><i></i><i></i></span></button>
   </header>
 
   <!-- ============ MENU : discret, il s'ouvre en plein écran ============ -->
@@ -130,7 +100,8 @@
     <!-- ============ ACCUEIL : créez votre site en direct ============ -->
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero__text">
-        <h1 class="hero__title" id="hero-title" data-hero-title>Créez votre site. <em>Là, maintenant.</em></h1>
+        <h1 class="hero__title" id="hero-title" data-hero-title>Un site qui donne envie <em>de pousser la porte.</em></h1>
+        <p class="hero__lead hero__in">Des sites sur mesure pour les commerces&nbsp;: beaux, rapides, parfaits sur téléphone. Vous voyez la maquette avant de payer.</p>
       </div>
 
       <!-- L'iPhone : le site se construit en direct -->
@@ -172,16 +143,16 @@
         <div class="device__glow" aria-hidden="true"></div>
       </div>
 
-      <!-- petit secret : le ciel se touche -->
-      <p class="hero__hint" aria-hidden="true">✦ Psst… touchez le ciel.</p>
+      <!-- petit secret : les bulles s'éclatent -->
+      <p class="hero__hint" aria-hidden="true">✦ Psst… touchez une bulle.</p>
 
       <!-- Le créateur, en 4 temps (sans numéro d'étape) -->
       <div class="builder hero__in" data-step="1">
         <form class="builder__step" data-s="1" novalidate>
           <label class="builder__q" for="b-name">Comment s'appelle votre commerce&nbsp;?</label>
           <div class="builder__line">
-            <input class="builder__input" id="b-name" name="nom" type="text" maxlength="32" autocomplete="organization" placeholder="Ex. : Le Fournil…" enterkeyhint="next">
-            <button class="builder__go" type="submit" aria-label="Suivant"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h12m-5-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <input class="builder__input" id="b-name" name="nom" type="text" maxlength="32" autocomplete="organization" placeholder="Ex. : Le Fournil" enterkeyhint="next">
+            <button class="builder__go builder__go--text" type="submit" aria-label="Voir mon site"><span>Voir mon site</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h12m-5-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
           </div>
         </form>
 
@@ -215,6 +186,8 @@
             <button type="button" class="btn btn--gold builder__next" data-go="4">Mon site est prêt</button>
           </div>
         </div>
+
+        <p class="hero__links"><a href="#formules">Voir les formules</a><a href="#film">Pourquoi un site&nbsp;?</a></p>
 
         <div class="builder__step builder__done" data-s="4" hidden>
           <p class="builder__q builder__q--done">Le site de <em data-b="name">votre commerce</em> est prêt.</p>
@@ -432,17 +405,16 @@
     <p>© <span data-year>2026</span> <span translate="no">Astelsia</span> · <a href="mentions-legales.html">Mentions légales</a></p>
   </footer>
 
-  <script src="assets/js/config.js?v=20261118-2"></script>
+  <script src="assets/js/config.js?v=20261118-3"></script>
   <script src="assets/vendor/gsap.min.js" defer></script>
   <script src="assets/vendor/ScrollTrigger.min.js" defer></script>
   <script src="assets/vendor/SplitText.min.js" defer></script>
   <script src="assets/vendor/lenis.min.js" defer></script>
-  <script src="assets/js/builder.js?v=20261118-2" defer></script>
-  <script src="assets/js/scene.js?v=20261118-2" defer></script>
-  <script src="assets/js/fx.js?v=20261118-2" defer></script>
-  <script src="assets/js/main.js?v=20261118-2" defer></script>
+  <script src="assets/js/builder.js?v=20261118-3" defer></script>
+  <script src="assets/js/bubbles.js?v=20261118-3" defer></script>
+  <script src="assets/js/main.js?v=20261118-3" defer></script>
   <script>
-    // L'écran de chargement reste le temps que tout soit prêt (3D, polices), au minimum 1 s, au maximum 5 s.
+    // L'écran de chargement reste le temps que tout soit prêt (photo, polices), au minimum 1 s, au maximum 5 s.
     (function () {
       var t0 = performance.now(), minT = matchMedia('(prefers-reduced-motion: reduce)').matches ? 300 : 1000;
       function done() {

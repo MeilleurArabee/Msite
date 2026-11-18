@@ -1,7 +1,7 @@
 /* =========================================================
    Astelsia — animations
    GSAP + ScrollTrigger + SplitText + Lenis.
-   Plus on descend, plus le ciel s'éclaire : nuit → heure bleue → paysage.
+   Un champ de lavande au coucher du soleil ; la photo s'approche quand on descend.
    Scroll libre au doigt (aucun aimant). À la molette : un cran = une phrase.
    Mode doux (moins d'animations) : fondus uniquement.
    ========================================================= */
@@ -183,45 +183,20 @@
     }
   });
 
-  var scene = window.AstelsiaScene;
 
   /* =========================================================
-     Le ciel, au fil de la descente
+     Le champ, au fil de la descente
      ========================================================= */
   var mm = gsap.matchMedia();
   mm.add({ mobile: '(max-width: 899px)', desktop: '(min-width: 900px)', reduce: '(prefers-reduced-motion: reduce)' }, function (ctx) {
     var c = ctx.conditions, g = c.reduce; // mode doux : fondus uniquement
     var sc = g ? true : 0.6;
 
-    /* 1. Fin des phrases → exemples : la nuit s'éclaircit (heure bleue profonde) */
-    gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { trigger: '.tl-line--big', start: 'top 60%', endTrigger: '#formules', end: 'top 30%', scrub: sc } })
-      .to('.sky--night', { opacity: 0 }, 0)
-      .to('.stars', g ? { opacity: 0.6 } : { opacity: 0.6, yPercent: -12 }, 0);
-
-    /* 2. Fin des formules → Sérénité : le soleil couchant, les nuages, la lune */
-    gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: {
-        trigger: '#formules', start: 'bottom 85%', endTrigger: '#serenite', end: 'center center', scrub: sc,
-        onUpdate: function (self) { if (scene) scene.setStarsActive(self.progress < 0.95); }
-      }
-    })
-      .to('.sky--twilight', { opacity: 0, duration: 1 }, 0)
-      .fromTo('.clouds', { opacity: 0 }, { opacity: 1, duration: 0.9 }, 0.1)
-      .to('.stars', g ? { opacity: 0, duration: 1 } : { opacity: 0, yPercent: -35, duration: 1 }, 0)
-      .fromTo('.moon', { opacity: 0, y: g ? 0 : '20vh' }, { opacity: 1, y: 0, duration: 0.7 }, 0.3)
-      .to('.glow', { opacity: 1, duration: 0.6 }, 0.4);
-
-    /* 3. Contact : le paysage se lève, plan par plan */
-    var land = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { trigger: '#contact', start: 'top 95%', endTrigger: '.footer', end: 'bottom bottom', scrub: sc } });
-    if (g) {
-      land.fromTo('.land', { opacity: 0 }, { opacity: 1, duration: 1 }, 0);
-    } else {
-      [['.layer--far', 100], ['.layer--mid', 110], ['.layer--tree', 125], ['.layer--front', 150]].forEach(function (l, i) {
-        land.fromTo(l[0], { yPercent: l[1] }, { yPercent: 0, duration: 1 - i * 0.08, ease: 'power1.out' }, i * 0.04);
-      });
-    }
-    land.to('.fireflies', { opacity: 1, duration: 0.3 }, 0.7);
+    /* 1. Le champ de lavande : la photo s'approche doucement pendant la descente,
+          et le voile fonce un peu plus bas pour que les textes restent lisibles */
+    gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { trigger: 'main', start: 'top top', end: 'bottom bottom', scrub: sc } })
+      .fromTo('.lav img', { scale: g ? 1.04 : 1.14 }, { scale: 1.02 }, 0)
+      .fromTo('.lav__veil', { opacity: 0.3 }, { opacity: 1 }, 0);
 
     /* 4. Ordinateur : les formules se lèvent une fois */
     if (c.desktop) {
