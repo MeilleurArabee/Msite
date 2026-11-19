@@ -425,7 +425,8 @@
 
   /* ---------- Les vrais sites d'exemple, dans le téléphone des formules ----------
      Ajouter ici les exemples Business et Signature quand ils seront prêts. */
-  var DEMOS = { solo: 'demo/fleuriste/', business: 'demo/cordonnerie/', signature: 'demo/bistrot/' };
+  // le « ?v= » oblige le téléphone à recharger l'exemple après une mise à jour (sinon il garde l'ancien en mémoire)
+  var DEMOS = { solo: 'demo/fleuriste/?v=2', business: 'demo/cordonnerie/?v=2', signature: 'demo/bistrot/?v=3' };
   var site = document.querySelector('.plan-site'), siteScreen = site && site.querySelector('.plan-site__screen');
   var siteFrame = site && site.querySelector('iframe'), siteLink = document.querySelector('.plan-preview__link');
   var fitSite = function () {};
