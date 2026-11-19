@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Infos — La Tonnelle (site d'exemple)</title>
+  <meta name="description" content="Horaires, adresse et accès du restaurant fictif La Tonnelle.">
+  <!-- Commerce fictif : on demande aux moteurs de recherche de ne pas l'indexer -->
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#4a3442">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/manrope.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="style.css?v=3">
+  <script src="boot.js?v=3"></script>
+</head>
+<body class="p-infos">
+  <!-- Le décor : la terrasse au crépuscule, et des petites lumières qu'on touche -->
+  <div class="scene" aria-hidden="true">
+    <picture class="photo">
+      <source media="(max-aspect-ratio: 5/8)" srcset="img/terrasse-tel.webp">
+      <img src="img/terrasse.webp" alt="" width="2000" height="1250" fetchpriority="high">
+    </picture>
+    <div class="veil"></div>
+    <canvas class="lights"></canvas>
+  </div>
+
+  <aside class="demo-bar" aria-label="Site d'exemple">
+    <p>Site d'exemple · commerce fictif</p>
+    <a href="../../" target="_top">par <span translate="no">Astelsia</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.7 5.6 2.9 7.8 8.5 8.5-5.6.7-7.8 2.9-8.5 8.5-.7-5.6-2.9-7.8-8.5-8.5 5.6-.7 7.8-2.9 8.5-8.5z"/></svg></a>
+  </aside>
+
+  <header class="nav">
+    <a class="logo" href="index.html" translate="no">La Tonnelle</a>
+    <a class="nav__cta" href="reserver.html">Réserver</a>
+    <nav class="nav__links" aria-label="Pages"><a href="carte.html">La carte</a><a href="lieu.html">Le lieu</a><a href="reserver.html">Réserver</a><a href="infos.html" aria-current="page">Infos</a></nav>
+  </header>
+
+  <main>
+    
+    <section class="sub">
+      <p class="pill" data-status><i></i><span data-status-text>Ouvert ce soir dès 19h</span></p>
+      <p class="cap">Infos pratiques</p>
+      <h1>Nous <em>trouver.</em></h1>
+      <p class="sub__lead">Au bout du quai, la porte verte entre la librairie et le port.</p>
+    </section>
+    <section class="sec">
+      <div class="card">
+        <p class="cap">Les horaires</p>
+        <ul class="hours" data-hours><li data-day="2"><span>Mardi</span><b>19h – 23h</b></li><li data-day="3"><span>Mercredi</span><b>19h – 23h</b></li><li data-day="4"><span>Jeudi</span><b>19h – 23h</b></li><li data-day="5"><span>Vendredi</span><b>19h – 23h30</b></li><li data-day="6"><span>Samedi</span><b>19h – 23h30</b></li><li data-day="0"><span>Dimanche</span><b>Fermé</b></li><li data-day="1"><span>Lundi</span><b>Fermé</b></li></ul>
+        <p class="cap cap--gap">L'adresse</p>
+        <p class="addr">8 quai des Indes, 56100 Lorient</p>
+        <a class="map" href="infos.html" data-demo="route" aria-label="Ouvrir l'itinéraire"><i></i></a>
+        <div class="acts"><a class="btn" href="infos.html" data-demo="call">Appeler</a><a class="btn btn--glass" href="infos.html" data-demo="route">Itinéraire</a></div>
+        <p class="cap cap--gap">Bon à savoir</p>
+        <ul class="facts"><li>Terrasse chauffée d'octobre à avril</li><li>Accès de plain-pied, toilettes adaptées</li><li>Groupes jusqu'à 20 personnes, sur demande</li></ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <nav aria-label="Pages"><a href="index.html">Accueil</a><a href="carte.html">La carte</a><a href="lieu.html">Le lieu</a><a href="reserver.html">Réserver</a><a href="infos.html">Infos</a></nav>
+    <p><span translate="no">La Tonnelle</span> · restaurant fictif · photos&nbsp;: Pexels</p>
+    <p>Site d'exemple de la formule <strong>Signature</strong> d'<span translate="no">Astelsia</span> · <a href="../../" target="_top">Créer le mien</a></p>
+  </footer>
+  <div class="toast" role="status" aria-live="polite"></div>
+  <script src="app.js?v=3" defer></script>
+</body>
+</html>

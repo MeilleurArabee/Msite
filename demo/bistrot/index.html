@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>La Tonnelle — Restaurant (site d'exemple)</title>
-  <meta name="description" content="Site d'exemple réalisé par Astelsia (formule Signature) pour un restaurant fictif : la carte du soir, la réservation en ligne, les infos.">
+  <meta name="description" content="Site d'exemple réalisé par Astelsia (formule Signature) pour un restaurant fictif : la carte du soir, le lieu, la réservation en ligne, les infos.">
   <!-- Commerce fictif : on demande aux moteurs de recherche de ne pas l'indexer -->
   <meta name="robots" content="noindex, nofollow">
   <meta name="theme-color" content="#4a3442">
@@ -12,10 +12,10 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preload" href="fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/manrope.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="style.css?v=2">
-  <script src="boot.js?v=1"></script>
+  <link rel="stylesheet" href="style.css?v=3">
+  <script src="boot.js?v=3"></script>
 </head>
-<body>
+<body class="p-index">
   <!-- Le décor : la terrasse au crépuscule, et des petites lumières qu'on touche -->
   <div class="scene" aria-hidden="true">
     <picture class="photo">
@@ -32,22 +32,19 @@
   </aside>
 
   <header class="nav">
-    <a class="logo" href="#haut" translate="no">La Tonnelle</a>
-    <nav class="nav__links" aria-label="Pages"><a href="#carte">La carte</a><a href="#reserver">Réserver</a><a href="#infos">Infos</a></nav>
-    <a class="nav__cta" href="#reserver">Réserver</a>
+    <a class="logo" href="index.html" translate="no" aria-current="page">La Tonnelle</a>
+    <a class="nav__cta" href="reserver.html">Réserver</a>
+    <nav class="nav__links" aria-label="Pages"><a href="carte.html">La carte</a><a href="lieu.html">Le lieu</a><a href="reserver.html">Réserver</a><a href="infos.html">Infos</a></nav>
   </header>
 
-  <main id="haut">
+  <main>
     <section class="hero" aria-labelledby="titre">
       <p class="pill" data-status><i></i><span data-status-text>Ouvert ce soir dès 19h</span></p>
       <h1 id="titre" class="hero__title">Le soir tombe. <em>On vous garde une table.</em></h1>
       <p class="hero__lead">Une terrasse sous les lauriers-roses, une cuisine du marché, et le temps qui ralentit enfin.</p>
       <p class="hero__q">Pour combien ce soir&nbsp;?</p>
-      <div class="quick">
-        <div class="stepper" role="group" aria-label="Nombre de couverts"><button type="button" data-step="-1" aria-label="Un couvert de moins">−</button><output data-covers>2</output><button type="button" data-step="1" aria-label="Un couvert de plus">+</button></div>
-        <a class="btn" href="#reserver" data-quick>Réserver <span aria-hidden="true">→</span></a>
-      </div>
-      <p class="hero__links"><a href="#carte">Voir la carte</a><a href="#infos">Nous trouver</a></p>
+      <div class="quick"><div class="stepper" role="group" aria-label="Nombre de couverts"><button type="button" data-step="-1" aria-label="Un couvert de moins">−</button><output data-covers>2</output><button type="button" data-step="1" aria-label="Un couvert de plus">+</button></div><a class="btn" href="reserver.html" data-quick>Réserver <span aria-hidden="true">→</span></a></div>
+      <p class="hero__links"><a href="carte.html">Voir la carte</a><a href="lieu.html">Découvrir le lieu</a></p>
       <p class="hero__hint" aria-hidden="true">✦ Touchez une lumière</p>
     </section>
 
@@ -56,62 +53,30 @@
       <p class="tl" data-words>On vient pour <em>rester un peu.</em></p>
     </section>
 
-    <section class="sec" id="carte" aria-labelledby="t-carte">
+    <section class="sec" aria-label="Le restaurant en trois pages">
+      <div class="tiles">
+        <a class="tile" href="carte.html"><img src="img/table.webp" alt="" width="1100" height="733" loading="lazy"><span><small>Ce soir à l'ardoise</small>La carte <i aria-hidden="true">→</i></span></a>
+        <a class="tile" href="lieu.html"><img src="img/cour.webp" alt="" width="733" height="1100" loading="lazy"><span><small>Sous les guirlandes</small>Le lieu <i aria-hidden="true">→</i></span></a>
+        <a class="tile" href="reserver.html"><img src="img/bougies.webp" alt="" width="733" height="1100" loading="lazy"><span><small>En une minute, sans commission</small>Réserver <i aria-hidden="true">→</i></span></a>
+      </div>
+    </section>
+
+    <section class="sec" aria-labelledby="t-soir">
       <div class="card">
         <p class="cap">Ce soir à l'ardoise</p>
-        <h2 id="t-carte">La <em>carte</em></h2>
-        <ul class="dishes">
-          <li><span>Velouté de potimarron<small>noisettes torréfiées, crème crue</small></span><b>9&nbsp;€</b></li>
-          <li><span>Burrata, tomates anciennes<small>huile d'olive, basilic du jardin</small></span><b>12&nbsp;€</b></li>
-          <li><span>Lieu jaune de ligne<small>beurre blanc, poireaux fondants</small></span><b>24&nbsp;€</b></li>
-          <li><span>Joue de bœuf confite<small>purée maison, jus au vin rouge</small></span><b>22&nbsp;€</b></li>
-          <li><span>Tarte fine aux pommes<small>caramel au beurre salé</small></span><b>9&nbsp;€</b></li>
-        </ul>
-        <p class="note">La carte change avec le marché. Prix fictifs&nbsp;: site d'exemple.</p>
-      </div>
-    </section>
-
-    <section class="sec" id="reserver" aria-labelledby="t-resa">
-      <div class="card resa">
-        <p class="cap">Réservation en ligne, sans commission</p>
-        <h2 id="t-resa">Une table <em>pour vous.</em></h2>
-        <p class="label">Quel soir&nbsp;?</p>
-        <div class="days" role="group" aria-label="Soir" data-days></div>
-        <p class="label">À quelle heure&nbsp;?</p>
-        <div class="slots" role="group" aria-label="Heure" data-slots></div>
-        <div class="covers"><span class="label">Combien de couverts&nbsp;?</span><div class="stepper" role="group" aria-label="Nombre de couverts"><button type="button" data-step="-1" aria-label="Un couvert de moins">−</button><output data-covers>2</output><button type="button" data-step="1" aria-label="Un couvert de plus">+</button></div></div>
-        <label class="label" for="nom">À quel nom&nbsp;?</label>
-        <input id="nom" class="field" type="text" maxlength="30" autocomplete="name" placeholder="Ex. : Camille">
-        <button type="button" class="btn btn--wide" data-confirm>Confirmer</button>
-        <p class="note">Site d'exemple&nbsp;: rien n'est envoyé. Sur un vrai site, le restaurant reçoit la réservation par SMS.</p>
-      </div>
-    </section>
-
-    <section class="sec" id="infos" aria-labelledby="t-infos">
-      <div class="card">
-        <p class="cap">Infos pratiques</p>
-        <h2 id="t-infos">Nous <em>trouver.</em></h2>
-        <ul class="hours" data-hours>
-          <li data-day="2"><span>Mardi</span><b>19h – 23h</b></li>
-          <li data-day="3"><span>Mercredi</span><b>19h – 23h</b></li>
-          <li data-day="4"><span>Jeudi</span><b>19h – 23h</b></li>
-          <li data-day="5"><span>Vendredi</span><b>19h – 23h30</b></li>
-          <li data-day="6"><span>Samedi</span><b>19h – 23h30</b></li>
-          <li data-day="0"><span>Dimanche</span><b>Fermé</b></li>
-          <li data-day="1"><span>Lundi</span><b>Fermé</b></li>
-        </ul>
-        <p class="addr">8 quai des Indes, 56100 Lorient</p>
-        <div class="acts"><a class="btn" href="#infos" data-demo="call">Appeler</a><a class="btn btn--glass" href="#infos" data-demo="route">Itinéraire</a></div>
+        <h2 id="t-soir">Trois envies <em>du moment.</em></h2>
+        <ul class="dishes"><li><span>Velouté de potimarron<small>noisettes torréfiées, crème crue</small></span><b>9&nbsp;€</b></li><li><span>Lieu jaune de ligne<small>beurre blanc, poireaux fondants</small></span><b>24&nbsp;€</b></li><li><span>Tarte fine aux pommes<small>caramel au beurre salé</small></span><b>9&nbsp;€</b></li></ul>
+        <p class="more"><a class="btn btn--glass" href="carte.html">Toute la carte →</a></p>
       </div>
     </section>
   </main>
 
   <footer class="foot">
-    <p><span translate="no">La Tonnelle</span> · restaurant fictif · photo&nbsp;: Pexels</p>
+    <nav aria-label="Pages"><a href="index.html">Accueil</a><a href="carte.html">La carte</a><a href="lieu.html">Le lieu</a><a href="reserver.html">Réserver</a><a href="infos.html">Infos</a></nav>
+    <p><span translate="no">La Tonnelle</span> · restaurant fictif · photos&nbsp;: Pexels</p>
     <p>Site d'exemple de la formule <strong>Signature</strong> d'<span translate="no">Astelsia</span> · <a href="../../" target="_top">Créer le mien</a></p>
   </footer>
-
   <div class="toast" role="status" aria-live="polite"></div>
-  <script src="app.js?v=1" defer></script>
+  <script src="app.js?v=3" defer></script>
 </body>
 </html>

@@ -127,7 +127,7 @@
   var CAPS = {
     solo: '<strong>Solo</strong> · Un vrai exemple&nbsp;: Pivoine, une fleuriste. Une seule page, claire et soignée&nbsp;: ouvert ou fermé en direct, horaires, tarifs, appeler en un geste.',
     business: '<strong>Business</strong> · Un vrai exemple&nbsp;: Talon &amp; Clé, une cordonnerie. Un univers dessiné, un porte-clés qu\'on fait tinter, des animations soignées.',
-    signature: '<strong>Signature</strong> · Un vrai exemple&nbsp;: La Tonnelle, un restaurant. Une terrasse au crépuscule, des lumières qu\'on touche, et la réservation en ligne.'
+    signature: '<strong>Signature</strong> · Un vrai exemple&nbsp;: La Tonnelle, un restaurant. Cinq pages sur une terrasse au crépuscule, des lumières qu\'on touche, et la réservation en ligne.'
   };
 
   function norm(s) { return String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[’'\-_.]/g, ' ').replace(/\s+/g, ' ').trim(); }
