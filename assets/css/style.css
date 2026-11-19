@@ -1066,3 +1066,6 @@ body { background: linear-gradient(180deg, #9381cc 0, #7d63b4 30%, #5a3a7a 70%, 
 /* la couleur de secours reste sur <html> : sur <body>, elle passerait devant la photo du décor */
 html { background: linear-gradient(180deg, #9381cc 0, #7d63b4 30%, #5a3a7a 70%, #3e2340 100%) #9381cc; }
 body { background: transparent; }
+
+/* les bandes que Safari ajoute en haut et en bas prennent la couleur exacte du ciel et de la lavande */
+html { background-color: #8a71bb; }
