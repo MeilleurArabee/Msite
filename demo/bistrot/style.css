@@ -130,3 +130,7 @@ h2 em { color: var(--rose); font-weight: 300; }
   #reserver .card { max-width: 680px; }
 }
 .soft .tl .w { transition: none; }
+/* téléphones récents : la terrasse passe aussi sous les barres du navigateur */
+html { background: #4a3442; }
+.scene { inset: auto; top: 0; left: 0; right: 0; height: 100vh; height: 100lvh; }
+.nav { top: max(10px, calc(env(safe-area-inset-top) + 6px)); }

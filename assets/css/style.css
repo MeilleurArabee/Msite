@@ -1053,3 +1053,13 @@ body { background: #6b4a9a; }
 /* les trois exemples restent chargés dans le téléphone : on montre seulement celui de la formule choisie */
 .plan-site__screen iframe { opacity: 0; visibility: hidden; transition: opacity .35s ease; }
 .plan-site__screen iframe.is-on { opacity: 1; visibility: visible; }
+
+/* téléphones récents : le décor passe sous la barre d'état (en haut) et sous la barre du navigateur (en bas),
+   et les couleurs de secours prolongent le ciel en haut et la lavande en bas */
+html { background: #9381cc; }
+body { background: linear-gradient(180deg, #9381cc 0, #7d63b4 30%, #5a3a7a 70%, #3e2340 100%); }
+.scene { inset: auto; top: 0; left: 0; right: 0; height: 100vh; height: 100lvh; }
+.scene .lav img { object-position: 50% 62%; }
+.header { top: max(10px, calc(env(safe-area-inset-top) + 6px)); }
+.hero__cue { bottom: calc(10px + env(safe-area-inset-bottom)); }
+.footer { padding-bottom: max(32px, calc(env(safe-area-inset-bottom) + 20px)); }
