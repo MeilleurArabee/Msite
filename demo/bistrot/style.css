@@ -205,3 +205,4 @@ html { background: #4a3442; }
 @media (prefers-reduced-motion: reduce) { ::view-transition-new(root) { animation-name: vtOut; animation-direction: reverse; } }
 /* la couleur de secours reste sur <html> : sur <body>, elle passerait devant la photo */
 body { background: transparent; }
+.scene { height: calc(100lvh + env(safe-area-inset-bottom, 0px) + 60px); }
