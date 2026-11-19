@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Réserver — La Tonnelle (site d'exemple)</title>
+  <meta name="description" content="Réservez une table en ligne au restaurant fictif La Tonnelle.">
+  <!-- Commerce fictif : on demande aux moteurs de recherche de ne pas l'indexer -->
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#4a3442">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/manrope.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="style.css?v=3">
+  <script src="boot.js?v=3"></script>
+</head>
+<body class="p-reserver">
+  <!-- Le décor : la terrasse au crépuscule, et des petites lumières qu'on touche -->
+  <div class="scene" aria-hidden="true">
+    <picture class="photo">
+      <source media="(max-aspect-ratio: 5/8)" srcset="img/terrasse-tel.webp">
+      <img src="img/terrasse.webp" alt="" width="2000" height="1250" fetchpriority="high">
+    </picture>
+    <div class="veil"></div>
+    <canvas class="lights"></canvas>
+  </div>
+
+  <aside class="demo-bar" aria-label="Site d'exemple">
+    <p>Site d'exemple · commerce fictif</p>
+    <a href="../../" target="_top">par <span translate="no">Astelsia</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.7 5.6 2.9 7.8 8.5 8.5-5.6.7-7.8 2.9-8.5 8.5-.7-5.6-2.9-7.8-8.5-8.5 5.6-.7 7.8-2.9 8.5-8.5z"/></svg></a>
+  </aside>
+
+  <header class="nav">
+    <a class="logo" href="index.html" translate="no">La Tonnelle</a>
+    <a class="nav__cta" href="reserver.html">Réserver</a>
+    <nav class="nav__links" aria-label="Pages"><a href="carte.html">La carte</a><a href="lieu.html">Le lieu</a><a href="reserver.html" aria-current="page">Réserver</a><a href="infos.html">Infos</a></nav>
+  </header>
+
+  <main>
+    
+    <section class="sub">
+      <p class="pill" data-status><i></i><span data-status-text>Ouvert ce soir dès 19h</span></p>
+      <p class="cap">Réservation en ligne, sans commission</p>
+      <h1>Une table <em>pour vous.</em></h1>
+      <p class="sub__lead">Choisissez le soir, l'heure et le nombre de couverts. On vous confirme par SMS.</p>
+    </section>
+    <section class="sec">
+      <div class="card resa">
+        <p class="label">Quel soir&nbsp;?</p>
+        <div class="days" role="group" aria-label="Soir" data-days></div>
+        <p class="label">À quelle heure&nbsp;?</p>
+        <div class="slots" role="group" aria-label="Heure" data-slots></div>
+        <div class="covers"><span class="label">Combien de couverts&nbsp;?</span><div class="stepper" role="group" aria-label="Nombre de couverts"><button type="button" data-step="-1" aria-label="Un couvert de moins">−</button><output data-covers>2</output><button type="button" data-step="1" aria-label="Un couvert de plus">+</button></div></div>
+        <label class="label" for="nom">À quel nom&nbsp;?</label>
+        <input id="nom" class="field" type="text" maxlength="30" autocomplete="name" placeholder="Ex. : Camille">
+        <label class="label" for="tel">Votre téléphone <small>(pour la confirmation)</small></label>
+        <input id="tel" class="field" type="tel" maxlength="20" autocomplete="tel" placeholder="06 00 00 00 00">
+        <button type="button" class="btn btn--wide" data-confirm>Confirmer</button>
+        <p class="note">Site d'exemple&nbsp;: rien n'est envoyé. Sur un vrai site, le restaurant reçoit la réservation par SMS, sans aucune commission.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <nav aria-label="Pages"><a href="index.html">Accueil</a><a href="carte.html">La carte</a><a href="lieu.html">Le lieu</a><a href="reserver.html">Réserver</a><a href="infos.html">Infos</a></nav>
+    <p><span translate="no">La Tonnelle</span> · restaurant fictif · photos&nbsp;: Pexels</p>
+    <p>Site d'exemple de la formule <strong>Signature</strong> d'<span translate="no">Astelsia</span> · <a href="../../" target="_top">Créer le mien</a></p>
+  </footer>
+  <div class="toast" role="status" aria-live="polite"></div>
+  <script src="app.js?v=3" defer></script>
+</body>
+</html>

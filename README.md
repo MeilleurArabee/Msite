@@ -42,7 +42,7 @@ le message est déjà rédigé (SMS sur téléphone, mail sur ordinateur). Aucun
 Des sites de commerces **fictifs**, clairement marqués « site d'exemple », pour montrer chaque formule :
 - **Solo** — fleuriste « Pivoine » (une page claire : ouvert en direct, horaires, tarifs) : `https://astelsia.fr/demo/fleuriste/`
 - **Business** — cordonnerie « Talon & Clé » : `https://astelsia.fr/demo/cordonnerie/`
-- **Signature** — restaurant « La Tonnelle » (terrasse au crépuscule, lumières à toucher, réservation en ligne) : `https://astelsia.fr/demo/bistrot/`
+- **Signature** — restaurant « La Tonnelle » (5 pages : accueil, carte, lieu, réserver, infos ; terrasse au crépuscule, lumières à toucher, réservation en ligne) : `https://astelsia.fr/demo/bistrot/`
 - Anciens exemples gardés hors des formules : `demo/restaurant/` (L'Ardoise), `demo/boulangerie/` (Aube)
 
 Ils s'affichent en direct dans l'iPhone des formules (onglets Solo / Business / Signature, liste `DEMOS` dans `assets/js/builder.js`).

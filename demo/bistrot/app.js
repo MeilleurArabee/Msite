@@ -91,7 +91,7 @@
     requestAnimationFrame(draw);
   }
   function hit(x, y) { for (var i = 0; i < list.length; i++) { var l = list[i]; if (Math.hypot(l.x - x, l.y - y) < l.r * 4 + 10) return l; } return null; }
-  function blocked(el) { return !!(el && el.closest && el.closest('a, button, input, .card, .nav, .quick, .demo-bar')); }
+  function blocked(el) { return !!(el && el.closest && el.closest('a, button, input, .card, .nav, .quick, .demo-bar, .gallery, .lb, .tiles')); }
   d.addEventListener('pointerdown', function (e) {
     if (blocked(e.target)) return;
     var l = hit(e.clientX, e.clientY); if (!l) return;
@@ -104,7 +104,7 @@
   if (fine) d.addEventListener('pointermove', function (e) { root.classList.toggle('on-light', !blocked(e.target) && !!hit(e.clientX, e.clientY)); }, { passive: true });
   size(); seed(); requestAnimationFrame(draw);
   addEventListener('resize', function () { var w = W; size(); if (Math.abs(W - w) > 120) seed(); });
-  var hint = $('.hero__hint');
+  var hint = $('.hero__hint') || d.createElement('p');
   setTimeout(function () { if (!taps && scrollY < 80) { hint.classList.add('is-on'); setTimeout(function () { hint.classList.remove('is-on'); }, 5000); } }, 3500);
 
   /* ---------- les phrases s'allument mot à mot ---------- */
@@ -131,15 +131,17 @@
 
   /* ---------- la réservation ---------- */
   var covers = 2;
-  function setCovers(n) { covers = Math.max(1, Math.min(12, n)); $$('[data-covers]').forEach(function (o) { o.textContent = covers; }); }
+  function setCovers(n) { covers = Math.max(1, Math.min(12, n)); $$('[data-covers]').forEach(function (o) { o.textContent = covers; }); try { sessionStorage.setItem('tonnelle-couverts', covers); } catch (e) {} }
   $$('[data-step]').forEach(function (b) { b.addEventListener('click', function () { setCovers(covers + +b.getAttribute('data-step')); }); });
   var daysBox = $('[data-days]'), slotsBox = $('[data-slots]'), pick = { day: null, slot: null };
+  try { var saved = +sessionStorage.getItem('tonnelle-couverts'); if (saved) setCovers(saved); } catch (e) {}
   var SHORT = ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'], days = [], n0 = paris();
   for (var k = 0; days.length < 4 && k < 14; k++) {
     var dt = new Date(n0.date.getFullYear(), n0.date.getMonth(), n0.date.getDate() + k), wd = dt.getDay();
     if (!OPEN[wd] || (k === 0 && n0.min > OPEN[wd][1] - 90)) continue;
     days.push({ date: dt, wd: wd, k: k });
   }
+  if (daysBox && slotsBox) {
   daysBox.innerHTML = days.map(function (x, i) { return '<button type="button" aria-pressed="false" data-i="' + i + '">' + (x.k === 0 ? 'Ce soir' : x.k === 1 ? 'Demain' : SHORT[x.wd]) + '<b>' + x.date.getDate() + '</b></button>'; }).join('');
   function pickDay(i) {
     pick.day = days[i]; pick.slot = null;
@@ -151,7 +153,6 @@
   daysBox.addEventListener('click', function (e) { var b = e.target.closest('button'); if (b) pickDay(+b.getAttribute('data-i')); });
   slotsBox.addEventListener('click', function (e) { var b = e.target.closest('button'); if (!b) return; pick.slot = +b.getAttribute('data-m'); $$('button', slotsBox).forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); }); });
   if (days.length) pickDay(0);
-  $('[data-quick]').addEventListener('click', function () { toast('Parfait, <b>' + covers + ' couvert' + (covers > 1 ? 's' : '') + '</b> : choisissez le soir et l’heure.'); });
   $('[data-confirm]').addEventListener('click', function () {
     var name = $('#nom').value.trim().replace(/[<>&"]/g, '');
     if (!pick.slot) { toast('Choisissez l’heure de votre arrivée.'); return; }
@@ -159,4 +160,22 @@
     var x = pick.day, when = (x.k === 0 ? 'ce soir' : x.k === 1 ? 'demain' : NAMES[x.wd] + ' ' + x.date.getDate()) + ' à ' + hm(pick.slot);
     toast('C’est noté, <b>' + name + '</b> : ' + covers + ' couvert' + (covers > 1 ? 's' : '') + ', ' + when + '. <br>Site d’exemple : rien n’a été envoyé.');
   });
+  }
+
+  /* ---------- la galerie : on touche une photo, elle s'agrandit ---------- */
+  var lb = $('.lb'), phs = $$('[data-ph]');
+  if (lb && phs.length) (function () {
+    var img = $('img', lb), cap = $('figcaption', lb), cur = 0;
+    function show(i) { cur = (i + phs.length) % phs.length; var src = $('img', phs[cur]); img.src = src.src; img.alt = src.alt; cap.textContent = src.alt; }
+    function open(i) { show(i); lb.classList.add('is-open'); lb.setAttribute('aria-hidden', 'false'); $('.lb__x', lb).focus(); }
+    function close() { lb.classList.remove('is-open'); lb.setAttribute('aria-hidden', 'true'); phs[cur].focus(); }
+    phs.forEach(function (b, i) { b.addEventListener('click', function () { open(i); }); });
+    $('.lb__x', lb).addEventListener('click', close);
+    $('.lb__prev', lb).addEventListener('click', function () { show(cur - 1); });
+    $('.lb__next', lb).addEventListener('click', function () { show(cur + 1); });
+    lb.addEventListener('click', function (e) { if (e.target === lb) close(); });
+    d.addEventListener('keydown', function (e) { if (!lb.classList.contains('is-open')) return; if (e.key === 'Escape') close(); if (e.key === 'ArrowLeft') show(cur - 1); if (e.key === 'ArrowRight') show(cur + 1); });
+    var x0 = null; lb.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+    lb.addEventListener('touchend', function (e) { if (x0 == null) return; var dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 50) show(cur + (dx < 0 ? 1 : -1)); x0 = null; }, { passive: true });
+  })();
 })();

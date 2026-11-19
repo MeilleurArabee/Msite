@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Le lieu — La Tonnelle (site d'exemple)</title>
+  <meta name="description" content="La terrasse et la salle du restaurant fictif La Tonnelle, en photos.">
+  <!-- Commerce fictif : on demande aux moteurs de recherche de ne pas l'indexer -->
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#4a3442">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/manrope.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="style.css?v=3">
+  <script src="boot.js?v=3"></script>
+</head>
+<body class="p-lieu">
+  <!-- Le décor : la terrasse au crépuscule, et des petites lumières qu'on touche -->
+  <div class="scene" aria-hidden="true">
+    <picture class="photo">
+      <source media="(max-aspect-ratio: 5/8)" srcset="img/terrasse-tel.webp">
+      <img src="img/terrasse.webp" alt="" width="2000" height="1250" fetchpriority="high">
+    </picture>
+    <div class="veil"></div>
+    <canvas class="lights"></canvas>
+  </div>
+
+  <aside class="demo-bar" aria-label="Site d'exemple">
+    <p>Site d'exemple · commerce fictif</p>
+    <a href="../../" target="_top">par <span translate="no">Astelsia</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.7 5.6 2.9 7.8 8.5 8.5-5.6.7-7.8 2.9-8.5 8.5-.7-5.6-2.9-7.8-8.5-8.5 5.6-.7 7.8-2.9 8.5-8.5z"/></svg></a>
+  </aside>
+
+  <header class="nav">
+    <a class="logo" href="index.html" translate="no">La Tonnelle</a>
+    <a class="nav__cta" href="reserver.html">Réserver</a>
+    <nav class="nav__links" aria-label="Pages"><a href="carte.html">La carte</a><a href="lieu.html" aria-current="page">Le lieu</a><a href="reserver.html">Réserver</a><a href="infos.html">Infos</a></nav>
+  </header>
+
+  <main>
+    
+    <section class="sub">
+      <p class="pill" data-status><i></i><span data-status-text>Ouvert ce soir dès 19h</span></p>
+      <p class="cap">Sous les guirlandes</p>
+      <h1>Le <em>lieu.</em></h1>
+      <p class="sub__lead">Une cour pavée, des lauriers-roses, quarante couverts dehors et vingt dedans pour les soirs de pluie. Touchez une photo pour l'agrandir.</p>
+    </section>
+    <section class="sec"><div class="gallery"><button type="button" class="ph" data-ph="0" aria-label="Agrandir : La cour, un soir de juin"><img src="img/cour.webp" alt="La cour, un soir de juin" width="733" height="1100" loading="lazy"></button><button type="button" class="ph" data-ph="1" aria-label="Agrandir : Les bougies sur les tables"><img src="img/table.webp" alt="Les bougies sur les tables" width="1100" height="733" loading="lazy"></button><button type="button" class="ph" data-ph="2" aria-label="Agrandir : La façade, quand la nuit tombe"><img src="img/soir.webp" alt="La façade, quand la nuit tombe" width="733" height="1100" loading="lazy"></button><button type="button" class="ph" data-ph="3" aria-label="Agrandir : Les lanternes du comptoir"><img src="img/lanternes.webp" alt="Les lanternes du comptoir" width="1100" height="708" loading="lazy"></button><button type="button" class="ph" data-ph="4" aria-label="Agrandir : Un verre, une bougie, le temps"><img src="img/bougies.webp" alt="Un verre, une bougie, le temps" width="733" height="1100" loading="lazy"></button><button type="button" class="ph" data-ph="5" aria-label="Agrandir : La salle, côté fenêtre"><img src="img/salle.webp" alt="La salle, côté fenêtre" width="733" height="1100" loading="lazy"></button><button type="button" class="ph" data-ph="6" aria-label="Agrandir : Vu de la rue"><img src="img/vitre.webp" alt="Vu de la rue" width="1100" height="1067" loading="lazy"></button><button type="button" class="ph" data-ph="7" aria-label="Agrandir : Les soirs de pluie, on reste au chaud"><img src="img/pluie.webp" alt="Les soirs de pluie, on reste au chaud" width="733" height="1100" loading="lazy"></button></div></section>
+  </main>
+  <div class="lb" role="dialog" aria-modal="true" aria-label="Photo" aria-hidden="true">
+    <button type="button" class="lb__x" aria-label="Fermer">×</button>
+    <button type="button" class="lb__nav lb__prev" aria-label="Photo précédente">‹</button>
+    <figure><img src="data:," alt=""><figcaption></figcaption></figure>
+    <button type="button" class="lb__nav lb__next" aria-label="Photo suivante">›</button>
+  </div>
+
+  <footer class="foot">
+    <nav aria-label="Pages"><a href="index.html">Accueil</a><a href="carte.html">La carte</a><a href="lieu.html">Le lieu</a><a href="reserver.html">Réserver</a><a href="infos.html">Infos</a></nav>
+    <p><span translate="no">La Tonnelle</span> · restaurant fictif · photos&nbsp;: Pexels</p>
+    <p>Site d'exemple de la formule <strong>Signature</strong> d'<span translate="no">Astelsia</span> · <a href="../../" target="_top">Créer le mien</a></p>
+  </footer>
+  <div class="toast" role="status" aria-live="polite"></div>
+  <script src="app.js?v=3" defer></script>
+</body>
+</html>
