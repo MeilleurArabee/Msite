@@ -1069,3 +1069,5 @@ body { background: transparent; }
 
 /* les bandes que Safari ajoute en haut et en bas prennent la couleur exacte du ciel et de la lavande */
 html { background-color: #8a71bb; }
+/* iPhone : le décor descend aussi sous la barre d'accueil, tout en bas de l'écran */
+.scene { height: calc(100lvh + env(safe-area-inset-bottom, 0px) + 60px); }
