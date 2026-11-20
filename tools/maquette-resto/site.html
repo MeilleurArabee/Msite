@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+@font-face{font-family:Playfair;src:url(fonts/playfair-400.woff2) format('woff2');font-weight:400}
+@font-face{font-family:Playfair;src:url(fonts/playfair-500.woff2) format('woff2');font-weight:500}
+@font-face{font-family:Playfair;src:url(fonts/playfair-400i.woff2) format('woff2');font-weight:400;font-style:italic}
+@font-face{font-family:Jost;src:url(fonts/jost-400.woff2) format('woff2');font-weight:400}
+@font-face{font-family:Jost;src:url(fonts/jost-500.woff2) format('woff2');font-weight:500}
+@font-face{font-family:Jost;src:url(fonts/jost-600.woff2) format('woff2');font-weight:600}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:Jost,sans-serif;color:#fff;background:#111;overflow:hidden}
+.hero{position:relative;height:100vh;min-height:600px;overflow:hidden}
+.hero__img{position:absolute;inset:0;background:var(--photo) var(--pos,center)/cover no-repeat;transform:scale(1.02)}
+.hero__shade{position:absolute;inset:0;background:
+  linear-gradient(90deg,rgba(var(--dark),.92) 0%,rgba(var(--dark),.72) 34%,rgba(var(--dark),.18) 66%,rgba(var(--dark),.05) 100%),
+  linear-gradient(0deg,rgba(var(--dark),.75) 0%,transparent 34%),linear-gradient(180deg,rgba(var(--dark),.55) 0%,transparent 18%)}
+.top{position:absolute;top:0;left:0;right:0;display:flex;align-items:center;gap:40px;padding:30px 64px;z-index:2}
+.brand{font-family:Playfair,serif;font-size:26px;font-weight:500;letter-spacing:.2px;margin-right:auto}
+.brand i{font-style:italic;color:var(--accent)}
+.links{display:flex;gap:34px;font-size:15px;font-weight:500;opacity:.92}
+.links span:first-child{border-bottom:1.5px solid var(--accent);padding-bottom:3px}
+.book{padding:12px 22px;border-radius:4px;background:var(--accent);color:var(--accentink);font-weight:600;font-size:14.5px}
+.copy{position:absolute;left:64px;bottom:150px;max-width:620px;z-index:2}
+.eyebrow{display:flex;align-items:center;gap:14px;font-family:Playfair,serif;font-style:italic;font-size:19px;color:var(--accent)}
+.eyebrow::before{content:"";width:42px;height:1.5px;background:var(--accent)}
+h1{font-family:Playfair,serif;font-weight:400;font-size:var(--h1,104px);line-height:.98;letter-spacing:-1.5px;margin:18px 0 22px}
+.lead{font-size:20px;line-height:1.5;opacity:.9;max-width:520px}
+.ctas{display:flex;align-items:center;gap:28px;margin-top:34px}
+.cta{padding:16px 28px;border-radius:4px;background:var(--accent);color:var(--accentink);font-weight:600;font-size:16px}
+.more{font-weight:500;font-size:16px;display:flex;gap:10px;align-items:center;border-bottom:1.5px solid rgba(255,255,255,.5);padding-bottom:4px}
+.bar{position:absolute;left:0;right:0;bottom:0;display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid rgba(255,255,255,.16);background:rgba(var(--dark),.55);backdrop-filter:blur(10px);z-index:2}
+.cell{display:flex;gap:14px;align-items:center;padding:24px 64px;font-size:14.5px;line-height:1.35}
+.cell+.cell{border-left:1px solid rgba(255,255,255,.12)}
+.cell svg{width:22px;height:22px;flex:none;stroke:var(--accent);fill:none;stroke-width:1.6}
+.cell b{display:block;font-weight:600;font-size:15.5px}
+.cell span{opacity:.75}
+/* téléphone */
+@media (max-width:600px){
+  .top{padding:20px 22px;gap:0}.links,.book{display:none}
+  .brand{font-size:22px}
+  .menu{display:block}
+  .copy{left:22px;right:22px;bottom:200px}
+  h1{font-size:var(--h1m,58px);letter-spacing:-.8px}
+  .lead{font-size:17px}
+  .eyebrow{font-size:16px}
+  .ctas{flex-direction:column;align-items:flex-start;gap:18px}
+  .cta{width:100%;text-align:center}
+  .bar{grid-template-columns:1fr}
+  .cell{padding:13px 22px}
+  .cell+.cell{border-left:0;border-top:1px solid rgba(255,255,255,.12)}
+  .cell:nth-child(3){display:none}
+  .hero__shade{background:linear-gradient(0deg,rgba(var(--dark),.95) 0%,rgba(var(--dark),.8) 45%,rgba(var(--dark),.2) 80%,rgba(var(--dark),.35) 100%)}
+}
+.menu{display:none;width:26px;height:12px;border-top:2px solid #fff;border-bottom:2px solid #fff}
+</style></head><body>
+<section class="hero">
+  <div class="hero__img"></div><div class="hero__shade"></div>
+  <header class="top"><div class="brand" id="brand"></div>
+    <nav class="links"><span>Accueil</span><span id="l2">La carte</span><span id="l3">Le lieu</span><span>Contact</span></nav>
+    <span class="book" id="book"></span><span class="menu"></span></header>
+  <div class="copy">
+    <p class="eyebrow" id="eyebrow"></p>
+    <h1 id="name"></h1>
+    <p class="lead" id="lead"></p>
+    <div class="ctas"><span class="cta" id="cta"></span><span class="more"><span id="more"></span> →</span></div>
+  </div>
+  <div class="bar">
+    <div class="cell"><svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><div><b id="a1"></b><span id="a2"></span></div></div>
+    <div class="cell"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><div><b id="i1"></b><span id="i2"></span></div></div>
+    <div class="cell"><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1z"/></svg><div><b id="p1"></b><span id="p2"></span></div></div>
+  </div>
+</section>
+<script>
+var d = JSON.parse(new URLSearchParams(location.search).get('d'));
+var s = document.documentElement.style;
+s.setProperty('--photo', 'url(' + d.photo + ')'); s.setProperty('--accent', d.accent); s.setProperty('--accentink', d.accentink); s.setProperty('--dark', d.dark);
+if (d.pos) s.setProperty('--pos', d.pos); if (d.h1) s.setProperty('--h1', d.h1 + 'px'); if (d.h1m) s.setProperty('--h1m', d.h1m + 'px');
+function t(id, v) { document.getElementById(id).textContent = v; }
+document.getElementById('brand').innerHTML = d.brand;
+t('eyebrow', d.eyebrow); t('name', d.name); t('lead', d.lead); t('cta', d.cta); t('book', d.cta); t('more', d.more);
+t('a1', d.a1); t('a2', d.a2); t('i1', d.i1); t('i2', d.i2); t('p1', d.p1); t('p2', d.p2);
+if (d.l2) t('l2', d.l2); if (d.l3) t('l3', d.l3);
+</script>
+</body></html>

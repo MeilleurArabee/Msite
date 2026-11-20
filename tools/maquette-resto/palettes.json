@@ -1,0 +1,7 @@
+{
+ "or":         {"label":"Or",         "dark":"24,16,10", "accent":"#e9c27a", "accentink":"#2a1a0c"},
+ "terracotta": {"label":"Terracotta", "dark":"30,14,10", "accent":"#f0b48f", "accentink":"#3a160b"},
+ "vert":       {"label":"Vert",       "dark":"16,24,12", "accent":"#c9df6e", "accentink":"#1d2a08"},
+ "rouge":      {"label":"Rouge",      "dark":"20,8,10",  "accent":"#ff5a4e", "accentink":"#ffffff"},
+ "bleu":       {"label":"Bleu",       "dark":"9,17,33",  "accent":"#9cc4ff", "accentink":"#0a1830"}
+}

@@ -1,0 +1,14 @@
+[
+ {"id":"dolcevita","photo":"photos/p5710181.jpg","pos":"80% 50%","dark":"24,16,10","accent":"#e9c27a","accentink":"#2a1a0c",
+  "brand":"La <i>Dolce</i> Vita","eyebrow":"Restaurant italien à Colomiers","name":"La Dolce Vita","lead":"Pâtes fraîches, pizzas et douceurs de la nonna : l'Italie généreuse, à deux pas de chez vous.",
+  "cta":"Réserver une table","more":"Découvrir la carte","a1":"1 place du Falcou","a2":"31770 Colomiers","i1":"Sur place & à emporter","i2":"Cuisine italienne halal","p1":"Réservation en ligne","p2":"En deux clics, sans appeler"},
+ {"id":"alavolee","photo":"photos/gambas.webp","pos":"60% 50%","dark":"30,14,10","accent":"#f0b48f","accentink":"#3a160b",
+  "brand":"A la <i>Volée</i>","eyebrow":"Cuisine & art de vivre","name":"A la Volée","lead":"Un lieu unique où la gastronomie rencontre l'art, et l'amour des bonnes choses.",
+  "cta":"Réserver une table","more":"Voir la carte du moment","a1":"3 rue Antoine-Lavoisier","a2":"31140, nord de Toulouse","i1":"Terrasse aux beaux jours","i2":"Cuisine du marché","p1":"Contact WhatsApp","p2":"Une question ? Écrivez-nous"},
+ {"id":"boncoin","photo":"photos/p20016138.jpg","pos":"55% 60%","dark":"16,24,12","accent":"#c9df6e","accentink":"#1d2a08",
+  "brand":"Le Bon <i>Coin</i>","eyebrow":"Restaurant & traiteur, ZI Thibaud","name":"Le Bon Coin","lead":"Le resto rapide, naturellement bon. Et un service traiteur pour tous vos événements.",
+  "cta":"Commander","more":"Demander un devis traiteur","a1":"3 bis rue Boudeville","a2":"31100 Toulouse","i1":"Sur place & à emporter","i2":"Traiteur sur commande","p1":"06 34 47 67 39","p2":"Appel en un geste"},
+ {"id":"oldschool","photo":"photos/bar.webp","pos":"50% 50%","dark":"20,8,10","accent":"#ff5a4e","accentink":"#fff",
+  "brand":"Old <i>School</i>","eyebrow":"Bar, food & comedy club","name":"Old School","lead":"Bons plats, bons verres, et des soirées stand-up qui font rire tout Toulouse.","l2":"La prog","l3":"La carte",
+  "cta":"Voir la programmation","more":"Réserver pour un groupe","a1":"Rue Clémence-Isaure","a2":"31000 Toulouse","i1":"Soirées stand-up","i2":"Chaque semaine","p1":"06 60 96 30 57","p2":"Appel en un geste"}
+]
