@@ -1071,3 +1071,26 @@ body { background: transparent; }
 html { background-color: #8a71bb; }
 /* iPhone : le décor descend aussi sous la barre d'accueil, tout en bas de l'écran */
 .scene { height: calc(100lvh + env(safe-area-inset-bottom, 0px) + 60px); }
+
+/* ---------- 21/11 : la lumière suit la souris sur le grand titre ---------- */
+@property --base { syntax: '<color>'; inherits: true; initial-value: #fff8f2; }
+@property --glow { syntax: '<length>'; inherits: true; initial-value: 0px; }
+.hero__title.is-lit { --base: #fff8f2; text-shadow: none; filter: drop-shadow(0 2px 26px rgba(80, 30, 100, .38)); }
+.hero__title.is-lit em { --base: #ffd3ea; animation: none; color: inherit; }
+.anim:not(.soft) .hero__title.is-lit em { animation: baseShine 6s ease-in-out infinite; }
+@keyframes baseShine { 0%, 100% { --base: #ffd3ea; } 50% { --base: #ffe3b8; } }
+.hero__title.is-lit .hw {
+  color: transparent; -webkit-text-fill-color: transparent;
+  background-image: radial-gradient(var(--glow) circle at var(--mx, -999px) var(--my, -999px), #fff1c9 0%, #ffc28a 28%, #ff9ccc 58%, var(--base) 100%);
+  background-repeat: no-repeat; -webkit-background-clip: text; background-clip: text;
+  padding: 0 .04em; margin: 0 -.04em;
+}
+
+/* ---------- 21/11 : la barre « nom du commerce » grossit au survol ---------- */
+.builder__line { transition: transform .5s var(--spring), box-shadow .4s var(--ease), background-color .4s var(--ease), border-color .3s; transform-origin: 50% 50%; }
+@media (hover: hover) and (pointer: fine) {
+  .builder__line:hover { transform: scale(1.06); background-color: rgba(255, 238, 250, .3); box-shadow: 0 18px 44px -18px rgba(120, 40, 110, .55), 0 0 0 4px rgba(255, 224, 168, .16); }
+  .builder__line:hover .builder__go--text { box-shadow: 0 10px 26px -8px rgba(255, 140, 100, 1), inset 0 1px 0 rgba(255, 255, 255, .7); }
+}
+.builder__line:focus-within { transform: scale(1.04); }
+.soft .builder__line, .soft .builder__line:hover, .soft .builder__line:focus-within { transform: none; }

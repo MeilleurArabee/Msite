@@ -239,14 +239,44 @@
     onEnter: function (els) { gsap.to(els, { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out', stagger: 0.08 }); }
   });
 
+  /* ---------- La lumière suit la souris sur le grand titre (ordinateur, hors mode doux) ---------- */
+  var litBound = false;
+  function lightTitle(h) {
+    if (reduced || !finePointer || root.classList.contains('soft')) return;
+    h.classList.add('is-lit');
+    if (litBound) return; litBound = true;
+    var zone = document.querySelector('.hero') || h;
+    var tx = -999, ty = -999, x = -999, y = -999, r = 0, tr = 0, raf = 0;
+    function frame() {
+      x += (tx - x) * 0.14; y += (ty - y) * 0.14; r += (tr - r) * 0.1;
+      h.querySelectorAll('.hw').forEach(function (w) {
+        var b = w.getBoundingClientRect();
+        w.style.setProperty('--mx', (x - b.left) + 'px');
+        w.style.setProperty('--my', (y - b.top) + 'px');
+      });
+      h.style.setProperty('--glow', r.toFixed(1) + 'px');
+      if (Math.abs(tx - x) + Math.abs(ty - y) + Math.abs(tr - r) > 0.5) raf = requestAnimationFrame(frame); else raf = 0;
+    }
+    function go() { if (!raf) raf = requestAnimationFrame(frame); }
+    zone.addEventListener('pointermove', function (e) {
+      if (x < -900) { x = e.clientX; y = e.clientY; }
+      tx = e.clientX; ty = e.clientY;
+      var b = h.getBoundingClientRect(), near = e.clientY > b.top - 140 && e.clientY < b.bottom + 140;
+      tr = near ? Math.max(220, b.width * 0.28) : 0; go();
+    });
+    zone.addEventListener('pointerleave', function () { tr = 0; go(); });
+    addEventListener('scroll', function () { if (r > 1) go(); }, { passive: true });
+  }
+
   /* ---------- Titres qui se révèlent ligne par ligne ; l'accueil attend la fin du chargement ---------- */
   function splitReveal() {
     if (!window.SplitText) { root.classList.remove('anim'); return; }
     var hero = document.querySelector('[data-hero-title]');
     SplitText.create(hero, {
-      type: 'words,lines', mask: 'lines', autoSplit: true,
+      type: 'words,lines', mask: 'lines', autoSplit: true, wordsClass: 'hw',
       onSplit: function (s) {
         gsap.set(hero, { visibility: 'visible' });
+        lightTitle(hero);
         var intro = gsap.timeline({ delay: 0.3, paused: true });
         intro.from(s.words, reduced ? { opacity: 0, duration: 0.8, stagger: 0.05 } : { yPercent: 115, rotate: 4, duration: 1.05, ease: 'power4.out', stagger: 0.07 })
              .fromTo('.hero__in', { opacity: 0, y: reduced ? 0 : 24 }, { opacity: 1, y: 0, duration: 0.9, stagger: 0.12, ease: 'power3.out', clearProps: 'transform' }, '-=0.6');
