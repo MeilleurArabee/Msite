@@ -69,7 +69,7 @@ Attention : 249,90 € est le prix de lancement des 3 premiers clients, puis 349
 Le gérant veut, à la fin de chaque message, une courte astuce comme sur un écran de chargement de jeu vidéo :
 - sur tout ce qui peut aider son activité (vente, outils, admin, réseaux, IA, organisation), de préférence astucieuse et peu connue ;
 - **jamais deux fois la même**, pas forcément liée au message ;
-- déjà données : lire Gmail pour résumer les réponses ; registre des entreprises pour trouver les commerces tout juste créés ; programmer l'envoi le mardi ou jeudi 9-10 h ; éviter « gratuit » dans l'objet ; une seule question fermée ; devis PDF le jour même ; posts Google Business Profile ; kit de marque ; compte Google au nom d'Astelsia ; captures d'outils avant de cliquer ; regarder « sous le capot » ; fiche de préparation d'appel ; garder les refus ; créneau 14 h 30-17 h des restaurateurs ; icône du tableau sur l'écran d'accueil.
+- déjà données : lire Gmail pour résumer les réponses ; registre des entreprises pour trouver les commerces tout juste créés ; programmer l'envoi le mardi ou jeudi 9-10 h ; éviter « gratuit » dans l'objet ; une seule question fermée ; devis PDF le jour même ; posts Google Business Profile ; kit de marque ; compte Google au nom d'Astelsia ; captures d'outils avant de cliquer ; regarder « sous le capot » ; fiche de préparation d'appel ; garder les refus ; créneau 14 h 30-17 h des restaurateurs ; icône du tableau sur l'écran d'accueil ; modèles de réponse Gmail ; se taire après l'annonce du prix ; rappeler entre 15 h et 17 h en citant la maquette ; photo de plat près d'une fenêtre à 45° ; demander l'accord pour montrer le site du premier client ; relire un mail à voix haute ; donner une date précise de mise en ligne ; numéroter les devis sans trou ; signer un PDF sur iPhone (Fichiers, Annoter) ; compte bancaire séparé ; réserver les variantes du nom de domaine ; QR code qui compte les scans.
 
 ## Prospection avec Apify (test du 21/11)
 
@@ -93,3 +93,22 @@ Le gérant veut, à la fin de chaque message, une courte astuce comme sur un éc
 - Les exemples et la bibliothèque média de MotionSites ne sont pas dans le dépôt (licence : usage autorisé avec le skill, redistribution interdite, et le dépôt est public). Pour les consulter : cloner en lecture seule le dépôt ci-dessus, hors du projet. Ne pas utiliser leurs vidéos par défaut (vidéos génériques hébergées chez un tiers) : photos réelles du commerce ou Pexels.
 - Les règles du gérant priment sur celles du skill : originalité (ne jamais copier la mise en page d'un autre site), photo juste ou d'ambiance, `prefers-reduced-motion`, captures téléphone et PC montrées avant toute mise en ligne.
 - Mise à jour du skill : relire le dépôt source avant d'en reprendre une nouvelle version (ne jamais l'activer en mise à jour automatique : ses consignes pourraient changer).
+
+## Formule Solo vendue (21/11) : décisions
+
+- Premier « oui » transformé : un restaurant de Toulouse a choisi **Solo** pour démarrer (détails dans le tableau de suivi, pas dans ce dépôt public).
+- Décisions du gérant : **flyer offert** (A5, QR code vers le site, fichier prêt à imprimer, impression à la charge du client) ; **hébergement offert** (GitHub Pages), seul le nom de domaine reste à la charge du client (environ 12 € par an) ; pas de Sérénité imposée avec Solo.
+- **Une maquette Solo = une seule page courte** (environ un écran et demi sur téléphone) : premier écran, bloc « ouvert maintenant » avec adresse et téléphone, liens vers les plateformes de livraison, horaires. Pas de sections en plus, sinon ça ressemble à plusieurs pages.
+- Pas de photo d'alcool pour un snack qui peut être halal ; tant qu'on ne connaît pas la cuisine, une photo d'ambiance sans plat.
+- Nom de domaine déjà pris : variante avec la ville (nom-ville.fr).
+
+## Devis et factures
+
+- Numéros sans trou : D-2026-001, 002… ; factures F-2026-001…
+- Écrire clairement : l'IBAN (le BIC n'est pas utile en France) ; « 2 séries de retouches avant la mise en ligne, puis 30 jours de petites corrections offertes (faute, horaire, prix) » ; « photos d'illustration de qualité professionnelle (libres de droits) », jamais « photos professionnelles » seul ; ce qui reste à la charge du client (impression, nom de domaine) ; solde « à la mise en ligne, à réception de la facture ». Une seule page.
+- **Jamais dans ce dépôt (public)** : l'adresse du gérant, son IBAN, les devis et les coordonnées des clients.
+
+## À faire plus tard (quand Astelsia aura grandi)
+
+- Réserver les variantes du nom de domaine d'Astelsia (astelsia.com…).
+- Compte bancaire dédié : obligatoire pour un micro-entrepreneur seulement après 2 années civiles de suite au-dessus de 10 000 € de chiffre d'affaires ; avant, une « poche » Revolut renommée Astelsia suffit pour séparer l'argent.
