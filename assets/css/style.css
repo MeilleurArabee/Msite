@@ -1094,3 +1094,19 @@ html { background-color: #8a71bb; }
 }
 .builder__line:focus-within { transform: scale(1.04); }
 .soft .builder__line, .soft .builder__line:hover, .soft .builder__line:focus-within { transform: none; }
+
+/* ---------- 21/11 : formules en 3D, étoiles, pluie d'étoiles, barre au premier plan ---------- */
+.plan { will-change: transform; }
+.plan.is-tilt::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: radial-gradient(420px circle at var(--gx, 50%) var(--gy, 50%), rgba(255, 255, 255, .16), transparent 60%); }
+.night { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
+.night i { position: absolute; border-radius: 50%; background: #fff8e6; box-shadow: 0 0 6px 1px rgba(255, 240, 200, .8); opacity: 0; transition: opacity .6s ease; }
+.rain-star { position: fixed; top: -30px; z-index: 300; pointer-events: none; color: #ffe0a0; text-shadow: 0 0 10px rgba(255, 210, 130, .9);
+  animation: rainStar 2s cubic-bezier(.35, .1, .6, 1) both; }
+@keyframes rainStar { 0% { transform: translate(0, 0) rotate(0); opacity: 0; } 10% { opacity: 1; } 100% { transform: translate(var(--dx, 0), 110vh) rotate(260deg); opacity: .2; } }
+.hero__title, .hero__lead, .hero__links { transition: opacity .45s var(--ease), filter .45s var(--ease); }
+@media (max-width: 899px) {
+  .is-typing .hero__title, .is-typing .hero__lead, .is-typing .hero__links { opacity: .35; filter: blur(2px); }
+  .is-typing .builder__line { transform: scale(1.05); box-shadow: 0 20px 50px -18px rgba(90, 30, 110, .7), 0 0 0 4px rgba(255, 224, 168, .2); }
+}
+.soft .night { display: none; }

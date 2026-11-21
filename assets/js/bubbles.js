@@ -105,10 +105,29 @@
   }
   // ce qu'on touche dans la page reste prioritaire (boutons, liens, champs, aperçus…)
   function blocked(el) { return !!(el && el.closest && el.closest('a, button, input, textarea, select, label, iframe, .device, .plan, .compare, .rappel, .way, .menu, .header, .tabs, .sere__card')); }
+  // doigt : un toucher bref éclate la bulle ; un appui long la fait gonfler puis s'envoler en étoiles
+  var hold = null;
+  function stars(i) {
+    var b = list[i];
+    for (var k = 0; k < 26; k++) { var a = Math.random() * 6.28, sp = 60 + Math.random() * 220; drops.push({ x: b.x, y: b.y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - 90, r: 1.6 + Math.random() * 2.6, c: k % 3 ? '#ffe3a6' : '#fff6dc', life: 1 }); }
+    pops++;
+    whisper(b.name ? '✦ « ' + b.name + ' » brille déjà ✦' : '✦ Une étoile de plus ✦', 'star', b.y);
+    list[i] = make(!!b.name, H + 60); go();
+  }
   document.addEventListener('pointerdown', function (e) {
     if (blocked(e.target)) return;
-    var i = hit(e.clientX, e.clientY); if (i >= 0) pop(i);
+    var i = hit(e.clientX, e.clientY); if (i < 0) return;
+    if (fine || reduced) { pop(i); return; }
+    var b = list[i], s0 = b.s;
+    hold = { b: b, t: setTimeout(function () {
+      if (!hold) return; var h = hold; hold = null;
+      var t0 = performance.now();
+      (function grow(now) { var k = Math.min(1, (now - t0) / 260); h.b.s = s0 * (1 + 0.45 * k); go(); if (k < 1) requestAnimationFrame(grow); else { var j = list.indexOf(h.b); if (j >= 0) stars(j); } })(t0);
+    }, 420) };
   }, { passive: true });
+  function release() { if (!hold) return; clearTimeout(hold.t); var j = list.indexOf(hold.b); hold = null; if (j >= 0) pop(j); }
+  document.addEventListener('pointerup', release, { passive: true });
+  document.addEventListener('pointercancel', function () { if (hold) { clearTimeout(hold.t); hold = null; } }, { passive: true });
   if (fine) document.addEventListener('pointermove', function (e) {
     var on = !blocked(e.target) && hit(e.clientX, e.clientY) >= 0;
     document.documentElement.classList.toggle('on-bubble', on);
