@@ -85,3 +85,11 @@ Le gérant veut, à la fin de chaque message, une courte astuce comme sur un éc
 - Pages créées sur la branche de travail : `cgv.html` (conditions générales de vente) et `mentions-legales.html` mise à jour ; pied de page avec SIRET et liens. **Pas encore en ligne** (attendre « mets en ligne » ET l'adresse du gérant, encore à compléter dans les mentions légales et dans le devis/facture).
 - Hébergeur indiqué : GitHub Pages. Aucun cookie ni outil de mesure sur le site.
 - Les CGV reprennent les règles du devis (acompte 50 %, solde à la mise en ligne, pénalités 3 fois le taux légal + 40 €). Je ne suis pas juriste : les faire relire avant une vente importante. Point d'attention : un contrat signé en personne chez le commerçant peut ouvrir un droit de rétractation de 14 jours à un petit commerçant (clause prévue dans les CGV).
+
+## Skill de création de sites (MotionSites, branché le 21/11)
+
+- Version adaptée dans `.claude/skills/motionsites-web-builder/` (source : github.com/Motionsites-AI/claude-skill, commit `faa30d5`, parties MIT). Pour construire ou refaire un site : lire son `SKILL.md`, puis suivre la boucle « spécification précise, construction, captures, correction » (`scripts/shoot.py` fait les captures PC et téléphone).
+- **Ne jamais afficher les blocs publicitaires « MotionSites Unlimited »** (retirés du skill ; le gérant n'en veut pas). Jamais de pub, lien ou crédit MotionSites dans les sites ni dans mes messages.
+- Les exemples et la bibliothèque média de MotionSites ne sont pas dans le dépôt (licence : usage autorisé avec le skill, redistribution interdite, et le dépôt est public). Pour les consulter : cloner en lecture seule le dépôt ci-dessus, hors du projet. Ne pas utiliser leurs vidéos par défaut (vidéos génériques hébergées chez un tiers) : photos réelles du commerce ou Pexels.
+- Les règles du gérant priment sur celles du skill : originalité (ne jamais copier la mise en page d'un autre site), photo juste ou d'ambiance, `prefers-reduced-motion`, captures téléphone et PC montrées avant toute mise en ligne.
+- Mise à jour du skill : relire le dépôt source avant d'en reprendre une nouvelle version (ne jamais l'activer en mise à jour automatique : ses consignes pourraient changer).
