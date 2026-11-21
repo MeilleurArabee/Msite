@@ -56,6 +56,7 @@ Même texte, avec : « On est passés sur le site de [Nom], et on s'est amusés 
 
 - Générateur : `tools/maquette-resto/` (`site.html` + `palettes.json` + `render3.js` + `compose.py`). Une seule mise en page pour tous ; on change le nom, l'adresse, la photo et la palette.
 - 5 palettes : Or, Terracotta, Vert, Rouge, Bleu.
+- **La maquette représente la formule Business** (649,90 €, la formule recommandée), jamais Signature : boutons « Voir la carte » et « Nous contacter » ; ne PAS écrire « Réserver une table » ni « Réservation en ligne » (réservation avec jour et heure = Signature, 1 349,90 €). Pour montrer un avantage Business : les vrais chiffres Google du commerce (note et nombre d'avis, venant de Google Maps), les horaires « ouvert maintenant ». Quand un gérant répond « oui » : présenter les trois formules en partant de Business (Signature = réservation en ligne ; Solo = démarrer petit). Pas de prix dans le premier mail.
 - Image du mail : version PC et version téléphone côte à côte, **fond beige** (pas de blanc vide), pas de faux iPhone.
 - **Leçon Au Buron (20/11)** : on a mis une fondue pour un restaurant auvergnat qui sert de l'aligot ; il a refusé. Règle : **photo du bon plat, sinon photo d'ambiance** (salle, table, terrasse). Pour une cuisine précise, utiliser leurs propres photos (captures Facebook envoyées par le gérant).
 - Photos libres : Pexels (usage commercial autorisé) ; les télécharger depuis images.pexels.com.
@@ -66,3 +67,18 @@ Le gérant veut, à la fin de chaque message, une courte astuce comme sur un éc
 - sur tout ce qui peut aider son activité (vente, outils, admin, réseaux, IA, organisation), de préférence astucieuse et peu connue ;
 - **jamais deux fois la même**, pas forcément liée au message ;
 - déjà données : lire Gmail pour résumer les réponses ; registre des entreprises pour trouver les commerces tout juste créés ; programmer l'envoi le mardi ou jeudi 9-10 h ; éviter « gratuit » dans l'objet ; une seule question fermée ; devis PDF le jour même ; posts Google Business Profile ; kit de marque ; compte Google au nom d'Astelsia ; captures d'outils avant de cliquer ; regarder « sous le capot » ; fiche de préparation d'appel ; garder les refus ; créneau 14 h 30-17 h des restaurateurs ; icône du tableau sur l'écran d'accueil.
+
+## Prospection avec Apify (test du 21/11)
+
+- Outil : Apify, acteur « Google Maps Scraper » (compass/crawler-google-places), avec l'add-on « Company contacts enrichment (from website) » ; coût d'environ 0,28 $ pour 50 fiches. Il ne trouve les mails que sur le site du commerce : pas de site = pas de mail.
+- Le gérant lance le run sur son PC et exporte le fichier JSON ou CSV, puis me le donne ; je trie : chaînes et fast-food écartés, adresses d'annuaire ou bidon écartées, doublons, commerces fermés, « sans site » en priorité.
+- Une zone par run : changer la Location (« 31000 Toulouse », « 31400 Toulouse »…), sinon tous les résultats sont dans le même quartier.
+- Les restaurants sans mail ni site : le gérant ouvre leur page Facebook (bloc « En un coup d'œil ») et m'envoie une capture.
+- Facebook : ne jamais collecter automatiquement (risque de blocage du compte).
+
+## Juridique (état au 21/11)
+
+- SIRET 132 960 097 00013, APE 62.01Z, EI, TVA non applicable art. 293 B du CGI.
+- Pages créées sur la branche de travail : `cgv.html` (conditions générales de vente) et `mentions-legales.html` mise à jour ; pied de page avec SIRET et liens. **Pas encore en ligne** (attendre « mets en ligne » ET l'adresse du gérant, encore à compléter dans les mentions légales et dans le devis/facture).
+- Hébergeur indiqué : GitHub Pages. Aucun cookie ni outil de mesure sur le site.
+- Les CGV reprennent les règles du devis (acompte 50 %, solde à la mise en ligne, pénalités 3 fois le taux légal + 40 €). Je ne suis pas juriste : les faire relire avant une vente importante. Point d'attention : un contrat signé en personne chez le commerçant peut ouvrir un droit de rétractation de 14 jours à un petit commerçant (clause prévue dans les CGV).
