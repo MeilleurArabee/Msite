@@ -6,7 +6,7 @@ Ce fichier est relu automatiquement au début de chaque session. Il garde les r�
 
 - Astelsia crée des sites pour les commerces (formules Solo 249,90 €, Business 649,90 €, Signature 1 349,90 €). Le gérant vend, Claude construit et s'occupe de la prospection.
 - Réponds en français, avec le tutoiement, simplement et sans jargon.
-- Suivi de la prospection : tableau « Sheets » https://claude.ai/artifact/BDdVAyJtGw8RtazCmjywsy (onglet Commerces : statut, date, version du mail, notes).
+- Suivi de la prospection : tableau « Sheets » https://claude.ai/artifact/BDdVAyJtGw8RtazCmjywsy, **onglet « Prospects »** (le seul à utiliser depuis le 21/11 ; l'ancien onglet « Commerces » est renommé « Ancien tableau (archive) »). Colonnes : A Enseigne, B Statut (liste déroulante), C Envoyé le, D E-mail, E Téléphone, F Note Google, G Ma note (★★★ priorité, ★★ bon, ★ plus tard, ✕ écarté), H Ma suggestion, I Site actuel, J Adresse, K Version du mail. Ordre des lignes : programmés, à contacter avec mail, à contacter sans mail, envoyés le 20/11, envoyés le 19/11. Nouvelle ligne = à la suite (ligne 115 et +).
 
 ## Règles de travail
 
