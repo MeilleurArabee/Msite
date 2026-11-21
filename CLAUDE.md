@@ -33,18 +33,21 @@ Ce fichier est relu automatiquement au début de chaque session. Il garde les r�
 - Adresses : uniquement celles affichées par le commerce lui-même (Facebook, site). Jamais d'adresse devinée. Attention : Gmail n'accepte pas les tirets dans une adresse @gmail.com.
 - Un « non merci » = statut « Pas intéressé », on ne relance jamais.
 
-### Mail validé, version « sans site » (v1)
-Objet : On a imaginé le site de [Nom]
+### Mails validés (v2, avec le prix, choisie le 21/11)
+La v1 (« C'est gratuit et sans engagement ») pouvait faire croire que le site était gratuit : abandonnée. **Toujours dire clairement : maquette offerte, site payant, avec le prix de départ.**
+
+Version « sans site » : objet « On a imaginé le site de [Nom] »
 > Bonjour,
 > Nous sommes Astelsia, une petite équipe qui crée des sites pour les commerces. On s'est amusés à imaginer celui de [Nom], le voici :
 > [image]
-> Il vous plaît ? Répondez « oui » et on vous prépare la vraie version, avec vos photos et votre carte. C'est gratuit et sans engagement.
+> **Cette maquette est offerte, sans engagement.** Si elle vous plaît, on construit le vrai site avec vos photos et votre carte : c'est un service payant, **à partir de 249,90 €**, prix fixe et sans frais cachés. Sinon, on en reste là, sans rien à payer.
+> Ça vous intéresse ? Répondez « oui » et on vous envoie les détails.
 > L'équipe Astelsia
 > Pas intéressé ? Répondez « non merci ».
 
-### Mail validé, version « a déjà un site » (v1-site)
-Objet : On a imaginé un nouveau site pour [Nom]
-Même texte, avec : « On est passés sur le site de [Nom], et on s'est amusés à imaginer à quoi pourrait ressembler une nouvelle version : » et « Elle vous plaît ? ».
+Version « a déjà un site » : objet « On a imaginé un nouveau site pour [Nom] » ; première phrase après la présentation : « On est passés sur le site de [Nom], et on s'est amusés à imaginer à quoi pourrait ressembler une nouvelle version : » ; le reste est identique.
+
+Attention : 249,90 € est le prix de lancement des 3 premiers clients, puis 349,90 € : **changer la phrase après le 3e client signé**. Versions : v1 (envois du 20/11) puis v2 (à partir du 21/11) ; noter la version dans le tableau.
 
 ### Tests (comme TikTok)
 - Une seule chose change à la fois : objet, première phrase, image, heure d'envoi.
