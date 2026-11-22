@@ -6,6 +6,8 @@ Ce fichier est relu automatiquement au début de chaque session. Il garde les r�
 
 - Astelsia crée des sites pour les commerces (formules Solo 249,90 €, Business 649,90 €, Signature 1 349,90 €). Le gérant vend, Claude construit et s'occupe de la prospection.
 - Réponds en français, avec le tutoiement, simplement et sans jargon.
+- **Messages courts** : l'abonnement du gérant est limité (20 € par mois). Aller à l'essentiel, pas de longues explications techniques.
+- **Être un associé** : penser par soi-même, proposer des idées qu'il n'a pas eues, ne pas seulement exécuter.
 - Suivi de la prospection : tableau « Sheets » https://claude.ai/artifact/BDdVAyJtGw8RtazCmjywsy, **onglet « Prospects »** (le seul à utiliser depuis le 21/11 ; l'ancien onglet « Commerces » est renommé « Ancien tableau (archive) »). Colonnes : A Enseigne, B Statut (liste déroulante), C Envoyé le, D E-mail, E Téléphone, F Note Google, G Ma note (★★★ priorité, ★★ bon, ★ plus tard, ✕ écarté), H Ma suggestion, I Site actuel, J Adresse, K Version du mail. Ordre des lignes : programmés, à contacter avec mail, à contacter sans mail, envoyés le 20/11, envoyés le 19/11. Nouvelle ligne = à la suite (ligne 115 et +).
 
 ## Règles de travail
@@ -112,3 +114,14 @@ Le gérant veut, à la fin de chaque message, une courte astuce comme sur un éc
 
 - Réserver les variantes du nom de domaine d'Astelsia (astelsia.com…).
 - Compte bancaire dédié : obligatoire pour un micro-entrepreneur seulement après 2 années civiles de suite au-dessus de 10 000 € de chiffre d'affaires ; avant, une « poche » Revolut renommée Astelsia suffit pour séparer l'argent.
+
+## Projet « Radar » (demandé le 22/11)
+
+But : un outil à nous, gratuit, sur GitHub (dépôt **privé**), pour toute la France :
+- une carte de tous les commerces qui pourraient avoir besoin d'un site ;
+- recherche automatique des mails (sur le site du commerce, page contact, mentions légales) et des autres infos utiles ;
+- **mémoire** : un commerce déjà sorti ne ressort jamais (liste de tous les commerces vus) ;
+- à terme, le résultat arrive directement chez Claude, puis maquettes et mails.
+Sources : OpenStreetMap (gratuit), éventuellement l'API Google officielle (clé créée par le gérant, jamais dans le chat). Le réseau de la session bloque OpenStreetMap : l'outil doit tourner sur GitHub Actions.
+Aussi : prévenir le gérant sur son téléphone (tâche programmée avec notification) comme un associé : réponses reçues, envois faits, idées.
+Les commerces sans mail : contact par Facebook / Instagram / téléphone, à organiser.
