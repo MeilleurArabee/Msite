@@ -55,6 +55,8 @@ Version « sans site » : objet « On a imaginé le site de [Nom] »
 
 Version « a déjà un site » : objet « On a imaginé un nouveau site pour [Nom] » ; première phrase après la présentation : « On est passés sur le site de [Nom], et on s'est amusés à imaginer à quoi pourrait ressembler une nouvelle version : » ; le reste est identique.
 
+**v3 (à partir du 23/11)** = v2 + une phrase sous la maquette : « Ce n'est qu'un premier jet : couleurs, ambiance, photos, tout se change selon vos envies. » (mot d'ordre du gérant : la personnalisation).
+
 Attention : 249,90 € est le prix de lancement des 3 premiers clients, puis 349,90 € : **changer la phrase après le 3e client signé**. Versions : v1 (envois du 20/11) puis v2 (à partir du 21/11) ; noter la version dans le tableau.
 
 ### Tests (comme TikTok)
