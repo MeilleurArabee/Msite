@@ -10,6 +10,12 @@ Ce fichier est relu automatiquement au début de chaque session. Il garde les r�
 - **Être un associé** : penser par soi-même, proposer des idées qu'il n'a pas eues, ne pas seulement exécuter.
 - Suivi de la prospection : tableau « Sheets » https://claude.ai/artifact/BDdVAyJtGw8RtazCmjywsy, **onglet « Prospects »** (le seul à utiliser depuis le 21/11 ; l'ancien onglet « Commerces » est renommé « Ancien tableau (archive) »). Colonnes : A Enseigne, B Statut (liste déroulante), C Envoyé le, D E-mail, E Téléphone, F Note Google, G Ma note (★★★ priorité, ★★ bon, ★ plus tard, ✕ écarté), H Ma suggestion, I Site actuel, J Adresse, K Version du mail. Ordre des lignes : programmés, à contacter avec mail, à contacter sans mail, envoyés le 20/11, envoyés le 19/11. Nouvelle ligne = à la suite (ligne 115 et +).
 
+## Nos objectifs (22/11)
+
+- Le gérant : un revenu stable qui rapporte bien pour peu de travail, ne plus dépendre d'un patron, se prouver que l'audace paie, et s'amuser (outils, IA).
+- Premier cap symbolique : **gagner 800 € par mois avec Astelsia** (son ancien salaire pour 35 h par semaine), puis le dépasser.
+- Mes objectifs d'associé : 3 clients signés avant Noël ; livrer Darkoum de façon irréprochable (avis Google, référence) ; un revenu mensuel récurrent grâce à Sérénité (29,70 €/mois) ; une machine (Radar, maquettes, mails) qui tourne presque seule. Chiffres suivis : taux de réponse (viser 1 « oui » sur 20), clients par mois, abonnés Sérénité.
+
 ## Règles de travail
 
 - Demander avant un gros changement ; pour un choix de design, proposer 2 ou 3 options avec une recommandation.
