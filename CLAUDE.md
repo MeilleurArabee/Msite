@@ -57,6 +57,17 @@ Version « a déjà un site » : objet « On a imaginé un nouveau site pour [No
 
 **v3 (à partir du 23/11)** = v2 + une phrase sous la maquette : « Ce n'est qu'un premier jet : couleurs, ambiance, photos, tout se change selon vos envies. » (mot d'ordre du gérant : la personnalisation).
 
+**v4 (validée le 22/11, pour les lots du Radar)** : ton humain, comme une vraie personne, jamais une pub. Mot d'ordre de la marque : **personnalisation et liberté**. Chaque mail commence par un **vrai détail** sur le commerce (trouvé par le Radar ou en cherchant), jamais générique, sans exploser l'abonnement. Modèle :
+> Objet : [Nom], une petite idée
+> Bonjour,
+> On est tombés sur [Nom] en cherchant [type] du côté de [quartier]. [Vrai détail personnel], on s'est dit que vous méritiez un site qui [bénéfice concret]. Alors on s'est amusés à en dessiner un, juste pour voir :
+> [maquette]
+> C'est un premier jet, fait sans vous connaître. Les couleurs, les photos, l'ambiance : on peut tout changer pour que ça vous ressemble vraiment.
+> Si ça vous plaît, on le construit pour de vrai (à partir de 249,90 €, prix fixe). Sinon, aucun souci : gardez la maquette, c'est cadeau.
+> Ça vous dit qu'on en parle ?
+> L'équipe Astelsia
+> P.S. Pas intéressé ? Un petit « non merci » et on ne vous embête plus.
+
 Attention : 249,90 € est le prix de lancement des 3 premiers clients, puis 349,90 € : **changer la phrase après le 3e client signé**. Versions : v1 (envois du 20/11) puis v2 (à partir du 21/11) ; noter la version dans le tableau.
 
 ### Tests (comme TikTok)
