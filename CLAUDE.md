@@ -8,7 +8,13 @@ Ce fichier est relu automatiquement au début de chaque session. Il garde les r�
 - Réponds en français, avec le tutoiement, simplement et sans jargon.
 - **Messages courts** : l'abonnement du gérant est limité (20 € par mois). Aller à l'essentiel, pas de longues explications techniques.
 - **Être un associé** : penser par soi-même, proposer des idées qu'il n'a pas eues, ne pas seulement exécuter.
-- Suivi de la prospection : tableau « Sheets » https://claude.ai/artifact/BDdVAyJtGw8RtazCmjywsy, **onglet « Prospects »** (le seul à utiliser depuis le 21/11 ; l'ancien onglet « Commerces » est renommé « Ancien tableau (archive) »). Colonnes : A Enseigne, B Statut (liste déroulante), C Envoyé le, D E-mail, E Téléphone, F Note Google, G Ma note (★★★ priorité, ★★ bon, ★ plus tard, ✕ écarté), H Ma suggestion, I Site actuel, J Adresse, K Version du mail. Ordre des lignes : programmés, à contacter avec mail, à contacter sans mail, envoyés le 20/11, envoyés le 19/11. Nouvelle ligne = à la suite (ligne 115 et +).
+- Suivi de la prospection : tableau « Sheets » https://claude.ai/artifact/BDdVAyJtGw8RtazCmjywsy, restructuré le 22/11 en 4 onglets, une question par onglet, colonnes minimales :
+  - « Réponses » : ceux qui ont dit oui et les clients (Commerce · Ville · Où on en est · Prochaine action · Quand). À regarder chaque matin.
+  - « À envoyer » : la file d'attente (Commerce · Ville · Métier · Mail · Détail perso / note). Une ligne envoyée quitte cet onglet.
+  - « Envoyés » : rangés **par jour**, le plus récent en haut : une ligne titre en gras « ▸ Lundi 23/11 — 20 mails » puis les lignes du jour, groupées (repliables). Colonnes : Commerce · Ville · Métier · Mail · Statut (Envoyé, Relancé, A répondu oui, Non merci, Adresse inexistante).
+  - « Facebook à vérifier » : commerces sans site ; le gérant cherche le mail sur Facebook et le note dans « Mail trouvé » ; je le passe ensuite dans « À envoyer ».
+  - « Archive » : l'ancien onglet Prospects (ne plus l'utiliser).
+- Objectif : environ 100 nouveaux commerces par jour dans « À envoyer » (Radar). Envoi par le **robot d'envoi** (dépôt astelsia-radar, voir son CLAUDE.md), pas par moi, pour économiser l'abonnement ; montée progressive 30 → 50 → 100 par jour.
 
 ## Nos objectifs (22/11)
 
