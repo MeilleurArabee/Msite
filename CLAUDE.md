@@ -45,7 +45,7 @@ Radar (trouve les commerces + mails) → Plume (trouve les bons détails vrais) 
 - **Brevo est interdit pour la prospection** (compte bloqué le 20/11 : Brevo refuse les envois à des personnes qui n'ont rien demandé).
 - On envoie depuis Gmail (outil Gmail connecté), expéditeur contact@astelsia.fr, **un mail à la fois, 1 à 2 minutes d'écart**.
 - **Aucun lien dans le mail** : l'outil Gmail transforme tous les liens en « google.com/url… », ce qui affiche une page d'avertissement. À la place, la maquette est **une image dans le mail**.
-- Pas de prénom (signer « L'équipe Astelsia »), pas de numéro de téléphone, parler au pluriel (« nous », « on »).
+- **Depuis le 23/11 : parler à la première personne (« je »)**, plus proche de la personne (décision du gérant). Signature « À bientôt, Astelsia » (pas de prénom tant que le gérant ne le demande pas), pas de numéro de téléphone.
 - Une seule question fermée à la fin (« Répondez oui »), plus une ligne « Pas intéressé ? Répondez non merci ».
 - Toujours montrer le mail au gérant avant le premier envoi d'une nouvelle version. Une fois validée, une version peut être réutilisée.
 - Ne jamais critiquer le site actuel d'un commerce.
