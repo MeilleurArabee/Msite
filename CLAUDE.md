@@ -19,7 +19,7 @@ Ce fichier est relu automatiquement au début de chaque session. Il garde les r�
 - Objectif : environ 100 nouveaux commerces par jour dans « À envoyer » (Radar). Envoi par le **robot d'envoi** (dépôt astelsia-radar, voir son CLAUDE.md), pas par moi, pour économiser l'abonnement ; montée progressive 30 → 50 → 100 par jour.
 
 ## Chaîne de prospection (décidée le 23/11)
-Radar (trouve les commerces + mails) → Plume (trouve les bons détails vrais) → **Claude rédige chaque mail** avec ce qu'ils ont trouvé et montre des exemples → Robot d'envoi (après « go ») → Facteur (lit les réponses). « Lance le Radar sur X » = toute la chaîne. Le **Radar pro** = uniquement la recherche d'alternance du gérant, à part, seulement s'il le demande.
+Radar (trouve les commerces + mails) → Plume (trouve les bons détails vrais) → **Claude rédige chaque mail** avec ce qu'ils ont trouvé et montre des exemples → Robot d'envoi (après « go ») → Facteur (lit les réponses). « Lance le Radar sur X » = toute la chaîne. Chaîne idéale à terme : Radar → Plume → **Atelier** (maquettes automatiques, à construire) → Robot → Facteur. **Toujours tenir le tableau à jour, en économisant les crédits** : une seule mise à jour groupée (journal du robot + `reponses.csv` du Facteur) à chaque fois qu'on se parle, pas ligne par ligne. Le **Radar pro** = uniquement la recherche d'alternance du gérant, à part, seulement s'il le demande.
 
 ## Nos objectifs (22/11)
 
