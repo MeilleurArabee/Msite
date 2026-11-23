@@ -127,6 +127,14 @@ Le gérant veut, à la fin de chaque message, une courte astuce comme sur un éc
 - Les règles du gérant priment sur celles du skill : originalité (ne jamais copier la mise en page d'un autre site), photo juste ou d'ambiance, `prefers-reduced-motion`, captures téléphone et PC montrées avant toute mise en ligne.
 - Mise à jour du skill : relire le dépôt source avant d'en reprendre une nouvelle version (ne jamais l'activer en mise à jour automatique : ses consignes pourraient changer).
 
+
+## Skill « unslop » (demandé le 23/11 : à appliquer CHAQUE FOIS qu'on fait ou touche un site)
+
+- Copie dans `.claude/skills/unslop/` (source : github.com/heydamir/unslop, commit `620163e`, licence CC BY 4.0 : garder le crédit à Damir Sokolovsky). Lire son `SKILL.md` avant tout travail sur un site, une page, une maquette ou un modèle de l'Atelier.
+- Méthode : audit des signes « fait par l'IA » (`references/signs.md`), puis 5 lignes de direction (produit, caractère, monde, moments, signature) à montrer au gérant avant de modifier, puis les 9 passes dans l'ordre (espacements, couleurs, icônes, textes, typo, mise en page, détails, visuels, mouvement), puis la liste de vérification.
+- **Les goûts du gérant priment** quand ils diffèrent du skill : il aime les **couleurs vives** et les styles « rêve » validés (titres serif avec une fin en italique, étalonnage des couleurs). On garde donc ces choix, mais on applique le reste du skill : chrome sobre autour, une seule « pièce forte » colorée, espacements sur une grille de 4 px, pas de dégradé violet-bleu ni de lueurs, pas d'emoji en guise d'icônes, pas de MAJUSCULES espacées, textes précis et sans mots creux, pas d'animation en boucle.
+- Mise à jour : relire le dépôt source avant de reprendre une nouvelle version (pas de mise à jour automatique).
+
 ## Formule Solo vendue (21/11) : décisions
 
 - Premier « oui » transformé : un restaurant de Toulouse a choisi **Solo** pour démarrer (détails dans le tableau de suivi, pas dans ce dépôt public).
