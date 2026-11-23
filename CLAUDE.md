@@ -1,5 +1,7 @@
 # Astelsia : mémoire de travail
 
+**État du moment (clients, lots, outils, prochaines étapes) : lire `JOURNAL.md` dans le dépôt privé astelsia-radar.**
+
 Ce fichier est relu automatiquement au début de chaque session. Il garde les règles et les leçons, pour qu'elles survivent à la fin d'une conversation. Mets-le à jour dès qu'une nouvelle règle est décidée.
 
 ## Qui, quoi
