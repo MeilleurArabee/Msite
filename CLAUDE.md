@@ -51,6 +51,7 @@ Radar (trouve les commerces + mails) → Plume (trouve les bons détails vrais) 
 - **Aucun lien dans le mail** : l'outil Gmail transforme tous les liens en « google.com/url… », ce qui affiche une page d'avertissement. À la place, la maquette est **une image dans le mail**.
 - **Depuis le 23/11 : parler à la première personne (« je »)**, plus proche de la personne (décision du gérant). Signature « À bientôt, Astelsia » (pas de prénom tant que le gérant ne le demande pas), pas de numéro de téléphone.
 - Une seule question fermée à la fin (« Répondez oui »), plus une ligne « Pas intéressé ? Répondez non merci ».
+- **RIEN ne part sans le mot « envoie » (ou « go ») écrit par le gérant** : « c'est bon », « ok », « j'aime bien » ne suffisent PAS (erreur du 25/11 : réponse Tonnerre envoyée sans son accord). En cas de doute, demander.
 - Toujours montrer le mail au gérant avant le premier envoi d'une nouvelle version. Une fois validée, une version peut être réutilisée.
 - Ne jamais critiquer le site actuel d'un commerce.
 - Adresses : uniquement celles affichées par le commerce lui-même (Facebook, site). Jamais d'adresse devinée. Attention : Gmail n'accepte pas les tirets dans une adresse @gmail.com.
