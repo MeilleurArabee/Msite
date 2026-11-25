@@ -37,6 +37,7 @@ Radar (trouve les commerces + mails) → Plume (trouve les bons détails vrais) 
 - Montrer des captures téléphone et PC avant de publier.
 - Ne publier sur `main` (le site en ligne) qu'après « mets en ligne ». Travailler sur la branche `claude/new-session-ulwk8w`.
 - « Ne fais rien » veut dire ne rien toucher.
+- **Refonte du site Astelsia (25/11)** : le gérant discute avec Gemini et moi pour accumuler les idées. **Je ne modifie RIEN sur le site tant qu'il n'a pas écrit « go »** ; maquettes seulement (dossier `maquettes/ambiances/`). Bug iPhone noté (titre « Un site qui donne envie » invisible jusqu'au toucher) : vient du texte en dégradé (`background-clip: text`, `.hero__title.is-lit .hw`) sous un `filter: drop-shadow` sur le parent, que Safari iOS ne redessine pas ; à corriger au « go ». Nouvelle direction : un site-« espace » d'ambiance (heure dorée, nuages de nuit, prairie, eau étoilée), animations liées au décor, pas juste une image de fond.
 - Jamais de faux avis, faux clients, faux chiffres ou faux prix barrés.
 - Ne jamais reproduire une œuvre protégée ou copier un site existant : s'inspirer seulement.
 - Ne jamais demander de mot de passe ou de clé dans le chat.
