@@ -53,6 +53,7 @@ Radar (trouve les commerces + mails) → Plume (trouve les bons détails vrais) 
 - **Depuis le 23/11 : parler à la première personne (« je »)**, plus proche de la personne (décision du gérant). Signature « À bientôt, Astelsia » (pas de prénom tant que le gérant ne le demande pas), pas de numéro de téléphone.
 - Une seule question fermée à la fin (« Répondez oui »), plus une ligne « Pas intéressé ? Répondez non merci ».
 - **RIEN ne part sans le mot « envoie » (ou « go ») écrit par le gérant** : « c'est bon », « ok », « j'aime bien » ne suffisent PAS (erreur du 25/11 : réponse Tonnerre envoyée sans son accord). En cas de doute, demander.
+- **Règle simplifiée (27/11, décision du gérant)** : le « go » ne sert qu'UNE fois par NOUVEAU texte de mail. Une version validée part ensuite toute seule selon le calendrier du Pilote (nouveaux, relances, au revoir) : ne plus redemander. Les réponses individuelles à un commerce (après un « oui », une question) restent soumises à « envoie ».
 - Toujours montrer le mail au gérant avant le premier envoi d'une nouvelle version. Une fois validée, une version peut être réutilisée.
 - Ne jamais critiquer le site actuel d'un commerce.
 - Adresses : uniquement celles affichées par le commerce lui-même (Facebook, site). Jamais d'adresse devinée. Attention : Gmail n'accepte pas les tirets dans une adresse @gmail.com.
