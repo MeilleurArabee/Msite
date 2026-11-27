@@ -59,6 +59,21 @@ Radar (trouve les commerces + mails) → Plume (trouve les bons détails vrais) 
 - Adresses : uniquement celles affichées par le commerce lui-même (Facebook, site). Jamais d'adresse devinée. Attention : Gmail n'accepte pas les tirets dans une adresse @gmail.com.
 - Un « non merci » = statut « Pas intéressé », on ne relance jamais.
 
+### ⭐ Mail de Noël « excellent » (validé le 26/11 au soir, à NE JAMAIS perdre ; le gérant : « franchement, c'était excellent »)
+Code : `saison.py` (dépôt astelsia-radar), qui adapte le métier et la date (jusqu'au 20/12 « avant les fêtes », 21-31/12 « pour la nouvelle année », janvier « nouvelle année, nouvel air »). Toujours COURT, ton « coup de frais / on se fait plaisir », maquette en image, une seule question.
+> Objet : Un nouvel air pour [Nom] avant les fêtes
+> Bonjour,
+> Je suis tombé sur [Nom] en cherchant [un coiffeur] à [Ville], et [un vrai détail].
+> Avant les fêtes, tout le monde s'offre un coup de frais : [une coupe pour les réveillons, une carte cadeau à offrir]. Je me suis dit que [Nom] y avait droit aussi, alors je vous ai préparé une maquette de votre futur site :
+> [maquette]
+> Il peut être en ligne avant Noël. Je vous l'envoie en grand ?
+> À bientôt, Anas, Astelsia, astelsia.fr
+> P.S. Pas intéressé ? Un petit « non merci » et je ne vous embêterai plus.
+
+**Séquence (27/11, décision du gérant) : 3 mails seulement, 7 jours sur 7 (week-end compris)** : 1er mail ci-dessus → J+4 relance → J+9 au revoir. Au-delà, ils ne sont pas intéressés : on laisse la place aux nouveaux.
+> Relance : Bonjour, Je reviens vers vous pour la maquette de [Nom]. Pendant les fêtes, beaucoup cherchent [un coiffeur ou une carte cadeau] sur Google à la dernière minute : un site, c'est ce qui les amène chez vous. Je vous l'envoie en grand ? Anas, Astelsia (+ P.S. non merci)
+> Au revoir : Bonjour, C'est mon dernier message, je ne veux pas vous déranger plus. Si un jour vous voulez un site pour [Nom], la maquette est prête : répondez simplement « oui », même dans quelques mois. Je vous souhaite de belles fêtes, Anas, Astelsia
+
 ### Mails validés (v2, avec le prix, choisie le 21/11)
 La v1 (« C'est gratuit et sans engagement ») pouvait faire croire que le site était gratuit : abandonnée. **Toujours dire clairement : maquette offerte, site payant, avec le prix de départ.**
 
