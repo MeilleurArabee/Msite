@@ -117,6 +117,7 @@ Attention : 249,90 € est le prix de lancement des 3 premiers clients, puis 349
 - Image du mail : version PC et version téléphone côte à côte, **fond beige** (pas de blanc vide), pas de faux iPhone.
 - **Leçon Au Buron (20/11)** : on a mis une fondue pour un restaurant auvergnat qui sert de l'aligot ; il a refusé. Règle : **photo du bon plat, sinon photo d'ambiance** (salle, table, terrasse). Pour une cuisine précise, utiliser leurs propres photos (captures Facebook envoyées par le gérant).
 - **Styles « rêve » (validés le 23/11)** : grands paysages, titre centré en serif, menu en pilule de verre, beaucoup d'air (inspiration Pinterest, jamais copié). **Le plus important pour le gérant : les couleurs.** Toujours étalonner la photo (calques `mix-blend-mode: color` + `soft-light` + un peu de contraste) : « Crépuscule lavande » (violet, rose, pêche, texte prune) et « Heure dorée » (miel, pêche, marron, texte blanc, cadre « fenêtre ») sont validés. Le paysage = la ville ou le métier du commerce. Mélanger ces styles avec le style habituel.
+- **Maquettes intemporelles (28/11, règle du gérant)** : jamais de « Noël », « fêtes », « réveillons » écrits SUR le site d'une maquette (le site doit durer toute l'année) ; l'angle saisonnier va seulement dans le mail ou le message. Une maquette reprend l'ambiance de la page du commerce (couleurs, style), pas sa photo.
 - Photos libres : Pexels (usage commercial autorisé) ; les télécharger depuis images.pexels.com.
 
 ## Astuces de fin de message
